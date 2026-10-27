@@ -1,0 +1,42 @@
+{
+  "scenario": "A10_partial_delivery",
+  "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency\nGOOD,I1,ไฟล์เดียวถูกบันทึกก่อนหยุด,2,0.10,0.20,THB\n",
+  "source_sha256": "e2d5f6d8eb4feb6a7a9afa5df5069186ec8e94e6b798bd8c06875e3fe258c162",
+  "expected": {
+    "source_not_rewritten": true,
+    "engine_unchanged": true,
+    "status": "DELIVERED"
+  },
+  "actual": {
+    "batch_id": "partial",
+    "status": "DELIVERED",
+    "counts": {
+      "ERROR": 0,
+      "INVALID": 0,
+      "VALID": 1,
+      "documents": 1
+    },
+    "certified_total": "0.20",
+    "currency": "THB",
+    "ungrouped_rows": 0,
+    "receipt": {
+      "artifacts": {
+        "summary.csv": {
+          "path": "/tmp/neuron-delivery-test-u9qzilfm/batch_reports/partial/summary.csv",
+          "sha256": "43f762369df34b0cc2a5b82b99b70492c90837508aa82b8e99c475c8d53642e5",
+          "bytes": 149
+        },
+        "details.json": {
+          "path": "/tmp/neuron-delivery-test-u9qzilfm/batch_reports/partial/details.json",
+          "sha256": "3377a4ff929ea3f4586a0f062dcb7b3468de7bfe7a0aab69b9170be06011de25",
+          "bytes": 8807
+        },
+        "source.csv": {
+          "path": "/tmp/neuron-delivery-test-u9qzilfm/batch_reports/partial/source.csv",
+          "sha256": "e2d5f6d8eb4feb6a7a9afa5df5069186ec8e94e6b798bd8c06875e3fe258c162",
+          "bytes": 179
+        }
+      }
+    }
+  }
+}

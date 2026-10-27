@@ -1,0 +1,4 @@
+document_id,item_id,description,quantity,unit_price,declared_total,currency
+INV-001,A,สมุด,2,125.50,310.70,THB
+INV-001,B,ปากกา,3,19.90,310.70,THB
+INV-002,A,แฟ้ม,4,25.50,102.00,THB

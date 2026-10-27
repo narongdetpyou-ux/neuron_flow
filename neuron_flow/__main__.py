@@ -9,6 +9,8 @@ import sys
 
 from . import Runtime
 from .model import MAX_MESSAGE_BYTES, decode
+from .batch import BatchRuntime
+from .csv_input import MAX_SOURCE_BYTES
 
 
 DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
@@ -20,6 +22,15 @@ DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Neuron Flow supervised workflow prototype")
     commands = parser.add_subparsers(dest="command", required=True)
+    for name in ("csv", "batch-resume", "batch-status"):
+        command = commands.add_parser(name)
+        command.add_argument("--workspace", default="batch_workspace")
+        command.add_argument("--workers", type=int, default=3)
+        if name == "csv":
+            command.add_argument("source", type=Path)
+            command.add_argument("--batch-id")
+        else:
+            command.add_argument("batch_id")
     for name in ("demo", "invoice", "run", "resume", "status", "events"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", default="neuron_workspace")
@@ -36,6 +47,23 @@ def main(argv=None):
             command.add_argument("--after", type=int, default=0)
     args = parser.parse_args(argv)
     try:
+        if args.command in {"csv", "batch-resume", "batch-status"}:
+            with BatchRuntime(args.workspace, max_workers=args.workers) as batch:
+                if args.command == "csv":
+                    with args.source.open("rb") as stream:
+                        source = stream.read(MAX_SOURCE_BYTES + 1)
+                    submitted = batch.submit(source, args.batch_id)
+                    result = batch.deliver(submitted["batch_id"])
+                elif args.command == "batch-resume":
+                    result = batch.deliver(args.batch_id)
+                else:
+                    result = batch.status(args.batch_id)
+            print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            if (result.get("counts", {}).get("ERROR", 0)
+                    or result.get("status") == "DELIVERY_FAILED"
+                    or result.get("batch_status") == "DELIVERY_FAILED"):
+                return 1
+            return 0
         with Runtime(args.workspace, max_workers=args.workers) as runtime:
             if args.command == "demo":
                 runtime.ingest(DEMO_DOCUMENT, "invoice_demo")

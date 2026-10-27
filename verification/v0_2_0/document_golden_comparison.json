@@ -1,0 +1,3158 @@
+{
+  "input": "acceptance/input.csv",
+  "expected": "acceptance/expected_results.json",
+  "method": "pure pipeline; runtime verification recorded separately",
+  "documents": [
+    {
+      "document_id": "INV-001",
+      "expected": {
+        "document_id": "INV-001",
+        "document_status": "VALID",
+        "source_rows": [
+          2,
+          3
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.70",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "INV-001",
+        "document_status": "VALID",
+        "source_rows": [
+          2,
+          3
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.70",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-002",
+      "expected": {
+        "document_id": "VALID-002",
+        "document_status": "VALID",
+        "source_rows": [
+          4,
+          5,
+          6
+        ],
+        "computed_total": "1943.03",
+        "declared_total": "1943.03",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-002",
+        "document_status": "VALID",
+        "source_rows": [
+          4,
+          5,
+          6
+        ],
+        "computed_total": "1943.03",
+        "declared_total": "1943.03",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-003",
+      "expected": {
+        "document_id": "VALID-003",
+        "document_status": "VALID",
+        "source_rows": [
+          7
+        ],
+        "computed_total": "238940000.00",
+        "declared_total": "238940000.00",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-003",
+        "document_status": "VALID",
+        "source_rows": [
+          7
+        ],
+        "computed_total": "238940000.00",
+        "declared_total": "238940000.00",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-004",
+      "expected": {
+        "document_id": "VALID-004",
+        "document_status": "VALID",
+        "source_rows": [
+          8,
+          9
+        ],
+        "computed_total": "5000000002875.50",
+        "declared_total": "5000000002875.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-004",
+        "document_status": "VALID",
+        "source_rows": [
+          8,
+          9
+        ],
+        "computed_total": "5000000002875.50",
+        "declared_total": "5000000002875.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-005",
+      "expected": {
+        "document_id": "VALID-005",
+        "document_status": "VALID",
+        "source_rows": [
+          10,
+          11,
+          12
+        ],
+        "computed_total": "2161.80",
+        "declared_total": "2161.80",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-005",
+        "document_status": "VALID",
+        "source_rows": [
+          10,
+          11,
+          12
+        ],
+        "computed_total": "2161.80",
+        "declared_total": "2161.80",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-006",
+      "expected": {
+        "document_id": "VALID-006",
+        "document_status": "VALID",
+        "source_rows": [
+          13
+        ],
+        "computed_total": "3335.57",
+        "declared_total": "3335.57",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-006",
+        "document_status": "VALID",
+        "source_rows": [
+          13
+        ],
+        "computed_total": "3335.57",
+        "declared_total": "3335.57",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-007",
+      "expected": {
+        "document_id": "VALID-007",
+        "document_status": "VALID",
+        "source_rows": [
+          14,
+          16
+        ],
+        "computed_total": "6673.88",
+        "declared_total": "6673.88",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-007",
+        "document_status": "VALID",
+        "source_rows": [
+          14,
+          16
+        ],
+        "computed_total": "6673.88",
+        "declared_total": "6673.88",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-008",
+      "expected": {
+        "document_id": "VALID-008",
+        "document_status": "VALID",
+        "source_rows": [
+          17,
+          18,
+          19
+        ],
+        "computed_total": "11444.46",
+        "declared_total": "11444.46",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-008",
+        "document_status": "VALID",
+        "source_rows": [
+          17,
+          18,
+          19
+        ],
+        "computed_total": "11444.46",
+        "declared_total": "11444.46",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-009",
+      "expected": {
+        "document_id": "VALID-009",
+        "document_status": "VALID",
+        "source_rows": [
+          20
+        ],
+        "computed_total": "7140.80",
+        "declared_total": "7140.80",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-009",
+        "document_status": "VALID",
+        "source_rows": [
+          20
+        ],
+        "computed_total": "7140.80",
+        "declared_total": "7140.80",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-010",
+      "expected": {
+        "document_id": "VALID-010",
+        "document_status": "VALID",
+        "source_rows": [
+          21,
+          22
+        ],
+        "computed_total": "16672.37",
+        "declared_total": "16672.37",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-010",
+        "document_status": "VALID",
+        "source_rows": [
+          21,
+          22
+        ],
+        "computed_total": "16672.37",
+        "declared_total": "16672.37",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-011",
+      "expected": {
+        "document_id": "VALID-011",
+        "document_status": "VALID",
+        "source_rows": [
+          23,
+          24,
+          25
+        ],
+        "computed_total": "2621.49",
+        "declared_total": "2621.49",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-011",
+        "document_status": "VALID",
+        "source_rows": [
+          23,
+          24,
+          25
+        ],
+        "computed_total": "2621.49",
+        "declared_total": "2621.49",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-012",
+      "expected": {
+        "document_id": "VALID-012",
+        "document_status": "VALID",
+        "source_rows": [
+          26
+        ],
+        "computed_total": "1903.30",
+        "declared_total": "1903.30",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-012",
+        "document_status": "VALID",
+        "source_rows": [
+          26
+        ],
+        "computed_total": "1903.30",
+        "declared_total": "1903.30",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-013",
+      "expected": {
+        "document_id": "VALID-013",
+        "document_status": "VALID",
+        "source_rows": [
+          27,
+          28
+        ],
+        "computed_total": "253.57",
+        "declared_total": "253.57",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-013",
+        "document_status": "VALID",
+        "source_rows": [
+          27,
+          28
+        ],
+        "computed_total": "253.57",
+        "declared_total": "253.57",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-014",
+      "expected": {
+        "document_id": "VALID-014",
+        "document_status": "VALID",
+        "source_rows": [
+          29,
+          30,
+          31
+        ],
+        "computed_total": "2347.62",
+        "declared_total": "2347.62",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-014",
+        "document_status": "VALID",
+        "source_rows": [
+          29,
+          30,
+          31
+        ],
+        "computed_total": "2347.62",
+        "declared_total": "2347.62",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-015",
+      "expected": {
+        "document_id": "VALID-015",
+        "document_status": "VALID",
+        "source_rows": [
+          32
+        ],
+        "computed_total": "946.10",
+        "declared_total": "946.10",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-015",
+        "document_status": "VALID",
+        "source_rows": [
+          32
+        ],
+        "computed_total": "946.10",
+        "declared_total": "946.10",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-016",
+      "expected": {
+        "document_id": "VALID-016",
+        "document_status": "VALID",
+        "source_rows": [
+          33,
+          34
+        ],
+        "computed_total": "4578.04",
+        "declared_total": "4578.04",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-016",
+        "document_status": "VALID",
+        "source_rows": [
+          33,
+          34
+        ],
+        "computed_total": "4578.04",
+        "declared_total": "4578.04",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-017",
+      "expected": {
+        "document_id": "VALID-017",
+        "document_status": "VALID",
+        "source_rows": [
+          35,
+          36,
+          37
+        ],
+        "computed_total": "5933.86",
+        "declared_total": "5933.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-017",
+        "document_status": "VALID",
+        "source_rows": [
+          35,
+          36,
+          37
+        ],
+        "computed_total": "5933.86",
+        "declared_total": "5933.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-018",
+      "expected": {
+        "document_id": "VALID-018",
+        "document_status": "VALID",
+        "source_rows": [
+          38
+        ],
+        "computed_total": "3414.32",
+        "declared_total": "3414.32",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-018",
+        "document_status": "VALID",
+        "source_rows": [
+          38
+        ],
+        "computed_total": "3414.32",
+        "declared_total": "3414.32",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-019",
+      "expected": {
+        "document_id": "VALID-019",
+        "document_status": "VALID",
+        "source_rows": [
+          39,
+          40
+        ],
+        "computed_total": "7597.92",
+        "declared_total": "7597.92",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-019",
+        "document_status": "VALID",
+        "source_rows": [
+          39,
+          40
+        ],
+        "computed_total": "7597.92",
+        "declared_total": "7597.92",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-020",
+      "expected": {
+        "document_id": "VALID-020",
+        "document_status": "VALID",
+        "source_rows": [
+          41,
+          42,
+          43
+        ],
+        "computed_total": "14071.48",
+        "declared_total": "14071.48",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-020",
+        "document_status": "VALID",
+        "source_rows": [
+          41,
+          42,
+          43
+        ],
+        "computed_total": "14071.48",
+        "declared_total": "14071.48",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-021",
+      "expected": {
+        "document_id": "VALID-021",
+        "document_status": "VALID",
+        "source_rows": [
+          44
+        ],
+        "computed_total": "7307.96",
+        "declared_total": "7307.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-021",
+        "document_status": "VALID",
+        "source_rows": [
+          44
+        ],
+        "computed_total": "7307.96",
+        "declared_total": "7307.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-022",
+      "expected": {
+        "document_id": "VALID-022",
+        "document_status": "VALID",
+        "source_rows": [
+          45,
+          46
+        ],
+        "computed_total": "1488.47",
+        "declared_total": "1488.47",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-022",
+        "document_status": "VALID",
+        "source_rows": [
+          45,
+          46
+        ],
+        "computed_total": "1488.47",
+        "declared_total": "1488.47",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-023",
+      "expected": {
+        "document_id": "VALID-023",
+        "document_status": "VALID",
+        "source_rows": [
+          47,
+          48,
+          49
+        ],
+        "computed_total": "7419.73",
+        "declared_total": "7419.73",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-023",
+        "document_status": "VALID",
+        "source_rows": [
+          47,
+          48,
+          49
+        ],
+        "computed_total": "7419.73",
+        "declared_total": "7419.73",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-024",
+      "expected": {
+        "document_id": "VALID-024",
+        "document_status": "VALID",
+        "source_rows": [
+          50
+        ],
+        "computed_total": "2705.79",
+        "declared_total": "2705.79",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-024",
+        "document_status": "VALID",
+        "source_rows": [
+          50
+        ],
+        "computed_total": "2705.79",
+        "declared_total": "2705.79",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-025",
+      "expected": {
+        "document_id": "VALID-025",
+        "document_status": "VALID",
+        "source_rows": [
+          51,
+          52
+        ],
+        "computed_total": "10801.91",
+        "declared_total": "10801.91",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-025",
+        "document_status": "VALID",
+        "source_rows": [
+          51,
+          52
+        ],
+        "computed_total": "10801.91",
+        "declared_total": "10801.91",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-026",
+      "expected": {
+        "document_id": "VALID-026",
+        "document_status": "VALID",
+        "source_rows": [
+          53,
+          54,
+          55
+        ],
+        "computed_total": "982.77",
+        "declared_total": "982.77",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-026",
+        "document_status": "VALID",
+        "source_rows": [
+          53,
+          54,
+          55
+        ],
+        "computed_total": "982.77",
+        "declared_total": "982.77",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-027",
+      "expected": {
+        "document_id": "VALID-027",
+        "document_status": "VALID",
+        "source_rows": [
+          56
+        ],
+        "computed_total": "837.00",
+        "declared_total": "837.00",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-027",
+        "document_status": "VALID",
+        "source_rows": [
+          56
+        ],
+        "computed_total": "837.00",
+        "declared_total": "837.00",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-028",
+      "expected": {
+        "document_id": "VALID-028",
+        "document_status": "VALID",
+        "source_rows": [
+          57,
+          58
+        ],
+        "computed_total": "1970.95",
+        "declared_total": "1970.95",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-028",
+        "document_status": "VALID",
+        "source_rows": [
+          57,
+          58
+        ],
+        "computed_total": "1970.95",
+        "declared_total": "1970.95",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-029",
+      "expected": {
+        "document_id": "VALID-029",
+        "document_status": "VALID",
+        "source_rows": [
+          59,
+          60,
+          61
+        ],
+        "computed_total": "6886.86",
+        "declared_total": "6886.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-029",
+        "document_status": "VALID",
+        "source_rows": [
+          59,
+          60,
+          61
+        ],
+        "computed_total": "6886.86",
+        "declared_total": "6886.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-030",
+      "expected": {
+        "document_id": "VALID-030",
+        "document_status": "VALID",
+        "source_rows": [
+          62
+        ],
+        "computed_total": "3393.63",
+        "declared_total": "3393.63",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-030",
+        "document_status": "VALID",
+        "source_rows": [
+          62
+        ],
+        "computed_total": "3393.63",
+        "declared_total": "3393.63",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-031",
+      "expected": {
+        "document_id": "VALID-031",
+        "document_status": "VALID",
+        "source_rows": [
+          63,
+          64
+        ],
+        "computed_total": "8223.64",
+        "declared_total": "8223.64",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-031",
+        "document_status": "VALID",
+        "source_rows": [
+          63,
+          64
+        ],
+        "computed_total": "8223.64",
+        "declared_total": "8223.64",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-032",
+      "expected": {
+        "document_id": "VALID-032",
+        "document_status": "VALID",
+        "source_rows": [
+          65,
+          66,
+          67
+        ],
+        "computed_total": "16101.86",
+        "declared_total": "16101.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-032",
+        "document_status": "VALID",
+        "source_rows": [
+          65,
+          66,
+          67
+        ],
+        "computed_total": "16101.86",
+        "declared_total": "16101.86",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-033",
+      "expected": {
+        "document_id": "VALID-033",
+        "document_status": "VALID",
+        "source_rows": [
+          68
+        ],
+        "computed_total": "614.64",
+        "declared_total": "614.64",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-033",
+        "document_status": "VALID",
+        "source_rows": [
+          68
+        ],
+        "computed_total": "614.64",
+        "declared_total": "614.64",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-034",
+      "expected": {
+        "document_id": "VALID-034",
+        "document_status": "VALID",
+        "source_rows": [
+          69,
+          70
+        ],
+        "computed_total": "3473.26",
+        "declared_total": "3473.26",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-034",
+        "document_status": "VALID",
+        "source_rows": [
+          69,
+          70
+        ],
+        "computed_total": "3473.26",
+        "declared_total": "3473.26",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-035",
+      "expected": {
+        "document_id": "VALID-035",
+        "document_status": "VALID",
+        "source_rows": [
+          71,
+          72,
+          73
+        ],
+        "computed_total": "11621.33",
+        "declared_total": "11621.33",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-035",
+        "document_status": "VALID",
+        "source_rows": [
+          71,
+          72,
+          73
+        ],
+        "computed_total": "11621.33",
+        "declared_total": "11621.33",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-036",
+      "expected": {
+        "document_id": "VALID-036",
+        "document_status": "VALID",
+        "source_rows": [
+          74
+        ],
+        "computed_total": "3408.84",
+        "declared_total": "3408.84",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-036",
+        "document_status": "VALID",
+        "source_rows": [
+          74
+        ],
+        "computed_total": "3408.84",
+        "declared_total": "3408.84",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-037",
+      "expected": {
+        "document_id": "VALID-037",
+        "document_status": "VALID",
+        "source_rows": [
+          75,
+          76
+        ],
+        "computed_total": "13051.93",
+        "declared_total": "13051.93",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-037",
+        "document_status": "VALID",
+        "source_rows": [
+          75,
+          76
+        ],
+        "computed_total": "13051.93",
+        "declared_total": "13051.93",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-038",
+      "expected": {
+        "document_id": "VALID-038",
+        "document_status": "VALID",
+        "source_rows": [
+          77,
+          78,
+          79
+        ],
+        "computed_total": "261.75",
+        "declared_total": "261.75",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-038",
+        "document_status": "VALID",
+        "source_rows": [
+          77,
+          78,
+          79
+        ],
+        "computed_total": "261.75",
+        "declared_total": "261.75",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-039",
+      "expected": {
+        "document_id": "VALID-039",
+        "document_status": "VALID",
+        "source_rows": [
+          80
+        ],
+        "computed_total": "628.46",
+        "declared_total": "628.46",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-039",
+        "document_status": "VALID",
+        "source_rows": [
+          80
+        ],
+        "computed_total": "628.46",
+        "declared_total": "628.46",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-040",
+      "expected": {
+        "document_id": "VALID-040",
+        "document_status": "VALID",
+        "source_rows": [
+          81,
+          82
+        ],
+        "computed_total": "2033.12",
+        "declared_total": "2033.12",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-040",
+        "document_status": "VALID",
+        "source_rows": [
+          81,
+          82
+        ],
+        "computed_total": "2033.12",
+        "declared_total": "2033.12",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-041",
+      "expected": {
+        "document_id": "VALID-041",
+        "document_status": "VALID",
+        "source_rows": [
+          83,
+          84,
+          85
+        ],
+        "computed_total": "4483.32",
+        "declared_total": "4483.32",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-041",
+        "document_status": "VALID",
+        "source_rows": [
+          83,
+          84,
+          85
+        ],
+        "computed_total": "4483.32",
+        "declared_total": "4483.32",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-042",
+      "expected": {
+        "document_id": "VALID-042",
+        "document_status": "VALID",
+        "source_rows": [
+          86
+        ],
+        "computed_total": "3273.50",
+        "declared_total": "3273.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-042",
+        "document_status": "VALID",
+        "source_rows": [
+          86
+        ],
+        "computed_total": "3273.50",
+        "declared_total": "3273.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-043",
+      "expected": {
+        "document_id": "VALID-043",
+        "document_status": "VALID",
+        "source_rows": [
+          87,
+          88
+        ],
+        "computed_total": "8551.04",
+        "declared_total": "8551.04",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-043",
+        "document_status": "VALID",
+        "source_rows": [
+          87,
+          88
+        ],
+        "computed_total": "8551.04",
+        "declared_total": "8551.04",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-044",
+      "expected": {
+        "document_id": "VALID-044",
+        "document_status": "VALID",
+        "source_rows": [
+          89,
+          90,
+          91
+        ],
+        "computed_total": "1461.30",
+        "declared_total": "1461.30",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-044",
+        "document_status": "VALID",
+        "source_rows": [
+          89,
+          90,
+          91
+        ],
+        "computed_total": "1461.30",
+        "declared_total": "1461.30",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-045",
+      "expected": {
+        "document_id": "VALID-045",
+        "document_status": "VALID",
+        "source_rows": [
+          92
+        ],
+        "computed_total": "1129.84",
+        "declared_total": "1129.84",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-045",
+        "document_status": "VALID",
+        "source_rows": [
+          92
+        ],
+        "computed_total": "1129.84",
+        "declared_total": "1129.84",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-046",
+      "expected": {
+        "document_id": "VALID-046",
+        "document_status": "VALID",
+        "source_rows": [
+          93,
+          94
+        ],
+        "computed_total": "5159.73",
+        "declared_total": "5159.73",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-046",
+        "document_status": "VALID",
+        "source_rows": [
+          93,
+          94
+        ],
+        "computed_total": "5159.73",
+        "declared_total": "5159.73",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-047",
+      "expected": {
+        "document_id": "VALID-047",
+        "document_status": "VALID",
+        "source_rows": [
+          95,
+          96,
+          97
+        ],
+        "computed_total": "15226.29",
+        "declared_total": "15226.29",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-047",
+        "document_status": "VALID",
+        "source_rows": [
+          95,
+          96,
+          97
+        ],
+        "computed_total": "15226.29",
+        "declared_total": "15226.29",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-048",
+      "expected": {
+        "document_id": "VALID-048",
+        "document_status": "VALID",
+        "source_rows": [
+          98
+        ],
+        "computed_total": "4012.45",
+        "declared_total": "4012.45",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-048",
+        "document_status": "VALID",
+        "source_rows": [
+          98
+        ],
+        "computed_total": "4012.45",
+        "declared_total": "4012.45",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-049",
+      "expected": {
+        "document_id": "VALID-049",
+        "document_status": "VALID",
+        "source_rows": [
+          99,
+          100
+        ],
+        "computed_total": "15003.63",
+        "declared_total": "15003.63",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-049",
+        "document_status": "VALID",
+        "source_rows": [
+          99,
+          100
+        ],
+        "computed_total": "15003.63",
+        "declared_total": "15003.63",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-050",
+      "expected": {
+        "document_id": "VALID-050",
+        "document_status": "VALID",
+        "source_rows": [
+          101,
+          102,
+          103
+        ],
+        "computed_total": "16359.45",
+        "declared_total": "16359.45",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-050",
+        "document_status": "VALID",
+        "source_rows": [
+          101,
+          102,
+          103
+        ],
+        "computed_total": "16359.45",
+        "declared_total": "16359.45",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-051",
+      "expected": {
+        "document_id": "VALID-051",
+        "document_status": "VALID",
+        "source_rows": [
+          104
+        ],
+        "computed_total": "320.48",
+        "declared_total": "320.48",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-051",
+        "document_status": "VALID",
+        "source_rows": [
+          104
+        ],
+        "computed_total": "320.48",
+        "declared_total": "320.48",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-052",
+      "expected": {
+        "document_id": "VALID-052",
+        "document_status": "VALID",
+        "source_rows": [
+          105,
+          106
+        ],
+        "computed_total": "1796.97",
+        "declared_total": "1796.97",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-052",
+        "document_status": "VALID",
+        "source_rows": [
+          105,
+          106
+        ],
+        "computed_total": "1796.97",
+        "declared_total": "1796.97",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-053",
+      "expected": {
+        "document_id": "VALID-053",
+        "document_status": "VALID",
+        "source_rows": [
+          107,
+          108,
+          109
+        ],
+        "computed_total": "4789.96",
+        "declared_total": "4789.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-053",
+        "document_status": "VALID",
+        "source_rows": [
+          107,
+          108,
+          109
+        ],
+        "computed_total": "4789.96",
+        "declared_total": "4789.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-054",
+      "expected": {
+        "document_id": "VALID-054",
+        "document_status": "VALID",
+        "source_rows": [
+          110
+        ],
+        "computed_total": "3053.93",
+        "declared_total": "3053.93",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-054",
+        "document_status": "VALID",
+        "source_rows": [
+          110
+        ],
+        "computed_total": "3053.93",
+        "declared_total": "3053.93",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-055",
+      "expected": {
+        "document_id": "VALID-055",
+        "document_status": "VALID",
+        "source_rows": [
+          111,
+          112
+        ],
+        "computed_total": "715.01",
+        "declared_total": "715.01",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-055",
+        "document_status": "VALID",
+        "source_rows": [
+          111,
+          112
+        ],
+        "computed_total": "715.01",
+        "declared_total": "715.01",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-056",
+      "expected": {
+        "document_id": "VALID-056",
+        "document_status": "VALID",
+        "source_rows": [
+          113,
+          114,
+          115
+        ],
+        "computed_total": "3939.16",
+        "declared_total": "3939.16",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-056",
+        "document_status": "VALID",
+        "source_rows": [
+          113,
+          114,
+          115
+        ],
+        "computed_total": "3939.16",
+        "declared_total": "3939.16",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-057",
+      "expected": {
+        "document_id": "VALID-057",
+        "document_status": "VALID",
+        "source_rows": [
+          116
+        ],
+        "computed_total": "1545.60",
+        "declared_total": "1545.60",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-057",
+        "document_status": "VALID",
+        "source_rows": [
+          116
+        ],
+        "computed_total": "1545.60",
+        "declared_total": "1545.60",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-058",
+      "expected": {
+        "document_id": "VALID-058",
+        "document_status": "VALID",
+        "source_rows": [
+          117,
+          118
+        ],
+        "computed_total": "6547.88",
+        "declared_total": "6547.88",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-058",
+        "document_status": "VALID",
+        "source_rows": [
+          117,
+          118
+        ],
+        "computed_total": "6547.88",
+        "declared_total": "6547.88",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-059",
+      "expected": {
+        "document_id": "VALID-059",
+        "document_status": "VALID",
+        "source_rows": [
+          119,
+          120,
+          121
+        ],
+        "computed_total": "10795.09",
+        "declared_total": "10795.09",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-059",
+        "document_status": "VALID",
+        "source_rows": [
+          119,
+          120,
+          121
+        ],
+        "computed_total": "10795.09",
+        "declared_total": "10795.09",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-060",
+      "expected": {
+        "document_id": "VALID-060",
+        "document_status": "VALID",
+        "source_rows": [
+          122
+        ],
+        "computed_total": "4516.62",
+        "declared_total": "4516.62",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-060",
+        "document_status": "VALID",
+        "source_rows": [
+          122
+        ],
+        "computed_total": "4516.62",
+        "declared_total": "4516.62",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-061",
+      "expected": {
+        "document_id": "VALID-061",
+        "document_status": "VALID",
+        "source_rows": [
+          123,
+          124
+        ],
+        "computed_total": "7490.38",
+        "declared_total": "7490.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-061",
+        "document_status": "VALID",
+        "source_rows": [
+          123,
+          124
+        ],
+        "computed_total": "7490.38",
+        "declared_total": "7490.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-062",
+      "expected": {
+        "document_id": "VALID-062",
+        "document_status": "VALID",
+        "source_rows": [
+          125,
+          126,
+          127
+        ],
+        "computed_total": "20992.07",
+        "declared_total": "20992.07",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-062",
+        "document_status": "VALID",
+        "source_rows": [
+          125,
+          126,
+          127
+        ],
+        "computed_total": "20992.07",
+        "declared_total": "20992.07",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-063",
+      "expected": {
+        "document_id": "VALID-063",
+        "document_status": "VALID",
+        "source_rows": [
+          128
+        ],
+        "computed_total": "8913.06",
+        "declared_total": "8913.06",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-063",
+        "document_status": "VALID",
+        "source_rows": [
+          128
+        ],
+        "computed_total": "8913.06",
+        "declared_total": "8913.06",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-064",
+      "expected": {
+        "document_id": "VALID-064",
+        "document_status": "VALID",
+        "source_rows": [
+          129,
+          130
+        ],
+        "computed_total": "1262.50",
+        "declared_total": "1262.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-064",
+        "document_status": "VALID",
+        "source_rows": [
+          129,
+          130
+        ],
+        "computed_total": "1262.50",
+        "declared_total": "1262.50",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-065",
+      "expected": {
+        "document_id": "VALID-065",
+        "document_status": "VALID",
+        "source_rows": [
+          131,
+          132,
+          133
+        ],
+        "computed_total": "4499.96",
+        "declared_total": "4499.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-065",
+        "document_status": "VALID",
+        "source_rows": [
+          131,
+          132,
+          133
+        ],
+        "computed_total": "4499.96",
+        "declared_total": "4499.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-066",
+      "expected": {
+        "document_id": "VALID-066",
+        "document_status": "VALID",
+        "source_rows": [
+          134
+        ],
+        "computed_total": "227.91",
+        "declared_total": "227.91",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-066",
+        "document_status": "VALID",
+        "source_rows": [
+          134
+        ],
+        "computed_total": "227.91",
+        "declared_total": "227.91",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-067",
+      "expected": {
+        "document_id": "VALID-067",
+        "document_status": "VALID",
+        "source_rows": [
+          135,
+          136
+        ],
+        "computed_total": "1539.61",
+        "declared_total": "1539.61",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-067",
+        "document_status": "VALID",
+        "source_rows": [
+          135,
+          136
+        ],
+        "computed_total": "1539.61",
+        "declared_total": "1539.61",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-068",
+      "expected": {
+        "document_id": "VALID-068",
+        "document_status": "VALID",
+        "source_rows": [
+          137,
+          138,
+          139
+        ],
+        "computed_total": "5820.38",
+        "declared_total": "5820.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-068",
+        "document_status": "VALID",
+        "source_rows": [
+          137,
+          138,
+          139
+        ],
+        "computed_total": "5820.38",
+        "declared_total": "5820.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-069",
+      "expected": {
+        "document_id": "VALID-069",
+        "document_status": "VALID",
+        "source_rows": [
+          140
+        ],
+        "computed_total": "1861.92",
+        "declared_total": "1861.92",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-069",
+        "document_status": "VALID",
+        "source_rows": [
+          140
+        ],
+        "computed_total": "1861.92",
+        "declared_total": "1861.92",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-070",
+      "expected": {
+        "document_id": "VALID-070",
+        "document_status": "VALID",
+        "source_rows": [
+          141,
+          142
+        ],
+        "computed_total": "7637.71",
+        "declared_total": "7637.71",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-070",
+        "document_status": "VALID",
+        "source_rows": [
+          141,
+          142
+        ],
+        "computed_total": "7637.71",
+        "declared_total": "7637.71",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-071",
+      "expected": {
+        "document_id": "VALID-071",
+        "document_status": "VALID",
+        "source_rows": [
+          143,
+          144,
+          145
+        ],
+        "computed_total": "13753.69",
+        "declared_total": "13753.69",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-071",
+        "document_status": "VALID",
+        "source_rows": [
+          143,
+          144,
+          145
+        ],
+        "computed_total": "13753.69",
+        "declared_total": "13753.69",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-072",
+      "expected": {
+        "document_id": "VALID-072",
+        "document_status": "VALID",
+        "source_rows": [
+          146
+        ],
+        "computed_total": "4921.35",
+        "declared_total": "4921.35",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-072",
+        "document_status": "VALID",
+        "source_rows": [
+          146
+        ],
+        "computed_total": "4921.35",
+        "declared_total": "4921.35",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-073",
+      "expected": {
+        "document_id": "VALID-073",
+        "document_status": "VALID",
+        "source_rows": [
+          147,
+          148
+        ],
+        "computed_total": "9392.36",
+        "declared_total": "9392.36",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-073",
+        "document_status": "VALID",
+        "source_rows": [
+          147,
+          148
+        ],
+        "computed_total": "9392.36",
+        "declared_total": "9392.36",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-074",
+      "expected": {
+        "document_id": "VALID-074",
+        "document_status": "VALID",
+        "source_rows": [
+          149,
+          150,
+          151
+        ],
+        "computed_total": "15522.18",
+        "declared_total": "15522.18",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-074",
+        "document_status": "VALID",
+        "source_rows": [
+          149,
+          150,
+          151
+        ],
+        "computed_total": "15522.18",
+        "declared_total": "15522.18",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-075",
+      "expected": {
+        "document_id": "VALID-075",
+        "document_status": "VALID",
+        "source_rows": [
+          152
+        ],
+        "computed_total": "9406.20",
+        "declared_total": "9406.20",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-075",
+        "document_status": "VALID",
+        "source_rows": [
+          152
+        ],
+        "computed_total": "9406.20",
+        "declared_total": "9406.20",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-076",
+      "expected": {
+        "document_id": "VALID-076",
+        "document_status": "VALID",
+        "source_rows": [
+          153,
+          154
+        ],
+        "computed_total": "429.71",
+        "declared_total": "429.71",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-076",
+        "document_status": "VALID",
+        "source_rows": [
+          153,
+          154
+        ],
+        "computed_total": "429.71",
+        "declared_total": "429.71",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-077",
+      "expected": {
+        "document_id": "VALID-077",
+        "document_status": "VALID",
+        "source_rows": [
+          155,
+          156,
+          157
+        ],
+        "computed_total": "301.11",
+        "declared_total": "301.11",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-077",
+        "document_status": "VALID",
+        "source_rows": [
+          155,
+          156,
+          157
+        ],
+        "computed_total": "301.11",
+        "declared_total": "301.11",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-078",
+      "expected": {
+        "document_id": "VALID-078",
+        "document_status": "VALID",
+        "source_rows": [
+          158
+        ],
+        "computed_total": "356.38",
+        "declared_total": "356.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-078",
+        "document_status": "VALID",
+        "source_rows": [
+          158
+        ],
+        "computed_total": "356.38",
+        "declared_total": "356.38",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-079",
+      "expected": {
+        "document_id": "VALID-079",
+        "document_status": "VALID",
+        "source_rows": [
+          159,
+          160
+        ],
+        "computed_total": "2065.89",
+        "declared_total": "2065.89",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-079",
+        "document_status": "VALID",
+        "source_rows": [
+          159,
+          160
+        ],
+        "computed_total": "2065.89",
+        "declared_total": "2065.89",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "VALID-080",
+      "expected": {
+        "document_id": "VALID-080",
+        "document_status": "VALID",
+        "source_rows": [
+          161,
+          162,
+          163
+        ],
+        "computed_total": "7104.96",
+        "declared_total": "7104.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "actual": {
+        "document_id": "VALID-080",
+        "document_status": "VALID",
+        "source_rows": [
+          161,
+          162,
+          163
+        ],
+        "computed_total": "7104.96",
+        "declared_total": "7104.96",
+        "difference": "0.00",
+        "errors": []
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-001",
+      "expected": {
+        "document_id": "INVALID-001",
+        "document_status": "INVALID",
+        "source_rows": [
+          164,
+          165
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 164,
+            "field": "description",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-001",
+        "document_status": "INVALID",
+        "source_rows": [
+          164,
+          165
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 164,
+            "field": "description",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-002",
+      "expected": {
+        "document_id": "INVALID-002",
+        "document_status": "INVALID",
+        "source_rows": [
+          166,
+          167
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 166,
+            "field": "item_id",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-002",
+        "document_status": "INVALID",
+        "source_rows": [
+          166,
+          167
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 166,
+            "field": "item_id",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-003",
+      "expected": {
+        "document_id": "INVALID-003",
+        "document_status": "INVALID",
+        "source_rows": [
+          168,
+          169
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 168,
+            "field": "quantity",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-003",
+        "document_status": "INVALID",
+        "source_rows": [
+          168,
+          169
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 168,
+            "field": "quantity",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-004",
+      "expected": {
+        "document_id": "INVALID-004",
+        "document_status": "INVALID",
+        "source_rows": [
+          170,
+          171
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 170,
+            "field": "unit_price",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-004",
+        "document_status": "INVALID",
+        "source_rows": [
+          170,
+          171
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 170,
+            "field": "unit_price",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-005",
+      "expected": {
+        "document_id": "INVALID-005",
+        "document_status": "INVALID",
+        "source_rows": [
+          172,
+          173
+        ],
+        "computed_total": null,
+        "declared_total": null,
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 172,
+            "field": "declared_total",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-005",
+        "document_status": "INVALID",
+        "source_rows": [
+          172,
+          173
+        ],
+        "computed_total": null,
+        "declared_total": null,
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 172,
+            "field": "declared_total",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-006",
+      "expected": {
+        "document_id": "INVALID-006",
+        "document_status": "INVALID",
+        "source_rows": [
+          174,
+          175
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 174,
+            "field": "currency",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-006",
+        "document_status": "INVALID",
+        "source_rows": [
+          174,
+          175
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 174,
+            "field": "currency",
+            "reason_code": "REQUIRED",
+            "expected": "non-empty",
+            "actual": ""
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-007",
+      "expected": {
+        "document_id": "INVALID-007",
+        "document_status": "INVALID",
+        "source_rows": [
+          176,
+          177
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 176,
+            "field": "quantity",
+            "reason_code": "QUANTITY_RANGE",
+            "expected": "integer:1..1000000",
+            "actual": "0"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-007",
+        "document_status": "INVALID",
+        "source_rows": [
+          176,
+          177
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 176,
+            "field": "quantity",
+            "reason_code": "QUANTITY_RANGE",
+            "expected": "integer:1..1000000",
+            "actual": "0"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-008",
+      "expected": {
+        "document_id": "INVALID-008",
+        "document_status": "INVALID",
+        "source_rows": [
+          178,
+          179
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 178,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "-1"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-008",
+        "document_status": "INVALID",
+        "source_rows": [
+          178,
+          179
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 178,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "-1"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-009",
+      "expected": {
+        "document_id": "INVALID-009",
+        "document_status": "INVALID",
+        "source_rows": [
+          180,
+          181
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 180,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "1.5"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-009",
+        "document_status": "INVALID",
+        "source_rows": [
+          180,
+          181
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 180,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "1.5"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-010",
+      "expected": {
+        "document_id": "INVALID-010",
+        "document_status": "INVALID",
+        "source_rows": [
+          182,
+          183
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 182,
+            "field": "quantity",
+            "reason_code": "QUANTITY_RANGE",
+            "expected": "integer:1..1000000",
+            "actual": "1000001"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-010",
+        "document_status": "INVALID",
+        "source_rows": [
+          182,
+          183
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 182,
+            "field": "quantity",
+            "reason_code": "QUANTITY_RANGE",
+            "expected": "integer:1..1000000",
+            "actual": "1000001"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-011",
+      "expected": {
+        "document_id": "INVALID-011",
+        "document_status": "INVALID",
+        "source_rows": [
+          184,
+          185
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 184,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "two"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-011",
+        "document_status": "INVALID",
+        "source_rows": [
+          184,
+          185
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 184,
+            "field": "quantity",
+            "reason_code": "QUANTITY_FORMAT",
+            "expected": "unsigned-integer:1..7-digits",
+            "actual": "two"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-012",
+      "expected": {
+        "document_id": "INVALID-012",
+        "document_status": "INVALID",
+        "source_rows": [
+          186,
+          187
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 186,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "-0.01"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-012",
+        "document_status": "INVALID",
+        "source_rows": [
+          186,
+          187
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 186,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "-0.01"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-013",
+      "expected": {
+        "document_id": "INVALID-013",
+        "document_status": "INVALID",
+        "source_rows": [
+          188,
+          189
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 188,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "1.001"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-013",
+        "document_status": "INVALID",
+        "source_rows": [
+          188,
+          189
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 188,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "1.001"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-014",
+      "expected": {
+        "document_id": "INVALID-014",
+        "document_status": "INVALID",
+        "source_rows": [
+          190,
+          191
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 190,
+            "field": "unit_price",
+            "reason_code": "PRICE_RANGE",
+            "expected": "decimal:0..1000000000000",
+            "actual": "1000000000000.01"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-014",
+        "document_status": "INVALID",
+        "source_rows": [
+          190,
+          191
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 190,
+            "field": "unit_price",
+            "reason_code": "PRICE_RANGE",
+            "expected": "decimal:0..1000000000000",
+            "actual": "1000000000000.01"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-015",
+      "expected": {
+        "document_id": "INVALID-015",
+        "document_status": "INVALID",
+        "source_rows": [
+          192,
+          193
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 192,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "NaN"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-015",
+        "document_status": "INVALID",
+        "source_rows": [
+          192,
+          193
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 192,
+            "field": "unit_price",
+            "reason_code": "PRICE_FORMAT",
+            "expected": "unsigned-decimal:1..13-digits;scale<=2",
+            "actual": "NaN"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-016",
+      "expected": {
+        "document_id": "INVALID-016",
+        "document_status": "INVALID",
+        "source_rows": [
+          194,
+          195
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 195,
+            "field": "item_id",
+            "reason_code": "DUPLICATE_ITEM_ID",
+            "expected": "unique-within-document",
+            "actual": "A"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-016",
+        "document_status": "INVALID",
+        "source_rows": [
+          194,
+          195
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 195,
+            "field": "item_id",
+            "reason_code": "DUPLICATE_ITEM_ID",
+            "expected": "unique-within-document",
+            "actual": "A"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-017",
+      "expected": {
+        "document_id": "INVALID-017",
+        "document_status": "INVALID",
+        "source_rows": [
+          196,
+          197
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 196,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          },
+          {
+            "row_number": 197,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-017",
+        "document_status": "INVALID",
+        "source_rows": [
+          196,
+          197
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 196,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          },
+          {
+            "row_number": 197,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-018",
+      "expected": {
+        "document_id": "INVALID-018",
+        "document_status": "INVALID",
+        "source_rows": [
+          198,
+          199
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 199,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          },
+          {
+            "row_number": 199,
+            "field": "currency",
+            "reason_code": "CURRENCY_CONFLICT",
+            "expected": "THB",
+            "actual": "USD"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-018",
+        "document_status": "INVALID",
+        "source_rows": [
+          198,
+          199
+        ],
+        "computed_total": null,
+        "declared_total": "310.70",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 199,
+            "field": "currency",
+            "reason_code": "CURRENCY_UNSUPPORTED",
+            "expected": "THB",
+            "actual": "USD"
+          },
+          {
+            "row_number": 199,
+            "field": "currency",
+            "reason_code": "CURRENCY_CONFLICT",
+            "expected": "THB",
+            "actual": "USD"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-019",
+      "expected": {
+        "document_id": "INVALID-019",
+        "document_status": "INVALID",
+        "source_rows": [
+          200,
+          201
+        ],
+        "computed_total": null,
+        "declared_total": null,
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 201,
+            "field": "declared_total",
+            "reason_code": "DECLARED_TOTAL_CONFLICT",
+            "expected": "310.70",
+            "actual": "310.71"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-019",
+        "document_status": "INVALID",
+        "source_rows": [
+          200,
+          201
+        ],
+        "computed_total": null,
+        "declared_total": null,
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 201,
+            "field": "declared_total",
+            "reason_code": "DECLARED_TOTAL_CONFLICT",
+            "expected": "310.70",
+            "actual": "310.71"
+          }
+        ]
+      },
+      "matched": true
+    },
+    {
+      "document_id": "INVALID-020",
+      "expected": {
+        "document_id": "INVALID-020",
+        "document_status": "INVALID",
+        "source_rows": [
+          202,
+          203
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.71",
+        "difference": "-0.01",
+        "errors": [
+          {
+            "row_number": 202,
+            "field": "declared_total",
+            "reason_code": "TOTAL_MISMATCH",
+            "expected": "310.70",
+            "actual": "310.71"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-020",
+        "document_status": "INVALID",
+        "source_rows": [
+          202,
+          203
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.71",
+        "difference": "-0.01",
+        "errors": [
+          {
+            "row_number": 202,
+            "field": "declared_total",
+            "reason_code": "TOTAL_MISMATCH",
+            "expected": "310.70",
+            "actual": "310.71"
+          }
+        ]
+      },
+      "matched": true
+    }
+  ],
+  "all_matched": true
+}

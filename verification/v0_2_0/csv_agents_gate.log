@@ -1,0 +1,19 @@
+test_all_100_documents_run_through_actual_worker_processes_and_match_golden (tests.test_csv_agents.CsvAgentTests.test_all_100_documents_run_through_actual_worker_processes_and_match_golden) ... ok
+test_all_100_pure_results_match_locked_reference_and_leave_input_untouched (tests.test_csv_agents.CsvAgentTests.test_all_100_pure_results_match_locked_reference_and_leave_input_untouched) ... ok
+test_changed_calculation_and_numeric_type_do_not_pass_independent_check (tests.test_csv_agents.CsvAgentTests.test_changed_calculation_and_numeric_type_do_not_pass_independent_check) ... ok
+test_declared_total_format_range_and_conflicts (tests.test_csv_agents.CsvAgentTests.test_declared_total_format_range_and_conflicts) ... ok
+test_invalid_data_does_not_call_any_money_calculation_or_raise_retry_error (tests.test_csv_agents.CsvAgentTests.test_invalid_data_does_not_call_any_money_calculation_or_raise_retry_error) ... ok
+test_invalid_propagation_cannot_be_changed_and_missing_dependency_is_contract_error (tests.test_csv_agents.CsvAgentTests.test_invalid_propagation_cannot_be_changed_and_missing_dependency_is_contract_error) ... ok
+test_maximum_document_total_uses_23_integer_digits_without_rounding (tests.test_csv_agents.CsvAgentTests.test_maximum_document_total_uses_23_integer_digits_without_rounding) ... ok
+test_missing_fields_wrong_types_and_parser_row_errors_remain_data_errors (tests.test_csv_agents.CsvAgentTests.test_missing_fields_wrong_types_and_parser_row_errors_remain_data_errors) ... ok
+test_numeric_equivalent_declared_values_and_raw_mismatch_evidence (tests.test_csv_agents.CsvAgentTests.test_numeric_equivalent_declared_values_and_raw_mismatch_evidence) ... ok
+test_price_quantity_and_zero_boundaries (tests.test_csv_agents.CsvAgentTests.test_price_quantity_and_zero_boundaries) ... ok
+test_runtime_rejects_wrong_amounts_and_types_without_retrying (tests.test_csv_agents.CsvAgentTests.test_runtime_rejects_wrong_amounts_and_types_without_retrying) ... ok
+test_text_normalization_limits_and_document_size (tests.test_csv_agents.CsvAgentTests.test_text_normalization_limits_and_document_size) ... ok
+test_validation_and_verification_callbacks_reject_forged_typed_outputs (tests.test_csv_agents.CsvAgentTests.test_validation_and_verification_callbacks_reject_forged_typed_outputs) ... ok
+test_validation_never_certifies_valid_before_calculation_and_verification (tests.test_csv_agents.CsvAgentTests.test_validation_never_certifies_valid_before_calculation_and_verification) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 4.513s
+
+OK

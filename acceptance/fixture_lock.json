@@ -1,0 +1,20 @@
+{
+  "schema_version": "neuron-flow-acceptance-v1",
+  "fixture_id": "neuron-flow-0.2.0-golden-v1",
+  "algorithm": "SHA-256",
+  "files": {
+    "input.csv": {
+      "sha256": "c04e31ad7277d5eb39264cba8f4d82ea42c49db402e8d71bb6fac9ca4cfb6579",
+      "size_bytes": 11461
+    },
+    "expected_results.json": {
+      "sha256": "f72f753bb474b4e94743f3c917227625c5a8b0eb556e50c91fe6f3a90dd20b26",
+      "size_bytes": 30362
+    },
+    "cases.json": {
+      "sha256": "cdb976939a583cbcb189d2a99d77e1cd5f66d9e517514a83ecb96c4f56155f7d",
+      "size_bytes": 22058
+    }
+  },
+  "change_history": []
+}

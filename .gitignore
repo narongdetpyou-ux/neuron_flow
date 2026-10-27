@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+neuron_workspace/
+batch_workspace/
+.venv/
+verification/v0_2_0/_sample_workspaces/

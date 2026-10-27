@@ -1,0 +1,8 @@
+{
+  "zip_crc_check": true,
+  "manifest_files_verified": 20,
+  "extracted_archive_cli_demo": true,
+  "notebook_python_cells_parsed": 5,
+  "notebook_cells_executed_with_local_colab_stubs": 4,
+  "real_colab_session_tested": false
+}

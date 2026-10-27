@@ -38,6 +38,6 @@ test_wrong_output_does_not_count_as_success (tests.test_runtime.RuntimeTests.tes
 test_wrong_total_rejected_before_terminal_success (tests.test_runtime.RuntimeTests.test_wrong_total_rejected_before_terminal_success) ... ok
 
 ----------------------------------------------------------------------
-Ran 38 tests in 12.848s
+Ran 38 tests in 9.616s
 
 OK

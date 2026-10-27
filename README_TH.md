@@ -1,195 +1,162 @@
-# Neuron Flow 0.1.0
+# Neuron Flow 0.2.0
 
-ต้นแบบระบบจากแนวคิด Dendrite, Soma, Axon, Axon terminal และ Synapse
-รับข้อมูล → จัดงานให้ Agent → ตรวจผล → ลงมือทำ → รับผลยืนยันกลับ
+รับ CSV รายการซื้อหลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมรายงานย้อนถึงแถวต้นทาง
+เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
+ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ใช้ THB ไม่ต้องมี API key
 
-ใช้ Python 3.10 ขึ้นไป และ standard library เท่านั้น ไม่ต้องติดตั้งแพ็กเกจ ไม่ต้องใช้ API key
-Agent ตัวอย่างเป็นฟังก์ชันประมวลผลแบบกำหนดขั้นตอนชัดเจน สามารถเพิ่ม Agent ชนิดอื่นภายหลังได้
+**สถานะ:** ผู้ใช้อนุมัติให้ปิดรุ่นและเผยแพร่ 0.2.0 โดยรับทราบว่า **ยังไม่ได้ตรวจบน Google Colab จริง**
+ขั้น 1–5 ผ่านการตรวจในเครื่องแล้ว ฐานเดิม 38 กรณีและชุดใหม่ 65 กรณีผ่านแยกกัน
+ชุดตรวจรับ 100 เอกสารตรงคำตอบที่ล็อกไว้ครบ ส่วนการตรวจรับขั้น 6 บน Colab ยังเป็นข้อจำกัดที่เปิดเผย
+ไม่ได้ถือว่าผ่านครบทั้ง 6 ขั้น ดูหลักฐานการอนุมัติใน `RELEASE_APPROVAL.json`
+และผลจริงใน `verification/v0_2_0/test_results.json` กับ `BUILD_STATUS.json`
 
-## เริ่มทดลอง
+## เริ่มใช้ CSV
 
-แตกไฟล์ ZIP แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow` ที่มีไฟล์นี้ จากนั้นรัน:
-
-```bash
-python -m neuron_flow demo
-```
-
-ผลที่ถูกต้อง: `status` เป็น `SUCCEEDED` และขั้น `verify` แสดง `total` เท่ากับ `310.70`
-โปรแกรมจะแสดงตำแหน่งรายงานที่บันทึกจริงใน `receipt.path` พร้อม SHA-256 ของไฟล์
-
-ตัวอย่างนี้อ่านสมุด 2 เล่ม × 125.50 = 251.00 และปากกา 3 ด้าม × 19.90 = 59.70
-รวม 310.70 บาท ใช้ Decimal ในตัวคำนวณ และใช้จำนวนสตางค์แบบ integer ตรวจซ้ำแยกอีกวิธี
-
-สำหรับโทรศัพท์: เปิด `START_COLAB.ipynb` ใน Google Colab แล้วรันเซลล์ตามลำดับ
-เซลล์แรกจะให้อัปโหลด ZIP ชุดนี้ ไม่ต้องคัดลอกโค้ดของระบบเอง
-Notebook ใช้ subprocess เรียกไฟล์ Python เพื่อรองรับการสร้าง process ของ Agent อย่างถูกต้อง
-
-## โครงห้าส่วนที่ทำงานจริง
-
-| ส่วน | หน้าที่ในโค้ด | ตำแหน่ง |
-|---|---|---|
-| Dendrite | รับข้อมูล เลือก workflow ที่รองรับ ตรวจแผน และเก็บงานใหม่หรือคืนงานเดิม | `neuron_flow/engine.py`, class `Dendrite` |
-| Soma | จัดคิว จำกัด process ตรวจผล จัดการ timeout/crash และกลับมาทำงานต่อ | `neuron_flow/engine.py`, class `Soma` |
-| Axon | ส่งข้อมูลเข้าและผลของ dependency ให้ Agent ที่ลงทะเบียนไว้ | `neuron_flow/engine.py`, class `Axon` |
-| Axon terminal | บันทึกรายงานแบบ atomic อ่านไฟล์กลับมาตรวจ และคืนใบยืนยัน | `neuron_flow/engine.py`, class `AxonTerminal` |
-| Synapse | ตรวจสัญญาข้อมูล ตรวจผล และกำหนดผู้รับ event ที่เกี่ยวข้อง | `neuron_flow/engine.py`, class `Synapse` |
-
-SQLite เก็บงาน สถานะ ผลที่ผ่านการตรวจ และประวัติ event
-Agent ทำงานใน process ลูกที่ใช้ซ้ำได้ ค่าเริ่มต้นสูงสุด 3 process และแต่ละ process รับงานครั้งละหนึ่งงาน
-มีตัวเฝ้าดูเพื่อหยุด process ลูกเมื่อ controller ตาย
-
-## ส่งข้อมูลของตัวเอง
-
-แก้รายการใน `examples/invoice.json` แล้วใช้:
+แตก `dist/neuron_flow_v0.2.0.zip` แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
+ที่มีไฟล์นี้ ไม่ต้องติดตั้ง dependency เพิ่ม:
 
 ```bash
-python -m neuron_flow invoice examples/invoice.json --job-id my_invoice
+python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
+python -m neuron_flow batch-status demo --workspace batch_workspace
+python -m neuron_flow batch-resume demo --workspace batch_workspace
 ```
 
-หากละ `--job-id` ระบบจะสร้างรหัสจากเนื้อหาข้อมูลเพื่อจับงานเดิมซ้ำ
-`unit_price` ให้ใส่เป็นข้อความ เช่น `"19.90"` เพื่อรักษาค่าทศนิยม
-จำนวนต้องเป็นจำนวนเต็มบวก ราคาไม่ติดลบ และมีทศนิยมไม่เกินสองตำแหน่ง
-ตัวอย่างนี้คำนวณยอดรวมของรายการ ยังไม่มีภาษี ส่วนลด OCR หรือการอ่าน PDF/ภาพ
+ตัวอย่างปกติได้ 2 VALID ยอดที่รับรองรวม 412.70 บาท รวมตัวอย่างเดิม 310.70 บาท
+คำสั่ง `csv` ประมวลผลและส่งรายงานให้แล้ว ผลจะแสดง `receipt.artifacts` พร้อม path, SHA-256 และขนาด
+ไฟล์อยู่ใน `batch_workspace/batch_reports/demo/`:
 
-เมื่อแก้ข้อมูลแล้วต้องใช้ job id ใหม่ ระบบปฏิเสธการใช้รหัสเดิมกับข้อมูลหรือแผนที่เปลี่ยนไป
-การรันข้อมูลและรหัสเดิมอีกครั้งใช้ผลที่ตรวจผ่านแล้ว และไม่เขียนรายงานเดิมซ้ำ
+| ไฟล์ | เนื้อหา |
+| --- | --- |
+| `summary.csv` | ผลรายใบ ยอดที่ระบุ/คำนวณ ผลต่าง จำนวนข้อผิดพลาด แถวต้นทาง และ engine_status |
+| `details.json` | ผลละเอียด เหตุผลรายจุด รุ่นระบบ/Agent ประวัติงาน และ source_records ต้นฉบับ |
+| `source.csv` | ไฟล์เข้าเดิมทุกไบต์ รวม BOM ถ้ามี |
 
-## รันแผนที่กำหนดเอง
+ลองข้อมูลผิดและแถวที่ไม่มีรหัสเอกสาร:
 
 ```bash
-python -m neuron_flow run examples/workflow.json --workspace my_run --workers 3
-python -m neuron_flow status invoice_from_file --workspace my_run
-python -m neuron_flow events invoice_from_file --workspace my_run
+python -m neuron_flow csv examples/purchases_invalid.csv --batch-id mixed --workspace batch_workspace
 ```
 
-แต่ละ step ประกอบด้วย:
+ได้ 1 VALID, 2 INVALID, 0 ERROR และแถวที่จัดกลุ่มไม่ได้ 1 แถว ยอดที่รับรอง 10.00 บาท
+INVALID บอก `row_number`, `field`, `reason_code`, `expected`, `actual` โดยไม่ลองข้อมูลเดิมซ้ำ
+แถวว่างหรือแถวที่ไม่มี `document_id` เก็บใน `ungrouped_rows` ไม่ถูกทิ้ง
+หัวตารางผิด/ซ้ำ/ขาด หรือมีชื่อช่องเกินหัวตาราง หรือ UTF-8/ไวยากรณ์ CSV ผิด จะปฏิเสธทั้งไฟล์พร้อมเหตุผล
+แถวข้อมูลที่จำนวนช่องไม่ครบ/เกินยังถูกเก็บพร้อมข้อผิดพลาดรายแถว
 
-| ฟิลด์ | ความหมาย | ค่าเริ่มต้น |
-|---|---|---|
-| `id` | หมายเลขขั้นที่ไม่ซ้ำในงานเดียวกัน | ต้องระบุ |
-| `agent` | ความสามารถที่ลงทะเบียนไว้ | ต้องระบุ |
-| `depends_on` | ขั้นที่ต้องสำเร็จก่อนจึงเริ่มได้ | `[]` |
-| `params` | ค่าที่ส่งให้ Agent | `{}` |
-| `timeout_s` | เวลาทำงานสูงสุดต่อครั้ง หลัง worker พร้อมใช้งาน | 5 วินาที |
-| `max_attempts` | จำนวนครั้งทั้งหมด รวมครั้งแรก | 2 |
-| `retry_delay_s` | เวลารอก่อนลองใหม่ | 0.05 วินาที |
+ละ `--batch-id` เพื่อให้ระบบสร้างรหัสจาก hash ต้นทาง สัญญาข้อมูล รุ่นระบบ/Agent และค่าควบคุมงาน
+ถ้าแก้ข้อมูลให้ใช้รหัสใหม่ รหัสเดิมกับข้อมูลหรือรุ่นที่เปลี่ยนจะเป็น conflict และรักษาผลเดิมไว้
 
-ระบบรับได้สูงสุด 1,000 ขั้นต่อ workflow, process พร้อมกัน 1–32 ตัว,
-timeout 0.05–3,600 วินาที และจำนวนครั้ง 1–5 ครั้ง
-ข้อความ JSON รวม envelope และรายงานแต่ละไฟล์จำกัดประมาณ 1 MiB
-หากรวมผลจนเกินขนาดรายงาน ระบบจะแจ้ง `DELIVERY_FAILED` และยังเก็บผลแต่ละขั้นใน SQLite
+## สัญญาข้อมูล purchase-csv-v1
 
-แผนต้องไม่มีวงจร dependency และต้องอ้างถึงขั้นที่มีอยู่จริง
-Agent ที่มีให้คือ `extract_invoice`, `calculate_invoice`, `verify_invoice` และ `echo`
-`extract_invoice` ปรับข้อมูลรายการให้เป็นรูปแบบกลาง ไม่ได้อนุมานข้อมูลที่ไม่มีในต้นฉบับ
+CSV รองรับ UTF-8 และ UTF-8 BOM หนึ่ง record ต่อหนึ่งรายการซื้อ รวมใบด้วย `document_id`
+หัวตารางต้องมีชื่อครบตามนี้ สลับลำดับคอลัมน์ได้:
 
-## เมื่อมีความผิดพลาด
+```csv
+document_id,item_id,description,quantity,unit_price,declared_total,currency
+INV-001,A,สมุด,2,125.50,310.70,THB
+INV-001,B,ปากกา,3,19.90,310.70,THB
+```
 
-| เหตุการณ์ | พฤติกรรม |
-|---|---|
-| Agent ค้างเกินเวลา | หยุด process นั้น สร้างตัวแทนเมื่อจำเป็น และลองใหม่ภายในงบครั้ง |
-| process ลูกตายจริง | controller เก็บสาเหตุและลองงานนั้นใหม่ |
-| Agent แจ้ง `TransientAgentError` | รอแล้วลองใหม่ตามงบครั้ง |
-| ข้อมูลผิด / programming error / ผลไม่ผ่านตัวตรวจ | บันทึกความผิดพลาดและไม่ลองข้อมูลเดิมซ้ำโดยอัตโนมัติ |
-| ขั้นต้นทางล้มเหลว | ขั้นที่จำเป็นต้องใช้ผลนั้นเป็น `BLOCKED`; งานสาขาอื่นยังทำต่อ |
-| controller หยุดกะทันหัน | เปิด workspace เดิมแล้ว resume; เก็บผลที่สำเร็จแล้วไว้และนับความพยายามที่ถูกขัดจังหวะด้วย |
-| บันทึกรายงานไม่ได้ | `DELIVERY_FAILED`; resume เพื่อลองการส่งมอบอีกครั้งโดยไม่ประมวลผลขั้นที่สำเร็จแล้วใหม่ |
-| มีไฟล์ชื่อเดียวกันแต่เนื้อหาต่าง | เก็บไฟล์เดิมไว้และรายงาน conflict |
-| เปิด controller สองตัวใน workspace เดียว | ปฏิเสธตัวที่สองเพื่อป้องกันงานซ้ำ |
+| ช่อง | กติกา |
+| --- | --- |
+| `document_id` | มีข้อความ รวมแถวของเอกสารเดียวกันหลังตัดช่องว่างหัวท้าย |
+| `item_id` | มีข้อความ ไม่ซ้ำในใบเดียวกันหลังตัดช่องว่างหัวท้าย |
+| `description` | มีข้อความ รองรับไทย comma/quote และข้อความหลายบรรทัดตาม CSV |
+| `quantity` | ตัวเลข ASCII จำนวนเต็ม 1–1,000,000 รูปแบบ 1–7 หลัก |
+| `unit_price` | ตัวเลขไม่ติดลบ สูงสุด 1,000,000,000,000 บาท ทศนิยมไม่เกิน 2 ตำแหน่ง |
+| `declared_total` | ตัวเลขไม่ติดลบ สูงสุด 10²² บาท ทศนิยมไม่เกิน 2 ตำแหน่ง ค่าเชิงตัวเลขต้องตรงกันทุกแถว |
+| `currency` | THB และเหมือนกันทุกแถว |
 
-คำสั่งทำต่อ:
+ข้อความรหัสและคำอธิบายยาวไม่เกิน 500 ตัวอักษร หนึ่งใบมี 1–10,000 รายการตามฐานเดิม
+เก็บค่าดิบไว้เสมอ `source_rows` / `row_number` นับบรรทัดจริงเริ่มต้น CSV record
+โดยหัวตารางเริ่มที่ 1 ข้อความหลายบรรทัดจึงทำให้เลขแถวถัดไปขยับมากกว่าหนึ่ง
+จำนวนเอกสาร = VALID + INVALID + ERROR; แถวที่จัดกลุ่มไม่ได้แสดงแยกจากจำนวนเอกสาร
+
+## สถานะและยอดเงิน
+
+| document_status | ความหมาย |
+| --- | --- |
+| VALID | ข้อมูลผ่าน Decimal คำนวณผ่านการตรวจซ้ำด้วย integer สตางค์ และตรง declared_total |
+| INVALID | ข้อมูลผิดกติกาหรือยอดไม่ตรง มีเหตุผลตรวจกลับได้ |
+| ERROR | ระบบยังยืนยันผลไม่ได้ เช่น Agent ล้มและหมดจำนวนครั้งที่ลอง |
+
+`engine_status` แสดงผลประมวลผลแยกจากผลตรวจข้อมูล เช่น ใบ INVALID สามารถมี
+engine_status เป็น SUCCEEDED ได้ ส่วน ERROR ยังคงแสดงในรายงานแม้เขียนรายงานสำเร็จ
+ยอดรวมที่รับรอง (`certified_total`) นับเฉพาะ VALID ไม่มีการใช้ float คำนวณเงิน
+`difference` = computed_total − declared_total; ใบข้อมูลผิดมี computed_total/difference เป็น null
+ยกเว้น TOTAL_MISMATCH ซึ่งยังคำนวณยอดและผลต่างได้
+
+CLI คืน 0 เมื่อประมวลผล/ส่งรายงานสำเร็จหรืออ่านสถานะได้ และไม่มีเอกสาร ERROR;
+คืน 1 เมื่อมี ERROR หรือสถานะ DELIVERY_FAILED; คืน 2 เมื่อคำสั่ง ข้อมูลตั้งต้น หรือการส่งมอบเกิด exception
+ตรวจ `counts` และ `receipt` ร่วมกับ exit code เสมอ
+
+## หยุดและทำต่อ
+
+SQLite เก็บ source bytes งาน ประวัติ ความพยายาม และผลรายงานที่ตรึงไว้ก่อนส่งมอบ
+เรียก `batch-resume` บน workspace เดิมโดยไม่ต้องมี CSV ต้นทางอีกครั้ง
+งานที่ผ่านแล้วไม่ถูกเรียกซ้ำ และรายงานเดิมไม่ถูกเขียนซ้ำ การส่งไฟล์แต่ละไฟล์เป็น atomic
+พร้อม fsync ตรวจเนื้อหาและ SHA-256 หลังเขียน ความขัดแย้งของไฟล์ใดไฟล์หนึ่งจะถูกตรวจ
+ก่อนสร้างไฟล์ใหม่ ถ้าหยุดระหว่างส่งสามไฟล์ การเปิดต่อเติมเฉพาะไฟล์ที่ขาด
+และบันทึก receipt เมื่อครบทุกไฟล์แล้ว
+
+ค่าเริ่มต้น timeout 5 วินาทีต่อครั้งหลัง worker พร้อมใช้งาน และ max_attempts = 2 **รวมครั้งแรก**
+Agent ค้างหรือ worker ตายอาจลองใหม่ภายในงบ; ข้อมูลผิด/ผลตรวจไม่ผ่านไม่ถูกลองซ้ำอัตโนมัติ
+การถูกขัดจังหวะระหว่างทำงานนับเป็นความพยายามหนึ่งครั้ง เอกสารที่หมดงบยังเป็น ERROR
+ตัว controller ต้องถูกเปิดต่อโดยผู้ใช้ ไม่มี service ภายนอกคอยเริ่มให้เอง
+
+รุ่นนี้จัดเอกสารทีละใบและใช้ worker เดิมซ้ำ `--workers` ตั้งเพดาน worker (1–32 ค่าเริ่มต้น 3)
+จึงไม่ใช่ตัวเลขรับรองว่าเอกสารหลายใบจะรันพร้อมกัน เปิด controller เดียวต่อ workspace
+ผูกงานกับสัญญาข้อมูล รุ่นระบบ/Agent และ timeout การเปลี่ยนรุ่นต้องคืนรุ่นเดิมหรือใช้รหัสใหม่
+
+## ขอบเขตการใช้งาน
+
+- CSV ต้นทางไม่เกิน 16 MiB; ข้อความ workflow/Agent/report เดิมจำกัด 1 MiB
+  เอกสารที่ใหญ่เกินขอบเขต engine ถูกแสดงเป็น ERROR โดยเอกสารอื่นยังทำต่อ
+- 100 เอกสารแบบ 80 ถูก/20 ผิดเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่อัตราข้อมูลจริงหรือเพดานจำนวนเอกสาร
+- ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
+- worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
+- ทดสอบใน Linux ตามรุ่น Python ที่บันทึกในรายงาน ยังไม่ได้ยืนยัน Windows/macOS หรือ Google Colab จริง
+
+โครงห้าส่วนคงเดิม: Dendrite รับงาน, Soma จัดคิว/กู้คืน, Axon ส่ง dependency,
+Synapse ตรวจสัญญา/ผล และ Axon terminal ส่งมอบพร้อม receipt
+ตัวอย่าง JSON เดิมยังใช้ `python -m neuron_flow demo` และ
+`python -m neuron_flow invoice examples/invoice.json --job-id my_invoice` ได้
+Agent ต้องเป็นฟังก์ชันในโมดูลที่ import ได้และมี main guard เมื่อเปิด Runtime จากสคริปต์
+การไม่ทำซ้ำที่ทดสอบครอบคลุมรายงานภายใน ไม่ได้รับรองผลข้างเคียงของ Agent เพิ่มเองต่อบริการภายนอก
+
+## ตรวจซ้ำและสร้างชุดส่งมอบ
 
 ```bash
-python -m neuron_flow resume invoice_from_file --workspace my_run
-```
-
-สถานะของขั้น: `PENDING`, `RUNNING`, `RETRY_WAIT`, `SUCCEEDED`, `FAILED`, `BLOCKED`
-สถานะของงาน: `PENDING`, `RUNNING`, `SUCCEEDED`, `FAILED`, `DELIVERY_FAILED`
-งานที่มีขั้นล้มเหลวจะมีรายงานระบุ `FAILED` ชัดเจน แม้สามารถบันทึกรายงานความล้มเหลวนั้นได้สำเร็จ
-
-CLI คืน exit code 0 เมื่องานสำเร็จ/อ่านสถานะได้, 1 เมื่องานหรือการส่งมอบล้มเหลว,
-และ 2 เมื่อคำสั่ง ข้อมูลตั้งต้น หรือการเปิดระบบไม่ถูกต้อง
-
-## การส่งต่อและประวัติ
-
-ผลของแต่ละขั้นส่งเฉพาะขั้นที่ประกาศ dependency นั้น
-event มีรายชื่อผู้รับ เช่น `soma`, `monitor`, `terminal`, `step:calculate`
-ผู้สังเกตอ่านเฉพาะข้อความของตัวเองได้ และใช้ `sequence` เป็นตำแหน่งอ่านครั้งถัดไป:
-
-```bash
-python -m neuron_flow events invoice_from_file --workspace my_run --recipient step:calculate --after 0
-```
-
-นี่เป็น event log แบบเก็บถาวรและอ่านตามผู้รับ ไม่มีระบบ subscriber บนเครือข่ายในรุ่นนี้
-ไม่มีการส่ง event ทุกข้อความให้ Agent ทุกตัว
-
-## เพิ่ม Agent
-
-สร้างโมดูล Python ที่ import ได้ เช่น `my_agents.py` ในโฟลเดอร์โปรเจกต์:
-
-```python
-def uppercase(message):
-    return {"text": message["input"]["text"].upper()}
-
-def validate_uppercase(message, result):
-    expected = {"text": message["input"]["text"].upper()}
-    if result != expected:
-        raise ValueError("Incorrect uppercase result")
-```
-
-แล้วสร้างไฟล์ `run_custom.py`:
-
-```python
-from neuron_flow import Runtime, AgentDefinition
-from my_agents import validate_uppercase
-
-def main():
-    agent = AgentDefinition("uppercase", "my_agents:uppercase", validate_uppercase, version="1")
-    with Runtime("custom_run", agents=[agent]) as runtime:
-        runtime.submit({
-            "job_id": "uppercase_example",
-            "input": {"text": "hello"},
-            "steps": [{"id": "convert", "agent": "uppercase"}],
-        })
-        print(runtime.run("uppercase_example"))
-
-if __name__ == "__main__":
-    main()
-```
-
-รัน `python run_custom.py` จะได้ผล `HELLO`
-ฟังก์ชัน Agent รับ dict ที่มี `input`, `params`, `dependencies`, `attempt`, `job_id`, `step_id`, `work_id`
-และต้องคืนข้อมูลที่แปลงเป็น JSON ได้
-ตัวตรวจต้องทำงานสั้นและตรวจอย่างเดียว: คืน `None`/`True` เมื่อผ่าน หรือ raise เมื่อไม่ผ่าน
-การคืน `False` หรือแก้ผลลัพธ์ระหว่างตรวจจะถูกปฏิเสธ
-เพิ่ม `version` เมื่อเปลี่ยนความหมายของ Agent หรือตัวตรวจ เพื่อไม่ให้ผลเก่าถูกนำกลับมาใช้อย่างเงียบ ๆ
-ต้องใช้ main guard ดังตัวอย่าง และวางฟังก์ชัน Agent ในโมดูลที่ import ได้ ไม่ประกาศเป็น lambda หรือฟังก์ชันในเซลล์ notebook
-
-## ตรวจสอบซ้ำ
-
-```bash
-python -m unittest discover -s tests -v
 python tools/verify.py
+python tools/build_acceptance_fixture.py --check
+python tools/verify_v020.py
+python tools/build_delivery.py
 ```
 
-คำสั่งที่สองรันทดสอบทั้งหมด ตรวจ syntax และเรียก CLI สองครั้งบน workspace ใหม่
-ตรวจผลรวม ตรวจ hash ของไฟล์ และตรวจว่าครั้งที่สองไม่ทำงานหรือเขียนรายงานเดิมซ้ำ
-ผลตรวจที่ส่งมาพร้อมชุดนี้อยู่ใน `verification/VERIFICATION_TH.md`,
-`verification/test_results.json` และ `verification/tests.log`
+`verify.py` ตรวจฐานเดิม **38 กรณี** แยกจาก `verify_v020.py` ที่ตรวจรุ่นใหม่ **65 กรณี**
+พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 ผลชุดใหม่อยู่ใน
+`verification/v0_2_0/` ตัวอย่างรายงานอยู่ใน `verification/v0_2_0/samples/`
+คำตอบอ้างอิงและ SHA-256 ที่ล็อกอยู่ใน `acceptance/` ห้ามสร้างคำตอบจากผลของ validator รุ่นใหม่
+การเปลี่ยนเกณฑ์ต้องบันทึกเหตุผลและตรวจกรณีที่ได้รับผลกระทบใหม่
 
-## ขอบเขตของรุ่นนี้
+`build_delivery.py` สร้าง `dist/neuron_flow_v0.2.0.zip` พร้อม `SHA256SUMS.txt` และตรวจจากการแตกไฟล์ใหม่
+ผลตรวจตัว ZIP อยู่ใน `verification/v0_2_0/delivery_checks.json` ซึ่งอยู่นอก ZIP
+เพื่อหลีกเลี่ยงการอ้าง hash ของ ZIP กลับเข้าหาตัวเอง
 
-เป็นต้นแบบ workflow ที่ทำงานบนเครื่องเดียว ใช้โครงห้าส่วนเป็นการออกแบบซอฟต์แวร์
-การเลือกแผนอัตโนมัติรองรับข้อมูล invoice แบบมีโครงสร้าง ส่วนงานชนิดอื่นใช้ workflow และ Agent ที่ลงทะเบียนเพิ่ม
-ระบบยังไม่มีการเรียนรู้เองหรือสร้างวิธีแก้ปัญหาใหม่จากภาษาธรรมชาติ
+## ใช้ Notebook บน Google Colab
 
-การแยก process ช่วยจัดการงานค้าง แต่ไม่ใช่ sandbox สำหรับโค้ดที่ไม่เชื่อถือ และยังไม่ได้จำกัด RAM ต่อ Agent
-ตัวตรวจรันใน controller จึงต้องเป็นฟังก์ชันที่เชื่อถือได้และไม่ค้าง
-timeout เป็นขอบเขตเวลางานที่ตรวจด้วยรอบ scheduler ไม่ใช่ hard real-time guarantee
-การเริ่ม worker อาจใช้เวลาเพิ่มเติม และไม่รวมอยู่ใน timeout ของงาน
+เปิด `START_COLAB.ipynb` ใน Colab runtime ใหม่ แล้วรันเซลล์ตามคำอธิบาย:
+อัปโหลด ZIP รุ่น 0.2.0 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รัน CLI
+→ ดูรายงาน → เปิดต่อโดยไม่อัปโหลด CSV ซ้ำ → ตรวจทั้งชุด → ดาวน์โหลด backup
+ไม่มี Agent อยู่ในเซลล์ Notebook; เซลล์เรียก Python ผ่าน subprocess
 
-การไม่ทำการกระทำซ้ำรับรองเฉพาะการบันทึกรายงานภายในที่ให้มา
-Agent แบบเพิ่มเองควรประมวลผลข้อมูลและคืนผล; หากเรียกบริการภายนอกหรือสร้างผลข้างเคียง
-ต้องออกแบบการใช้ `work_id`/รหัสธุรกรรมและการยืนยันผลของบริการนั้นเพิ่มเติม
-การ resume เป็นคำสั่งที่ผู้ใช้เรียก ยังไม่มี service ภายนอกคอยเปิด controller ใหม่อัตโนมัติ
-ทดสอบจริงบน Linux กับ Python ตามที่ระบุในรายงานตรวจ ส่วน Windows/macOS ยังไม่ได้ทดสอบในรอบนี้
+Colab เก็บไฟล์ในพื้นที่ชั่วคราว ต้องดาวน์โหลด ZIP สำรองก่อนจบ session
+backup รวม workspace SQLite ที่สำรองอย่างสอดคล้อง รายงาน verification และ session metadata
+การคืน backup ต้องใช้ ZIP โปรเจกต์เดิมและ workspace path เดิม
+(`/content/neuron_flow_workspace`) เพราะ receipt เก็บ absolute path
+Notebook มีเซลล์คืน backup สำหรับ runtime ใหม่ โดยไม่เขียนทับ workspace ที่มีข้อมูลอยู่
+
+การตรวจ syntax ของเซลล์และการทดสอบในเครื่องยังไม่ใช่การตรวจบน Colab จริง
+หลักฐาน runtime ใหม่ที่อัปโหลด ZIP/CSV รัน เปิดต่อ และดาวน์โหลดได้จริงยังอยู่ใน
+`remaining_acceptance` ตามขั้น 6 ค่า `release_ready` อิงผลตรวจในเครื่องและการอนุมัติใน
+`RELEASE_APPROVAL.json` ส่วน `colab_acceptance_complete` ยังคงเป็น false จนตรวจ Colab จริงครบ

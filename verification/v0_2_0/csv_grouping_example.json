@@ -1,0 +1,119 @@
+{
+  "documents": [
+    {
+      "document_id": "BAD-QUANTITY",
+      "rows": [
+        {
+          "source_row": 2,
+          "fields": {
+            "document_id": "BAD-QUANTITY",
+            "item_id": "A",
+            "description": "จำนวนผิด",
+            "quantity": "0",
+            "unit_price": "10.00",
+            "declared_total": "10.00",
+            "currency": "THB"
+          },
+          "raw_fields": [
+            "BAD-QUANTITY",
+            "A",
+            "จำนวนผิด",
+            "0",
+            "10.00",
+            "10.00",
+            "THB"
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "document_id": "GOOD",
+      "rows": [
+        {
+          "source_row": 3,
+          "fields": {
+            "document_id": "GOOD",
+            "item_id": "A",
+            "description": "รายการที่ทำต่อได้",
+            "quantity": "2",
+            "unit_price": "5.00",
+            "declared_total": "10.00",
+            "currency": "THB"
+          },
+          "raw_fields": [
+            "GOOD",
+            "A",
+            "รายการที่ทำต่อได้",
+            "2",
+            "5.00",
+            "10.00",
+            "THB"
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "document_id": "BAD-TOTAL",
+      "rows": [
+        {
+          "source_row": 4,
+          "fields": {
+            "document_id": "BAD-TOTAL",
+            "item_id": "A",
+            "description": "ยอดไม่ตรง",
+            "quantity": "2",
+            "unit_price": "5.00",
+            "declared_total": "11.00",
+            "currency": "THB"
+          },
+          "raw_fields": [
+            "BAD-TOTAL",
+            "A",
+            "ยอดไม่ตรง",
+            "2",
+            "5.00",
+            "11.00",
+            "THB"
+          ],
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "ungrouped_rows": [
+    {
+      "source_row": 5,
+      "fields": {
+        "document_id": "",
+        "item_id": "A",
+        "description": "แถวที่จัดกลุ่มไม่ได้",
+        "quantity": "1",
+        "unit_price": "1.00",
+        "declared_total": "1.00",
+        "currency": "THB"
+      },
+      "raw_fields": [
+        "",
+        "A",
+        "แถวที่จัดกลุ่มไม่ได้",
+        "1",
+        "1.00",
+        "1.00",
+        "THB"
+      ],
+      "errors": [
+        {
+          "row_number": 5,
+          "field": "document_id",
+          "reason_code": "REQUIRED",
+          "expected": "non-empty text",
+          "actual": ""
+        }
+      ]
+    }
+  ],
+  "input_rows": 4,
+  "source_sha256": "5f925b58e2479ffdfe0025e06da4fa211d1e4299294e493e36a0e65f1970473f"
+}

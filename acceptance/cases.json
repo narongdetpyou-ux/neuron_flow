@@ -1,0 +1,1058 @@
+{
+  "schema_version": "neuron-flow-acceptance-v1",
+  "fixture_id": "neuron-flow-0.2.0-golden-v1",
+  "oracle": "Explicit scenario errors; all reference money computed independently using integer satang; no runtime imports",
+  "scope": "Golden input cases for A01, A03-A07. File rejection, ungrouped rows and process-failure acceptance require separate later scenarios.",
+  "counts": {
+    "documents": 100,
+    "VALID": 80,
+    "INVALID": 20,
+    "ERROR": 0,
+    "input_rows": 201,
+    "ungrouped_rows": 0
+  },
+  "cases": [
+    {
+      "case_id": "INV-001",
+      "title": "Original invoice: 310.70 THB",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        2,
+        3
+      ]
+    },
+    {
+      "case_id": "VALID-002",
+      "title": "Zero unit price is valid",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "case_id": "VALID-003",
+      "title": "Quantity upper boundary: 1000000",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        7
+      ]
+    },
+    {
+      "case_id": "VALID-004",
+      "title": "Unit-price upper boundary: 1000000000000.00",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        8,
+        9
+      ]
+    },
+    {
+      "case_id": "VALID-005",
+      "title": "Integer and one-place prices; leading-zero quantity",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "case_id": "VALID-006",
+      "title": "UTF-8 Thai, comma and escaped CSV quotes",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        13
+      ]
+    },
+    {
+      "case_id": "VALID-007",
+      "title": "Quoted multiline CSV record preserves physical source line",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        14,
+        16
+      ]
+    },
+    {
+      "case_id": "VALID-008",
+      "title": "Valid deterministic invoice 008",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "case_id": "VALID-009",
+      "title": "Valid deterministic invoice 009",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        20
+      ]
+    },
+    {
+      "case_id": "VALID-010",
+      "title": "Valid deterministic invoice 010",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        21,
+        22
+      ]
+    },
+    {
+      "case_id": "VALID-011",
+      "title": "Valid deterministic invoice 011",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "case_id": "VALID-012",
+      "title": "Valid deterministic invoice 012",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        26
+      ]
+    },
+    {
+      "case_id": "VALID-013",
+      "title": "Valid deterministic invoice 013",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        27,
+        28
+      ]
+    },
+    {
+      "case_id": "VALID-014",
+      "title": "Valid deterministic invoice 014",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        29,
+        30,
+        31
+      ]
+    },
+    {
+      "case_id": "VALID-015",
+      "title": "Valid deterministic invoice 015",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        32
+      ]
+    },
+    {
+      "case_id": "VALID-016",
+      "title": "Valid deterministic invoice 016",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        33,
+        34
+      ]
+    },
+    {
+      "case_id": "VALID-017",
+      "title": "Valid deterministic invoice 017",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        35,
+        36,
+        37
+      ]
+    },
+    {
+      "case_id": "VALID-018",
+      "title": "Valid deterministic invoice 018",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        38
+      ]
+    },
+    {
+      "case_id": "VALID-019",
+      "title": "Valid deterministic invoice 019",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        39,
+        40
+      ]
+    },
+    {
+      "case_id": "VALID-020",
+      "title": "Valid deterministic invoice 020",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        41,
+        42,
+        43
+      ]
+    },
+    {
+      "case_id": "VALID-021",
+      "title": "Valid deterministic invoice 021",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        44
+      ]
+    },
+    {
+      "case_id": "VALID-022",
+      "title": "Valid deterministic invoice 022",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        45,
+        46
+      ]
+    },
+    {
+      "case_id": "VALID-023",
+      "title": "Valid deterministic invoice 023",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "case_id": "VALID-024",
+      "title": "Valid deterministic invoice 024",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        50
+      ]
+    },
+    {
+      "case_id": "VALID-025",
+      "title": "Valid deterministic invoice 025",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        51,
+        52
+      ]
+    },
+    {
+      "case_id": "VALID-026",
+      "title": "Valid deterministic invoice 026",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        53,
+        54,
+        55
+      ]
+    },
+    {
+      "case_id": "VALID-027",
+      "title": "Valid deterministic invoice 027",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        56
+      ]
+    },
+    {
+      "case_id": "VALID-028",
+      "title": "Valid deterministic invoice 028",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        57,
+        58
+      ]
+    },
+    {
+      "case_id": "VALID-029",
+      "title": "Valid deterministic invoice 029",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        59,
+        60,
+        61
+      ]
+    },
+    {
+      "case_id": "VALID-030",
+      "title": "Valid deterministic invoice 030",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        62
+      ]
+    },
+    {
+      "case_id": "VALID-031",
+      "title": "Valid deterministic invoice 031",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        63,
+        64
+      ]
+    },
+    {
+      "case_id": "VALID-032",
+      "title": "Valid deterministic invoice 032",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        65,
+        66,
+        67
+      ]
+    },
+    {
+      "case_id": "VALID-033",
+      "title": "Valid deterministic invoice 033",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        68
+      ]
+    },
+    {
+      "case_id": "VALID-034",
+      "title": "Valid deterministic invoice 034",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        69,
+        70
+      ]
+    },
+    {
+      "case_id": "VALID-035",
+      "title": "Valid deterministic invoice 035",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        71,
+        72,
+        73
+      ]
+    },
+    {
+      "case_id": "VALID-036",
+      "title": "Valid deterministic invoice 036",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        74
+      ]
+    },
+    {
+      "case_id": "VALID-037",
+      "title": "Valid deterministic invoice 037",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        75,
+        76
+      ]
+    },
+    {
+      "case_id": "VALID-038",
+      "title": "Valid deterministic invoice 038",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        77,
+        78,
+        79
+      ]
+    },
+    {
+      "case_id": "VALID-039",
+      "title": "Valid deterministic invoice 039",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        80
+      ]
+    },
+    {
+      "case_id": "VALID-040",
+      "title": "Valid deterministic invoice 040",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        81,
+        82
+      ]
+    },
+    {
+      "case_id": "VALID-041",
+      "title": "Valid deterministic invoice 041",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        83,
+        84,
+        85
+      ]
+    },
+    {
+      "case_id": "VALID-042",
+      "title": "Valid deterministic invoice 042",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        86
+      ]
+    },
+    {
+      "case_id": "VALID-043",
+      "title": "Valid deterministic invoice 043",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        87,
+        88
+      ]
+    },
+    {
+      "case_id": "VALID-044",
+      "title": "Valid deterministic invoice 044",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        89,
+        90,
+        91
+      ]
+    },
+    {
+      "case_id": "VALID-045",
+      "title": "Valid deterministic invoice 045",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        92
+      ]
+    },
+    {
+      "case_id": "VALID-046",
+      "title": "Valid deterministic invoice 046",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        93,
+        94
+      ]
+    },
+    {
+      "case_id": "VALID-047",
+      "title": "Valid deterministic invoice 047",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        95,
+        96,
+        97
+      ]
+    },
+    {
+      "case_id": "VALID-048",
+      "title": "Valid deterministic invoice 048",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        98
+      ]
+    },
+    {
+      "case_id": "VALID-049",
+      "title": "Valid deterministic invoice 049",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        99,
+        100
+      ]
+    },
+    {
+      "case_id": "VALID-050",
+      "title": "Valid deterministic invoice 050",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "case_id": "VALID-051",
+      "title": "Valid deterministic invoice 051",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        104
+      ]
+    },
+    {
+      "case_id": "VALID-052",
+      "title": "Valid deterministic invoice 052",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        105,
+        106
+      ]
+    },
+    {
+      "case_id": "VALID-053",
+      "title": "Valid deterministic invoice 053",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        107,
+        108,
+        109
+      ]
+    },
+    {
+      "case_id": "VALID-054",
+      "title": "Valid deterministic invoice 054",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        110
+      ]
+    },
+    {
+      "case_id": "VALID-055",
+      "title": "Valid deterministic invoice 055",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        111,
+        112
+      ]
+    },
+    {
+      "case_id": "VALID-056",
+      "title": "Valid deterministic invoice 056",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        113,
+        114,
+        115
+      ]
+    },
+    {
+      "case_id": "VALID-057",
+      "title": "Valid deterministic invoice 057",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        116
+      ]
+    },
+    {
+      "case_id": "VALID-058",
+      "title": "Valid deterministic invoice 058",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        117,
+        118
+      ]
+    },
+    {
+      "case_id": "VALID-059",
+      "title": "Valid deterministic invoice 059",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        119,
+        120,
+        121
+      ]
+    },
+    {
+      "case_id": "VALID-060",
+      "title": "Valid deterministic invoice 060",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        122
+      ]
+    },
+    {
+      "case_id": "VALID-061",
+      "title": "Valid deterministic invoice 061",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        123,
+        124
+      ]
+    },
+    {
+      "case_id": "VALID-062",
+      "title": "Valid deterministic invoice 062",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        125,
+        126,
+        127
+      ]
+    },
+    {
+      "case_id": "VALID-063",
+      "title": "Valid deterministic invoice 063",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        128
+      ]
+    },
+    {
+      "case_id": "VALID-064",
+      "title": "Valid deterministic invoice 064",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        129,
+        130
+      ]
+    },
+    {
+      "case_id": "VALID-065",
+      "title": "Valid deterministic invoice 065",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        131,
+        132,
+        133
+      ]
+    },
+    {
+      "case_id": "VALID-066",
+      "title": "Valid deterministic invoice 066",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        134
+      ]
+    },
+    {
+      "case_id": "VALID-067",
+      "title": "Valid deterministic invoice 067",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        135,
+        136
+      ]
+    },
+    {
+      "case_id": "VALID-068",
+      "title": "Valid deterministic invoice 068",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        137,
+        138,
+        139
+      ]
+    },
+    {
+      "case_id": "VALID-069",
+      "title": "Valid deterministic invoice 069",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        140
+      ]
+    },
+    {
+      "case_id": "VALID-070",
+      "title": "Valid deterministic invoice 070",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        141,
+        142
+      ]
+    },
+    {
+      "case_id": "VALID-071",
+      "title": "Valid deterministic invoice 071",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        143,
+        144,
+        145
+      ]
+    },
+    {
+      "case_id": "VALID-072",
+      "title": "Valid deterministic invoice 072",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        146
+      ]
+    },
+    {
+      "case_id": "VALID-073",
+      "title": "Valid deterministic invoice 073",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        147,
+        148
+      ]
+    },
+    {
+      "case_id": "VALID-074",
+      "title": "Valid deterministic invoice 074",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        149,
+        150,
+        151
+      ]
+    },
+    {
+      "case_id": "VALID-075",
+      "title": "Valid deterministic invoice 075",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        152
+      ]
+    },
+    {
+      "case_id": "VALID-076",
+      "title": "Valid deterministic invoice 076",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        153,
+        154
+      ]
+    },
+    {
+      "case_id": "VALID-077",
+      "title": "Valid deterministic invoice 077",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        155,
+        156,
+        157
+      ]
+    },
+    {
+      "case_id": "VALID-078",
+      "title": "Valid deterministic invoice 078",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        158
+      ]
+    },
+    {
+      "case_id": "VALID-079",
+      "title": "Valid deterministic invoice 079",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        159,
+        160
+      ]
+    },
+    {
+      "case_id": "VALID-080",
+      "title": "Valid deterministic invoice 080",
+      "expected_status": "VALID",
+      "reason_codes": [],
+      "source_rows": [
+        161,
+        162,
+        163
+      ]
+    },
+    {
+      "case_id": "INVALID-001",
+      "title": "Missing required description",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        164,
+        165
+      ]
+    },
+    {
+      "case_id": "INVALID-002",
+      "title": "Missing required item_id",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        166,
+        167
+      ]
+    },
+    {
+      "case_id": "INVALID-003",
+      "title": "Missing required quantity",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        168,
+        169
+      ]
+    },
+    {
+      "case_id": "INVALID-004",
+      "title": "Missing required unit_price",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        170,
+        171
+      ]
+    },
+    {
+      "case_id": "INVALID-005",
+      "title": "Missing required declared_total",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        172,
+        173
+      ]
+    },
+    {
+      "case_id": "INVALID-006",
+      "title": "Missing required currency",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "REQUIRED"
+      ],
+      "source_rows": [
+        174,
+        175
+      ]
+    },
+    {
+      "case_id": "INVALID-007",
+      "title": "Quantity rejects 0",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "QUANTITY_RANGE"
+      ],
+      "source_rows": [
+        176,
+        177
+      ]
+    },
+    {
+      "case_id": "INVALID-008",
+      "title": "Quantity rejects -1",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "QUANTITY_FORMAT"
+      ],
+      "source_rows": [
+        178,
+        179
+      ]
+    },
+    {
+      "case_id": "INVALID-009",
+      "title": "Quantity rejects 1.5",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "QUANTITY_FORMAT"
+      ],
+      "source_rows": [
+        180,
+        181
+      ]
+    },
+    {
+      "case_id": "INVALID-010",
+      "title": "Quantity rejects 1000001",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "QUANTITY_RANGE"
+      ],
+      "source_rows": [
+        182,
+        183
+      ]
+    },
+    {
+      "case_id": "INVALID-011",
+      "title": "Quantity rejects two",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "QUANTITY_FORMAT"
+      ],
+      "source_rows": [
+        184,
+        185
+      ]
+    },
+    {
+      "case_id": "INVALID-012",
+      "title": "Unit price rejects -0.01",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "PRICE_FORMAT"
+      ],
+      "source_rows": [
+        186,
+        187
+      ]
+    },
+    {
+      "case_id": "INVALID-013",
+      "title": "Unit price rejects 1.001",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "PRICE_FORMAT"
+      ],
+      "source_rows": [
+        188,
+        189
+      ]
+    },
+    {
+      "case_id": "INVALID-014",
+      "title": "Unit price rejects 1000000000000.01",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "PRICE_RANGE"
+      ],
+      "source_rows": [
+        190,
+        191
+      ]
+    },
+    {
+      "case_id": "INVALID-015",
+      "title": "Unit price rejects NaN",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "PRICE_FORMAT"
+      ],
+      "source_rows": [
+        192,
+        193
+      ]
+    },
+    {
+      "case_id": "INVALID-016",
+      "title": "Duplicate item identifier is not counted twice",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "DUPLICATE_ITEM_ID"
+      ],
+      "source_rows": [
+        194,
+        195
+      ]
+    },
+    {
+      "case_id": "INVALID-017",
+      "title": "Currency must be THB",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "source_rows": [
+        196,
+        197
+      ]
+    },
+    {
+      "case_id": "INVALID-018",
+      "title": "Currency differs between rows",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "CURRENCY_CONFLICT",
+        "CURRENCY_UNSUPPORTED"
+      ],
+      "source_rows": [
+        198,
+        199
+      ]
+    },
+    {
+      "case_id": "INVALID-019",
+      "title": "Declared totals disagree between rows",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "DECLARED_TOTAL_CONFLICT"
+      ],
+      "source_rows": [
+        200,
+        201
+      ]
+    },
+    {
+      "case_id": "INVALID-020",
+      "title": "Declared total differs from computed total by one satang",
+      "expected_status": "INVALID",
+      "reason_codes": [
+        "TOTAL_MISMATCH"
+      ],
+      "source_rows": [
+        202,
+        203
+      ]
+    }
+  ]
+}

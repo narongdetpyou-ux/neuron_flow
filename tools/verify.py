@@ -18,10 +18,14 @@ sys.path.insert(0, str(PROJECT))
 
 
 def main():
+    from neuron_flow import __version__
     destination = PROJECT / "verification"
     destination.mkdir(exist_ok=True)
     started = time.monotonic()
-    suite = unittest.defaultTestLoader.discover(str(PROJECT / "tests"), top_level_dir=str(PROJECT))
+    # Keep the original 38-case baseline separate from 0.2.0 acceptance.
+    # New CSV/batch checks are recorded by tools/verify_v020.py.
+    suite = unittest.defaultTestLoader.discover(
+        str(PROJECT / "tests"), pattern="test_runtime.py", top_level_dir=str(PROJECT))
     stream = io.StringIO()
     result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
     duration = time.monotonic() - started
@@ -51,6 +55,7 @@ def main():
         (destination / "demo_report.json").write_bytes(before_bytes)
     successful = result.wasSuccessful() and all(checks.values())
     summary = {
+        "tested_implementation_version": __version__, "suite_origin_version": "0.1.0",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "python": sys.version.split()[0], "platform": platform.platform(),
         "test_cases": result.testsRun, "failures": len(result.failures),
@@ -59,9 +64,11 @@ def main():
         "checks": checks, "successful": successful,
     }
     (destination / "test_results.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    report = f"""# ผลตรวจ Neuron Flow 0.1.0
+    report = f"""# ผลตรวจชุดฐานเดิม Neuron Flow 0.1.0
 
 สถานะ: {'ผ่าน' if successful else 'ไม่ผ่าน'}
+
+ชุดตรวจฐานเดิม 38 กรณี รันกับโค้ดรุ่น {__version__}; ผลรุ่นใหม่แยกใน `v0_2_0/test_results.json`
 
 - เวลา UTC: {summary['created_at_utc']}
 - Python: {summary['python']}

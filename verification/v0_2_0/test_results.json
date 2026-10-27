@@ -1,0 +1,354 @@
+{
+  "version": "0.2.0",
+  "created_at_utc": "2026-10-27T23:40:46.358566+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "new_test_cases": 65,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "duration_seconds": 16.408,
+  "fixture_lock_passed": true,
+  "baseline_38_passed": true,
+  "report_examples_passed": true,
+  "local_successful": true,
+  "colab": {
+    "google_colab_importable": false,
+    "runtime_marker_names": [],
+    "observed_colab_runtime": false
+  },
+  "release_approved": true,
+  "release_ready": true,
+  "colab_acceptance_complete": false,
+  "all_acceptance_complete": false,
+  "remaining_acceptance": [
+    "Fresh Google Colab upload/run/download acceptance with recorded evidence"
+  ],
+  "cases": [
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_all_100_documents_run_through_actual_worker_processes_and_match_golden",
+      "outcome": "passed",
+      "duration_seconds": 3.771
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_all_100_pure_results_match_locked_reference_and_leave_input_untouched",
+      "outcome": "passed",
+      "duration_seconds": 0.0179
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_changed_calculation_and_numeric_type_do_not_pass_independent_check",
+      "outcome": "passed",
+      "duration_seconds": 0.0012
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_declared_total_format_range_and_conflicts",
+      "outcome": "passed",
+      "duration_seconds": 0.0008
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_invalid_data_does_not_call_any_money_calculation_or_raise_retry_error",
+      "outcome": "passed",
+      "duration_seconds": 0.0005
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_invalid_propagation_cannot_be_changed_and_missing_dependency_is_contract_error",
+      "outcome": "passed",
+      "duration_seconds": 0.0002
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_maximum_document_total_uses_23_integer_digits_without_rounding",
+      "outcome": "passed",
+      "duration_seconds": 0.2999
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_missing_fields_wrong_types_and_parser_row_errors_remain_data_errors",
+      "outcome": "passed",
+      "duration_seconds": 0.0004
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_numeric_equivalent_declared_values_and_raw_mismatch_evidence",
+      "outcome": "passed",
+      "duration_seconds": 0.0004
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_price_quantity_and_zero_boundaries",
+      "outcome": "passed",
+      "duration_seconds": 0.002
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_runtime_rejects_wrong_amounts_and_types_without_retrying",
+      "outcome": "passed",
+      "duration_seconds": 1.2564
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_text_normalization_limits_and_document_size",
+      "outcome": "passed",
+      "duration_seconds": 0.0073
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_validation_and_verification_callbacks_reject_forged_typed_outputs",
+      "outcome": "passed",
+      "duration_seconds": 0.0004
+    },
+    {
+      "test": "tests.test_csv_agents.CsvAgentTests.test_validation_never_certifies_valid_before_calculation_and_verification",
+      "outcome": "passed",
+      "duration_seconds": 0.0001
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_bad_headers_name_missing_extra_and_duplicate_columns",
+      "outcome": "passed",
+      "duration_seconds": 0.0002
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_blank_missing_id_short_and_extra_rows_are_not_lost",
+      "outcome": "passed",
+      "duration_seconds": 0.0001
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_bom_unicode_and_hash",
+      "outcome": "passed",
+      "duration_seconds": 0.0001
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_empty_source_rejected_and_header_only_has_zero_rows",
+      "outcome": "passed",
+      "duration_seconds": 0.0
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_interleaved_documents_preserve_source_order_and_values",
+      "outcome": "passed",
+      "duration_seconds": 0.0
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_locked_acceptance_fixture_groups_all_201_rows_once",
+      "outcome": "passed",
+      "duration_seconds": 0.0015
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_malformed_encoding_and_csv_reject_entire_file",
+      "outcome": "passed",
+      "duration_seconds": 0.0001
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_multiline_record_uses_starting_physical_line",
+      "outcome": "passed",
+      "duration_seconds": 0.0003
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_parse_csv_wrapper",
+      "outcome": "passed",
+      "duration_seconds": 0.0005
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_reordered_header_maps_values_by_name",
+      "outcome": "passed",
+      "duration_seconds": 0.0001
+    },
+    {
+      "test": "tests.test_csv_input.CsvInputTests.test_source_cap_is_explicit_and_long_data_field_is_preserved",
+      "outcome": "passed",
+      "duration_seconds": 0.0189
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_changed_agent_version_cannot_reuse_batch",
+      "outcome": "passed",
+      "duration_seconds": 0.1656
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_changed_source_under_same_batch_id_conflicts_and_preserves_existing_state",
+      "outcome": "passed",
+      "duration_seconds": 0.1607
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_document_report_written_before_receipt_can_resume_without_rerunning_steps",
+      "outcome": "passed",
+      "duration_seconds": 0.1735
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_generated_batch_id_is_stable_for_identical_bytes",
+      "outcome": "passed",
+      "duration_seconds": 0.0016
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_identical_resubmission_preserves_snapshot_history_attempts_and_receipts",
+      "outcome": "passed",
+      "duration_seconds": 0.2112
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_invalid_data_does_not_retry_or_prevent_next_document",
+      "outcome": "passed",
+      "duration_seconds": 0.2342
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_invalid_header_rejected_before_creating_document_jobs",
+      "outcome": "passed",
+      "duration_seconds": 0.0035
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_real_controller_kill_resumes_without_repeating_completed_work",
+      "outcome": "passed",
+      "duration_seconds": 0.5061
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_real_hung_worker_exhausts_two_attempts_then_next_document_finishes",
+      "outcome": "passed",
+      "duration_seconds": 0.8669
+    },
+    {
+      "test": "tests.test_batch.BatchTests.test_real_worker_death_exhausts_two_attempts_then_next_document_finishes",
+      "outcome": "passed",
+      "duration_seconds": 0.5306
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_bad_header_submits_no_batch",
+      "outcome": "passed",
+      "duration_seconds": 0.0034
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_conflicting_bytes_do_not_change_original_binding",
+      "outcome": "passed",
+      "duration_seconds": 0.2262
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_corrupted_workflow_report_is_detected_on_reuse",
+      "outcome": "passed",
+      "duration_seconds": 0.2043
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_header_only_and_unicode_document_id",
+      "outcome": "passed",
+      "duration_seconds": 0.16
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_locked_100_documents_and_duplicate_reuse_are_exact",
+      "outcome": "passed",
+      "duration_seconds": 3.9074
+    },
+    {
+      "test": "tests.test_batch_basic.BatchBasicTests.test_source_bytes_survive_file_removal_and_ungrouped_stay_separate",
+      "outcome": "passed",
+      "duration_seconds": 0.3571
+    },
+    {
+      "test": "tests.test_batch_cli.BatchCliTests.test_bad_header_and_conflict_are_machine_readable_errors",
+      "outcome": "passed",
+      "duration_seconds": 0.7571
+    },
+    {
+      "test": "tests.test_batch_cli.BatchCliTests.test_csv_resume_status_and_original_source_not_required",
+      "outcome": "passed",
+      "duration_seconds": 0.4872
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_conflicting_existing_report_is_preserved_and_delivery_is_rejected",
+      "outcome": "passed",
+      "duration_seconds": 0.1658
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_corrupt_cached_report_is_detected_and_preserved",
+      "outcome": "passed",
+      "duration_seconds": 0.1576
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_error_document_remains_visible_when_batch_report_delivery_succeeds",
+      "outcome": "passed",
+      "duration_seconds": 0.4912
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_pending_document_delivery_cannot_be_frozen_into_final_batch_reports",
+      "outcome": "passed",
+      "duration_seconds": 0.1649
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_preexisting_identical_source_artifact_is_reused_after_partial_delivery",
+      "outcome": "passed",
+      "duration_seconds": 0.1724
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_real_controller_kill_after_all_reports_before_receipt_reuses_files_and_work",
+      "outcome": "passed",
+      "duration_seconds": 0.2424
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_repeated_delivery_preserves_files_steps_events_and_receipt",
+      "outcome": "passed",
+      "duration_seconds": 0.1793
+    },
+    {
+      "test": "tests.test_batch_delivery.BatchDeliveryTests.test_reports_have_verified_receipts_and_trace_every_grouped_or_ungrouped_row",
+      "outcome": "passed",
+      "duration_seconds": 0.1607
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_bom_source_is_kept_byte_for_byte_and_hash_is_of_original_encoding",
+      "outcome": "passed",
+      "duration_seconds": 0.0022
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_concurrent_conflicting_file_is_never_overwritten_after_preflight",
+      "outcome": "passed",
+      "duration_seconds": 0.0025
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_consistently_forged_report_totals_still_fail_against_source_arithmetic",
+      "outcome": "passed",
+      "duration_seconds": 0.0006
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_corruption_after_publish_fails_readback_and_does_not_issue_receipt",
+      "outcome": "passed",
+      "duration_seconds": 0.0018
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_counts_certified_totals_and_float_amounts_cannot_be_misreported",
+      "outcome": "passed",
+      "duration_seconds": 0.0051
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_document_identifier_is_data_and_never_becomes_an_output_path",
+      "outcome": "passed",
+      "duration_seconds": 0.0021
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_existing_conflict_in_any_file_prevents_every_new_file_and_preserves_original",
+      "outcome": "passed",
+      "duration_seconds": 0.0031
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_full_artifacts_preserve_normal_invalid_error_and_source_provenance",
+      "outcome": "passed",
+      "duration_seconds": 0.0033
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_intermediate_or_delivery_pending_payload_cannot_be_published",
+      "outcome": "passed",
+      "duration_seconds": 0.0008
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_partial_publish_failure_can_resume_without_rewriting_completed_artifacts",
+      "outcome": "passed",
+      "duration_seconds": 0.0034
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_payload_source_and_trace_tampering_fail_before_any_artifact_is_written",
+      "outcome": "passed",
+      "duration_seconds": 0.004
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_preflight_does_not_create_missing_summary_when_later_source_conflicts",
+      "outcome": "passed",
+      "duration_seconds": 0.0031
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_repeated_delivery_preserves_receipt_bytes_and_mtime",
+      "outcome": "passed",
+      "duration_seconds": 0.0039
+    },
+    {
+      "test": "tests.test_reporting.ReportingTests.test_symlink_artifact_is_rejected_without_modifying_its_target",
+      "outcome": "passed",
+      "duration_seconds": 0.0013
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+test_bad_header_submits_no_batch (tests.test_batch_basic.BatchBasicTests.test_bad_header_submits_no_batch) ... ok
+test_conflicting_bytes_do_not_change_original_binding (tests.test_batch_basic.BatchBasicTests.test_conflicting_bytes_do_not_change_original_binding) ... ok
+test_corrupted_workflow_report_is_detected_on_reuse (tests.test_batch_basic.BatchBasicTests.test_corrupted_workflow_report_is_detected_on_reuse) ... ok
+test_header_only_and_unicode_document_id (tests.test_batch_basic.BatchBasicTests.test_header_only_and_unicode_document_id) ... ok
+test_locked_100_documents_and_duplicate_reuse_are_exact (tests.test_batch_basic.BatchBasicTests.test_locked_100_documents_and_duplicate_reuse_are_exact) ... ok
+test_source_bytes_survive_file_removal_and_ungrouped_stay_separate (tests.test_batch_basic.BatchBasicTests.test_source_bytes_survive_file_removal_and_ungrouped_stay_separate) ... ok
+test_changed_agent_version_cannot_reuse_batch (tests.test_batch.BatchTests.test_changed_agent_version_cannot_reuse_batch) ... ok
+test_changed_source_under_same_batch_id_conflicts_and_preserves_existing_state (tests.test_batch.BatchTests.test_changed_source_under_same_batch_id_conflicts_and_preserves_existing_state) ... ok
+test_document_report_written_before_receipt_can_resume_without_rerunning_steps (tests.test_batch.BatchTests.test_document_report_written_before_receipt_can_resume_without_rerunning_steps) ... ok
+test_generated_batch_id_is_stable_for_identical_bytes (tests.test_batch.BatchTests.test_generated_batch_id_is_stable_for_identical_bytes) ... ok
+test_identical_resubmission_preserves_snapshot_history_attempts_and_receipts (tests.test_batch.BatchTests.test_identical_resubmission_preserves_snapshot_history_attempts_and_receipts) ... ok
+test_invalid_data_does_not_retry_or_prevent_next_document (tests.test_batch.BatchTests.test_invalid_data_does_not_retry_or_prevent_next_document) ... ok
+test_invalid_header_rejected_before_creating_document_jobs (tests.test_batch.BatchTests.test_invalid_header_rejected_before_creating_document_jobs) ... ok
+test_real_controller_kill_resumes_without_repeating_completed_work (tests.test_batch.BatchTests.test_real_controller_kill_resumes_without_repeating_completed_work) ... ok
+test_real_hung_worker_exhausts_two_attempts_then_next_document_finishes (tests.test_batch.BatchTests.test_real_hung_worker_exhausts_two_attempts_then_next_document_finishes) ... ok
+test_real_worker_death_exhausts_two_attempts_then_next_document_finishes (tests.test_batch.BatchTests.test_real_worker_death_exhausts_two_attempts_then_next_document_finishes) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 6.220s
+
+OK

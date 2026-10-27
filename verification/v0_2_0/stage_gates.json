@@ -1,0 +1,74 @@
+{
+  "version": "0.2.0",
+  "release_status": "approved_for_publication_with_known_limitation",
+  "stages": {
+    "1": {
+      "status": "passed",
+      "baseline": "verification/baseline_report.json",
+      "fixture_lock": "acceptance/fixture_lock.json",
+      "locked_answers_sha256": "f72f753bb474b4e94743f3c917227625c5a8b0eb556e50c91fe6f3a90dd20b26",
+      "checks": {
+        "baseline_tests": 38,
+        "baseline_failures": 0,
+        "baseline_errors": 0,
+        "documents": 100,
+        "VALID": 80,
+        "INVALID": 20
+      }
+    },
+    "2": {
+      "status": "passed",
+      "test_command": "python -m unittest tests.test_csv_input -v",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "fixture_documents": 100,
+      "fixture_input_rows": 201,
+      "source_rows_preserved": true
+    },
+    "3": {
+      "status": "passed",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "runtime_documents": 100,
+      "VALID": 80,
+      "INVALID": 20,
+      "all_results_match_locked_answers": true,
+      "test_command": "python -m unittest tests.test_csv_agents -v",
+      "evidence": "verification/v0_2_0/csv_agents_gate.log"
+    },
+    "4": {
+      "status": "passed",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "real_worker_crash": true,
+      "real_agent_hang": true,
+      "real_controller_kill": true,
+      "no_completed_work_repeated": true,
+      "evidence": "verification/v0_2_0/batch_gate.log"
+    },
+    "5": {
+      "status": "passed",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "real_controller_kill_after_artifacts_before_receipt": true,
+      "source_traceability": true,
+      "atomic_write_and_sha256_readback": true,
+      "evidence": "verification/v0_2_0/reporting_gate.log"
+    },
+    "6": {
+      "status": "not_completed_disclosed_at_release",
+      "actual_colab": "not_run",
+      "local_verification": "passed",
+      "baseline_tests": 38,
+      "new_tests": 65,
+      "remaining": "Fresh Colab runtime upload/run/resume/download with actual evidence; no Colab runtime available here",
+      "release_decision": "User authorized closing and publishing with the previously disclosed absence of actual Colab acceptance evidence"
+    }
+  },
+  "release_approval": "RELEASE_APPROVAL.json",
+  "all_acceptance_complete": false
+}

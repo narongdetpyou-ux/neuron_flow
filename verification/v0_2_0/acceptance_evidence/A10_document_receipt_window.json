@@ -1,0 +1,1161 @@
+{
+  "scenario": "A10_document_receipt_window",
+  "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency\nA,I1,บันทึกรายงานแล้วแต่ยังไม่ได้ receipt,2,0.10,0.20,THB\n",
+  "source_sha256": "655587744c596e4299688879163a174a3dd7f9b3b8344ba6458bbc3fa9e0e4c8",
+  "expected": {
+    "resume_status": "PROCESSED",
+    "document_status": "VALID",
+    "step_attempts": 1,
+    "report_not_rewritten": true
+  },
+  "actual": {
+    "batch_id": "receipt-window",
+    "status": "PROCESSED",
+    "source_sha256": "655587744c596e4299688879163a174a3dd7f9b3b8344ba6458bbc3fa9e0e4c8",
+    "contract_version": "purchase-csv-v1",
+    "system_version": "0.2.0",
+    "agent_versions": {
+      "csv_calculate": {
+        "entrypoint": "neuron_flow.csv_agents:calculate_csv",
+        "validator": "neuron_flow.csv_agents:calculate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_validate": {
+        "entrypoint": "neuron_flow.csv_agents:validate_csv",
+        "validator": "neuron_flow.csv_agents:validate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_verify": {
+        "entrypoint": "neuron_flow.csv_agents:verify_csv",
+        "validator": "neuron_flow.csv_agents:verify_csv_output",
+        "version": "0.2.0"
+      }
+    },
+    "input_rows": 1,
+    "counts": {
+      "documents": 1,
+      "VALID": 1,
+      "INVALID": 0,
+      "ERROR": 0
+    },
+    "certified_total": "0.20",
+    "currency": "THB",
+    "ungrouped_rows": [],
+    "documents": [
+      {
+        "document_id": "A",
+        "document_status": "VALID",
+        "source_rows": [
+          2
+        ],
+        "computed_total": "0.20",
+        "declared_total": "0.20",
+        "difference": "0.00",
+        "errors": [],
+        "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+        "engine_status": "SUCCEEDED",
+        "steps": {
+          "validate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "A",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "A",
+                "items": [
+                  {
+                    "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                2
+              ]
+            },
+            "error": null
+          },
+          "calculate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "currency": "THB",
+              "lines": [
+                {
+                  "amount": "0.20",
+                  "item_id": "I1"
+                }
+              ],
+              "total": "0.20"
+            },
+            "error": null
+          },
+          "verify": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": "0.20",
+              "declared_total": "0.20",
+              "difference": "0.00",
+              "document_id": "A",
+              "document_status": "VALID",
+              "errors": [],
+              "source_rows": [
+                2
+              ]
+            },
+            "error": null
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:submitted",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.submitted",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {},
+            "timestamp": 1793144435.663645
+          },
+          {
+            "sequence": 2,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:fcfdce31a8e24f428d8411e08609915b",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.running",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "timestamp": 1793144435.6638532
+          },
+          {
+            "sequence": 3,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "validate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.663916
+          },
+          {
+            "sequence": 4,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "validate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8019097
+          },
+          {
+            "sequence": 5,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "calculate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8022563
+          },
+          {
+            "sequence": 6,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "calculate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8127604
+          },
+          {
+            "sequence": 7,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "verify",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8128886
+          },
+          {
+            "sequence": 8,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "verify",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.824083
+          },
+          {
+            "sequence": 9,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:DELIVERY_FAILED:fea3df9638fc4192ae54995663e122bc",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.delivery_failed",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": "Interrupted after document report, before receipt",
+              "receipt": null
+            },
+            "timestamp": 1793144435.8271315
+          },
+          {
+            "sequence": 10,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:e3f3af39059e4406948876f1e86f9a4e",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.running",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "timestamp": 1793144435.829109
+          },
+          {
+            "sequence": 11,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:SUCCEEDED:ea1f46b9185a42f09ad9583b7e679fa8",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": {
+                "bytes": 921,
+                "path": "/tmp/neuron-batch-test-p5l1rxub/reports/doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c.json",
+                "sha256": "40a56c179d994eaf3ac1a8391ecf70d2de9528c215c35af181ac2a89bbb75a31"
+              }
+            },
+            "timestamp": 1793144435.830022
+          }
+        ],
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+              "document_id": "A",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "A",
+              "I1",
+              "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 2
+          }
+        ]
+      }
+    ]
+  },
+  "before": {
+    "A": {
+      "id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+      "fingerprint": "8ce67557727b86181df1bf6bfa3c37db52f5e0f01aaa24a962f8ff3e59f15203",
+      "spec": {
+        "agent_versions": {
+          "csv_calculate": {
+            "entrypoint": "neuron_flow.csv_agents:calculate_csv",
+            "version": "0.2.0"
+          },
+          "csv_validate": {
+            "entrypoint": "neuron_flow.csv_agents:validate_csv",
+            "version": "0.2.0"
+          },
+          "csv_verify": {
+            "entrypoint": "neuron_flow.csv_agents:verify_csv",
+            "version": "0.2.0"
+          }
+        },
+        "input": {
+          "document_id": "A",
+          "rows": [
+            {
+              "errors": [],
+              "fields": {
+                "currency": "THB",
+                "declared_total": "0.20",
+                "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                "document_id": "A",
+                "item_id": "I1",
+                "quantity": "2",
+                "unit_price": "0.10"
+              },
+              "raw_fields": [
+                "A",
+                "I1",
+                "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                "2",
+                "0.10",
+                "0.20",
+                "THB"
+              ],
+              "source_row": 2
+            }
+          ]
+        },
+        "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+        "steps": [
+          {
+            "agent": "csv_validate",
+            "depends_on": [],
+            "id": "validate",
+            "max_attempts": 2,
+            "params": {},
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          },
+          {
+            "agent": "csv_calculate",
+            "depends_on": [
+              "validate"
+            ],
+            "id": "calculate",
+            "max_attempts": 2,
+            "params": {
+              "source": "validate"
+            },
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          },
+          {
+            "agent": "csv_verify",
+            "depends_on": [
+              "validate",
+              "calculate"
+            ],
+            "id": "verify",
+            "max_attempts": 2,
+            "params": {
+              "calculation": "calculate",
+              "source": "validate"
+            },
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          }
+        ]
+      },
+      "status": "DELIVERY_FAILED",
+      "delivery_error": "Interrupted after document report, before receipt",
+      "receipt": null,
+      "steps": {
+        "validate": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "validate",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "computed_total": null,
+            "declared_total": "0.20",
+            "declared_total_raw": "0.20",
+            "difference": null,
+            "document_id": "A",
+            "document_status": null,
+            "errors": [],
+            "invoice": {
+              "currency": "THB",
+              "document_id": "A",
+              "items": [
+                {
+                  "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                  "item_id": "I1",
+                  "quantity": 2,
+                  "unit_price": "0.10"
+                }
+              ]
+            },
+            "source_rows": [
+              2
+            ]
+          },
+          "error": null
+        },
+        "calculate": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "calculate",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "currency": "THB",
+            "lines": [
+              {
+                "amount": "0.20",
+                "item_id": "I1"
+              }
+            ],
+            "total": "0.20"
+          },
+          "error": null
+        },
+        "verify": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "verify",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "computed_total": "0.20",
+            "declared_total": "0.20",
+            "difference": "0.00",
+            "document_id": "A",
+            "document_status": "VALID",
+            "errors": [],
+            "source_rows": [
+              2
+            ]
+          },
+          "error": null
+        }
+      },
+      "events": [
+        {
+          "sequence": 1,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:submitted",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.submitted",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{}",
+          "timestamp": 1793144435.663645
+        },
+        {
+          "sequence": 2,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:fcfdce31a8e24f428d8411e08609915b",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.running",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":null,\"receipt\":null}",
+          "timestamp": 1793144435.6638532
+        },
+        {
+          "sequence": 3,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "validate",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.663916
+        },
+        {
+          "sequence": 4,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "validate",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\", \"step:calculate\", \"step:verify\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8019097
+        },
+        {
+          "sequence": 5,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "calculate",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8022563
+        },
+        {
+          "sequence": 6,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "calculate",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\", \"step:verify\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8127604
+        },
+        {
+          "sequence": 7,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "verify",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8128886
+        },
+        {
+          "sequence": 8,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "verify",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.824083
+        },
+        {
+          "sequence": 9,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:DELIVERY_FAILED:fea3df9638fc4192ae54995663e122bc",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.delivery_failed",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":\"Interrupted after document report, before receipt\",\"receipt\":null}",
+          "timestamp": 1793144435.8271315
+        }
+      ]
+    }
+  },
+  "after": {
+    "A": {
+      "id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+      "fingerprint": "8ce67557727b86181df1bf6bfa3c37db52f5e0f01aaa24a962f8ff3e59f15203",
+      "spec": {
+        "agent_versions": {
+          "csv_calculate": {
+            "entrypoint": "neuron_flow.csv_agents:calculate_csv",
+            "version": "0.2.0"
+          },
+          "csv_validate": {
+            "entrypoint": "neuron_flow.csv_agents:validate_csv",
+            "version": "0.2.0"
+          },
+          "csv_verify": {
+            "entrypoint": "neuron_flow.csv_agents:verify_csv",
+            "version": "0.2.0"
+          }
+        },
+        "input": {
+          "document_id": "A",
+          "rows": [
+            {
+              "errors": [],
+              "fields": {
+                "currency": "THB",
+                "declared_total": "0.20",
+                "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                "document_id": "A",
+                "item_id": "I1",
+                "quantity": "2",
+                "unit_price": "0.10"
+              },
+              "raw_fields": [
+                "A",
+                "I1",
+                "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                "2",
+                "0.10",
+                "0.20",
+                "THB"
+              ],
+              "source_row": 2
+            }
+          ]
+        },
+        "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+        "steps": [
+          {
+            "agent": "csv_validate",
+            "depends_on": [],
+            "id": "validate",
+            "max_attempts": 2,
+            "params": {},
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          },
+          {
+            "agent": "csv_calculate",
+            "depends_on": [
+              "validate"
+            ],
+            "id": "calculate",
+            "max_attempts": 2,
+            "params": {
+              "source": "validate"
+            },
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          },
+          {
+            "agent": "csv_verify",
+            "depends_on": [
+              "validate",
+              "calculate"
+            ],
+            "id": "verify",
+            "max_attempts": 2,
+            "params": {
+              "calculation": "calculate",
+              "source": "validate"
+            },
+            "retry_delay_s": 0.05,
+            "timeout_s": 5.0
+          }
+        ]
+      },
+      "status": "SUCCEEDED",
+      "delivery_error": null,
+      "receipt": {
+        "bytes": 921,
+        "path": "/tmp/neuron-batch-test-p5l1rxub/reports/doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c.json",
+        "sha256": "40a56c179d994eaf3ac1a8391ecf70d2de9528c215c35af181ac2a89bbb75a31"
+      },
+      "steps": {
+        "validate": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "validate",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "computed_total": null,
+            "declared_total": "0.20",
+            "declared_total_raw": "0.20",
+            "difference": null,
+            "document_id": "A",
+            "document_status": null,
+            "errors": [],
+            "invoice": {
+              "currency": "THB",
+              "document_id": "A",
+              "items": [
+                {
+                  "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                  "item_id": "I1",
+                  "quantity": 2,
+                  "unit_price": "0.10"
+                }
+              ]
+            },
+            "source_rows": [
+              2
+            ]
+          },
+          "error": null
+        },
+        "calculate": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "calculate",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "currency": "THB",
+            "lines": [
+              {
+                "amount": "0.20",
+                "item_id": "I1"
+              }
+            ],
+            "total": "0.20"
+          },
+          "error": null
+        },
+        "verify": {
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "id": "verify",
+          "status": "SUCCEEDED",
+          "attempts": 1,
+          "ready_at": 0.0,
+          "output": {
+            "computed_total": "0.20",
+            "declared_total": "0.20",
+            "difference": "0.00",
+            "document_id": "A",
+            "document_status": "VALID",
+            "errors": [],
+            "source_rows": [
+              2
+            ]
+          },
+          "error": null
+        }
+      },
+      "events": [
+        {
+          "sequence": 1,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:submitted",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.submitted",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{}",
+          "timestamp": 1793144435.663645
+        },
+        {
+          "sequence": 2,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:fcfdce31a8e24f428d8411e08609915b",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.running",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":null,\"receipt\":null}",
+          "timestamp": 1793144435.6638532
+        },
+        {
+          "sequence": 3,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "validate",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.663916
+        },
+        {
+          "sequence": 4,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "validate",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\", \"step:calculate\", \"step:verify\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8019097
+        },
+        {
+          "sequence": 5,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "calculate",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8022563
+        },
+        {
+          "sequence": 6,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "calculate",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\", \"step:verify\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8127604
+        },
+        {
+          "sequence": 7,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:RUNNING",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "verify",
+          "kind": "step.running",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.8128886
+        },
+        {
+          "sequence": 8,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:SUCCEEDED",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": "verify",
+          "kind": "step.succeeded",
+          "audience": "[\"soma\", \"monitor\"]",
+          "payload": "{\"attempt\":1,\"error\":null}",
+          "timestamp": 1793144435.824083
+        },
+        {
+          "sequence": 9,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:DELIVERY_FAILED:fea3df9638fc4192ae54995663e122bc",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.delivery_failed",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":\"Interrupted after document report, before receipt\",\"receipt\":null}",
+          "timestamp": 1793144435.8271315
+        },
+        {
+          "sequence": 10,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:e3f3af39059e4406948876f1e86f9a4e",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.running",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":null,\"receipt\":null}",
+          "timestamp": 1793144435.829109
+        },
+        {
+          "sequence": 11,
+          "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:SUCCEEDED:ea1f46b9185a42f09ad9583b7e679fa8",
+          "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+          "step_id": null,
+          "kind": "job.succeeded",
+          "audience": "[\"soma\", \"monitor\", \"terminal\"]",
+          "payload": "{\"error\":null,\"receipt\":{\"bytes\":921,\"path\":\"/tmp/neuron-batch-test-p5l1rxub/reports/doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c.json\",\"sha256\":\"40a56c179d994eaf3ac1a8391ecf70d2de9528c215c35af181ac2a89bbb75a31\"}}",
+          "timestamp": 1793144435.830022
+        }
+      ]
+    }
+  },
+  "interrupted_snapshot": {
+    "batch_id": "receipt-window",
+    "status": "DELIVERY_FAILED",
+    "source_sha256": "655587744c596e4299688879163a174a3dd7f9b3b8344ba6458bbc3fa9e0e4c8",
+    "contract_version": "purchase-csv-v1",
+    "system_version": "0.2.0",
+    "agent_versions": {
+      "csv_calculate": {
+        "entrypoint": "neuron_flow.csv_agents:calculate_csv",
+        "validator": "neuron_flow.csv_agents:calculate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_validate": {
+        "entrypoint": "neuron_flow.csv_agents:validate_csv",
+        "validator": "neuron_flow.csv_agents:validate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_verify": {
+        "entrypoint": "neuron_flow.csv_agents:verify_csv",
+        "validator": "neuron_flow.csv_agents:verify_csv_output",
+        "version": "0.2.0"
+      }
+    },
+    "input_rows": 1,
+    "counts": {
+      "documents": 1,
+      "VALID": 0,
+      "INVALID": 0,
+      "ERROR": 1
+    },
+    "certified_total": "0.00",
+    "currency": "THB",
+    "ungrouped_rows": [],
+    "documents": [
+      {
+        "document_id": "A",
+        "document_status": "ERROR",
+        "source_rows": [
+          2
+        ],
+        "computed_total": null,
+        "declared_total": "0.20",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 2,
+            "field": "*",
+            "reason_code": "ENGINE_ERROR",
+            "expected": "verified document result",
+            "actual": {
+              "engine_status": "DELIVERY_FAILED",
+              "delivery_error": "Interrupted after document report, before receipt",
+              "failed_steps": {}
+            }
+          }
+        ],
+        "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+        "engine_status": "DELIVERY_FAILED",
+        "steps": {
+          "validate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "A",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "A",
+                "items": [
+                  {
+                    "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                2
+              ]
+            },
+            "error": null
+          },
+          "calculate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "currency": "THB",
+              "lines": [
+                {
+                  "amount": "0.20",
+                  "item_id": "I1"
+                }
+              ],
+              "total": "0.20"
+            },
+            "error": null
+          },
+          "verify": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": "0.20",
+              "declared_total": "0.20",
+              "difference": "0.00",
+              "document_id": "A",
+              "document_status": "VALID",
+              "errors": [],
+              "source_rows": [
+                2
+              ]
+            },
+            "error": null
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:submitted",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.submitted",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {},
+            "timestamp": 1793144435.663645
+          },
+          {
+            "sequence": 2,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:RUNNING:fcfdce31a8e24f428d8411e08609915b",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.running",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "timestamp": 1793144435.6638532
+          },
+          {
+            "sequence": 3,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "validate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.663916
+          },
+          {
+            "sequence": 4,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:validate:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "validate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8019097
+          },
+          {
+            "sequence": 5,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "calculate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8022563
+          },
+          {
+            "sequence": 6,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:calculate:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "calculate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8127604
+          },
+          {
+            "sequence": 7,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:RUNNING",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "verify",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.8128886
+          },
+          {
+            "sequence": 8,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:verify:1:SUCCEEDED",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": "verify",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793144435.824083
+          },
+          {
+            "sequence": 9,
+            "event_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c:DELIVERY_FAILED:fea3df9638fc4192ae54995663e122bc",
+            "job_id": "doc_4ac53a51480ed988d1799746a34e8d58b8f7fb95351c43ba2a371110116da35c",
+            "step_id": null,
+            "kind": "job.delivery_failed",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": "Interrupted after document report, before receipt",
+              "receipt": null
+            },
+            "timestamp": 1793144435.8271315
+          }
+        ],
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+              "document_id": "A",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "A",
+              "I1",
+              "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 2
+          }
+        ]
+      }
+    ]
+  }
+}
