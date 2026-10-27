@@ -1,0 +1,8 @@
+{
+  "document_id": "INV-001",
+  "currency": "THB",
+  "items": [
+    {"item_id": "A", "description": "สมุด", "quantity": 2, "unit_price": "125.50"},
+    {"item_id": "B", "description": "ปากกา", "quantity": 3, "unit_price": "19.90"}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "job_id": "invoice_from_file",
+  "input": {
+    "document_id": "INV-001",
+    "currency": "THB",
+    "items": [
+      {"item_id": "A", "description": "สมุด", "quantity": 2, "unit_price": "125.50"},
+      {"item_id": "B", "description": "ปากกา", "quantity": 3, "unit_price": "19.90"}
+    ]
+  },
+  "steps": [
+    {"id": "extract", "agent": "extract_invoice"},
+    {"id": "calculate", "agent": "calculate_invoice", "depends_on": ["extract"], "params": {"source": "extract"}},
+    {"id": "verify", "agent": "verify_invoice", "depends_on": ["extract", "calculate"], "params": {"source": "extract", "calculation": "calculate"}}
+  ]
+}
