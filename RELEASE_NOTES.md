@@ -1,51 +1,40 @@
-# Neuron Flow 0.2.1 — candidate ยังไม่เผยแพร่
+# Neuron Flow 0.2.1 — beta
 
-รุ่นนี้เป็น candidate สำหรับตรวจและทบทวน ยังไม่ได้รับอนุมัติหรือเผยแพร่ 0.2.1
-การอนุมัติ 0.2.0 ที่เก็บใน RELEASE_APPROVAL.json ไม่อนุมัติ candidate นี้โดยอัตโนมัติ
-Colab จริงยังเป็น not_run และยังไม่มีผล GitHub Actions จริงในรอบนี้
+อนุมัติให้เผยแพร่ตามคำสั่งเจ้าของงาน โดยเปิดเผยข้อจำกัดด้านล่าง
+เป็นรุ่นสำหรับ purchase CSV/CLI บนเครื่องเดียว ไม่ใช่การรับรอง production หรือ SLA
 
-## สิ่งที่เพิ่มและแก้ใน candidate
+## การเปลี่ยนแปลง
 
-- `csv --submit-only` เก็บ source/identity และคืน batch_id กับสถานะจริงก่อนเริ่ม Agent
-  การเรียก `csv` ตามปกติยังประมวลผลและส่งรายงาน
-- `batch-list --workspace ...` ค้น batch โดยอ่านอย่างเดียว ใช้ได้แม้ controller กำลังถือ lock
-  ช่วยเปิดงานต่อเมื่อไม่ได้รับผล CLI สุดท้ายหรือไม่มี Notebook session metadata
-- เปิด workspace 0.2.0 ด้วย 0.2.1 ภายใต้ schema 1 และ policy ของ contract/Agents/settings ที่รองรับ
-  ไม่เขียน identity, provenance, frozen payload หรือรายงานเก่าใหม่ หาก auto-ID พบหลาย batch ที่เข้ากันได้
-  ต้องระบุรหัสชัดเจน ข้อมูลหรือสัญญาที่ขัดกันยังเกิด conflict
-- `MessageSizeError` มี phase, observed_bytes, limit_bytes และ retryable=false
-  job report ที่เกินขนาดแบบถาวรถูกแสดงเป็น ERROR ในรายงานชุด ไม่ติดลูปรอส่งข้อมูลเดิม
-- `verify_current.py --output-dir ...` ตรวจรุ่นปัจจุบันและเก็บผลแยกจากหลักฐาน 0.2.0
-  `verify.py --output-dir ...` แยก baseline ได้; จำนวน tests ให้อ่านจากรายงานจริงของ candidate
-- เพิ่ม checklist/template และ API ตรวจ assertion หลักฐาน Colab ที่ผู้ใช้ส่ง
-  ตรวจ package/fixture hashes, 100 jobs, attempts/hashes ก่อนหลัง และคำยืนยันรับดาวน์โหลดจริง
-  tests ใช้ข้อมูลจำลอง ไม่ใช่หลักฐานว่า Colab ผ่าน; ไม่ส่งไฟล์หลักฐานยังเป็น not_run
-- เตรียม CI Python 3.10/3.12 และ manual release workflow ที่ตั้ง publish=false โดยปริยาย
-  การมี workflow ยังไม่ได้ยืนยันว่าแก้ปัญหาสิทธิ์ native assets HTTP 401 แล้ว
+- รับงานด้วย `csv --submit-only`, ค้น batch ที่คงอยู่ด้วย `batch-list` และ resume โดยไม่ต้องมี source upload เดิม
+- รองรับ workspace 0.2.0 ตาม schema/contract/Agent compatibility ที่กำหนดไว้
+- แสดง structured size-limit errors โดยไม่ขัดขวางเอกสารอื่นใน batch
+- ปฏิเสธ `events --after` เกิน signed-int64 ด้วย JSON error แทน traceback และไม่สร้าง workspace
+- รักษาไบต์ golden fixture บน Windows โดยไม่เปลี่ยนคำตอบอ้างอิงหรือ checksum
+- เพิ่ม hash-locked patched build tools, clean wheel/sdist installation checks, branch coverage,
+  correctness lint และ incremental strict typing ของ discovery boundary
+- เพิ่ม full-runtime benchmark พร้อม real controller kill/recovery, API examples และ backup/restore runbook
+- จัดดัชนีหลักฐาน เก็บสถานะ/approval เก่าใน archive ลบ cache ที่สร้างใหม่ได้ และนำ manifest เก่าที่ซ้ำออกจาก source root
+  package ZIP ยังคงมี manifest ที่สร้างจากไฟล์จริงของ package นั้น
 
-## ตรวจและสร้าง candidate
+## ผลตรวจและขอบเขต
 
-```bash
-python tools/verify_current.py --output-dir verification/v0_2_1
-python tools/build_delivery.py --candidate --output-dir dist
-```
+Windows/macOS smoke ผ่าน Python 3.10/3.12 และ Linux regression/quality/distribution ผ่านจริง
+[CI ของ Windows fix](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187)
+ผลที่ตรงกับ source/tag สุดท้ายจะอยู่ใน manual release workflow และใน package verification
+แต่ละรอบบันทึกจำนวน tests, failures, errors และ skipped จริง ไม่ใช้จำนวนเก่าแทนรุ่นปัจจุบัน
+SHA-256, frozen expected answers และ independent Decimal/integer-satang checks ยังคงเดิม
 
-ผลตรวจจำนวน baseline/new tests, failures/errors/skipped, ชุดอ้างอิง 100 ใบ และ environment
-อยู่ในรายงานจริงใต้ verification/v0_2_1/ ไม่ใช้จำนวนชุดใหม่ของ 0.2.0 แทนค่าปัจจุบัน
-คำตอบอ้างอิงเดิม 80 VALID / 20 INVALID ยังคงล็อกไว้
+## ข้อจำกัดที่เปิดเผย
 
-ชุด candidate ประกอบด้วย neuron_flow_v0.2.1.zip, .sha256, Notebook, manifest,
-BUILD_STATUS.json และ delivery_checks.json ใน output directory ตรวจจาก ZIP ที่แตกใหม่
-การสร้างไฟล์เป็นงานในเครื่อง ไม่มีการเผยแพร่ภายนอก
-หากไม่ระบุ --candidate ต้องมี approval ตรงรุ่นปัจจุบันและผลตรวจที่ผ่าน
+- Actual Google Colab upload/run/resume/download/restore acceptance ยัง `not_run`
+- Windows/macOS ตรวจ smoke subset; full recovery/fault-injection suite ตรวจบน Linux
+- Python API ใน 0.2.x ยังทดลอง; เอกสารทำทีละใบ ใช้ workers ซ้ำ ไม่ใช่ batch parallel scheduling
+- backup/restore ใช้ absolute workspace path เดิม ไม่มี workspace relocation
+- THB, CSV สูงสุด 16 MiB, engine message/job report สูงสุด 1 MiB และ retry รวมสูงสุด 2 attempts
+- ไม่มี OCR/PDF, tax/discount engine หรือ SLA production
 
-## ขอบเขตที่ยังคงเดิม
-
-เครื่องเดียว THB สัญญา purchase-csv-v1, CSV 16 MiB, engine message/job report 1 MiB,
-Decimal ตรวจซ้ำด้วย integer สตางค์, สูงสุด 2 attempts รวมครั้งแรก และเอกสารยังทำทีละใบโดยใช้ worker ซ้ำ
-100 เอกสารเป็นขอบเขตชุดตรวจรับ ไม่ใช่เพดานจำนวนเอกสาร ไม่มีการเพิ่ม OCR/PDF ภาษี หรือส่วนลด
-backup ยังคืนที่ absolute path เดิม ไม่ได้เพิ่มการย้าย workspace ต่าง path
-ผลอนุมัติเผยแพร่แยกจาก colab_acceptance_complete และการทดสอบในเครื่องไม่แทนการตรวจ Colab จริง
+รับ ZIP/checksum/Notebook จาก release นี้ ตรวจ SHA-256 ก่อนใช้และเก็บ backup ของ workspace
+การอนุมัติเผยแพร่ไม่เปลี่ยน `colab_acceptance_complete` และไม่ทำให้หลักฐาน `not_run` กลายเป็น passed
 
 ## ประวัติรุ่น 0.2.0 — เผยแพร่แล้ว
 

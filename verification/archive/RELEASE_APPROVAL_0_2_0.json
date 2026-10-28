@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "version": "0.2.0",
+  "release_approved": true,
+  "approved_at_utc": "2026-10-27T23:40:03.778185+00:00",
+  "approval_source": "User instruction in this conversation",
+  "user_instruction": "ปิดรุ่นได้ พร้อมเผยแพร่",
+  "destination_instruction": "GitHub Releases ของ neuron_flow",
+  "publication_target": "https://github.com/narongdetpyou-ux/neuron_flow/releases",
+  "decision": "release_with_disclosed_known_limitation",
+  "colab_acceptance_complete": false,
+  "known_limitations": [
+    "Fresh Google Colab upload/run/resume/download acceptance has not been performed. Local tests and notebook offline checks do not establish Colab acceptance."
+  ]
+}

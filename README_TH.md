@@ -1,21 +1,22 @@
-# Neuron Flow 0.2.1 — candidate ยังไม่เผยแพร่
+# Neuron Flow 0.2.1 — beta
 
 รับ CSV รายการซื้อหลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมรายงานย้อนถึงแถวต้นทาง
 เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
 ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ใช้ THB ไม่ต้องมี API key
 
-**สถานะ:** 0.2.1 เป็น candidate สำหรับตรวจในเครื่อง ยังไม่ได้รับอนุมัติหรือเผยแพร่
-เพิ่มการรับงานก่อนประมวลผล การค้นหา batch ระหว่าง controller ทำงาน ความเข้ากันได้กับ workspace
-0.2.0 และรายละเอียดข้อผิดพลาดเรื่องขนาด ข้อมูลตรวจปัจจุบันอยู่ใน `verification/v0_2_1/`
-ให้อ่านจำนวน tests และผลจริงจากรายงาน ไม่ใช้จำนวนชุดใหม่ของรุ่นก่อนแทนผลของ candidate
+**สถานะ:** อนุมัติให้เผยแพร่ 0.2.1 สำหรับ workflow CSV/CLI บนเครื่องเดียวที่ตรวจแล้ว
+ดูไฟล์เผยแพร่และ checksum ที่ [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases)
+เพิ่ม submit-only, batch discovery, workspace 0.2.0 compatibility, structured size-limit errors,
+event cursor bounds และการรักษาไบต์ fixture บน Windows
+ดู [ดัชนีหลักฐาน](verification/README.md) เพื่อแยกรอบและขอบเขตการตรวจ
 
-รุ่น 0.2.0 เผยแพร่แล้วโดยมีการอนุมัติพร้อมข้อจำกัดว่า **Colab จริงยังไม่ได้ตรวจ**
-หลักฐานเดิมใน `verification/v0_2_0/` และ `RELEASE_APPROVAL.json` ยังคงเป็นของ 0.2.0
-การอนุมัตินั้นไม่อนุมัติ 0.2.1 โดยอัตโนมัติ สถานะ Colab ของรอบนี้ยังเป็น `not_run`
+Colab จริงยังเป็น `not_run` การอนุมัติและผล local ไม่แทนการตรวจ Colab จริง
+[การอนุมัติ 0.2.0 เดิม](verification/archive/RELEASE_APPROVAL_0_2_0.json) เก็บใน archive แล้ว
+Windows/macOS smoke ผ่าน Python 3.10/3.12 จริง แต่ full fault-injection suite ตรวจบน Linux
 
 ## เริ่มใช้ CSV
 
-แตก ZIP candidate `dist/neuron_flow_v0.2.1.zip` แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
+ดาวน์โหลด `neuron_flow_v0.2.1.zip` จาก GitHub Releases ตรวจ checksum แล้วแตก ZIP แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
 ที่มีไฟล์นี้ ไม่ต้องติดตั้ง dependency เพิ่ม:
 
 ```bash
@@ -231,4 +232,4 @@ Agent code ต้องเชื่อถือได้ งานหลาย�
 Python API ใน 0.2.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
 [คู่มือผู้ดูแล](docs/MAINTAINER_RUNBOOK_TH.md), [quality gates](docs/QUALITY_TH.md),
 [packaging](docs/PACKAGING_TH.md) และ [runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md)
-เพิ่ม CI smoke สำหรับ Windows/macOS แล้ว แต่ต้องอ่านผล runner จริงก่อนอ้างการรองรับ
+CI smoke บน Windows/macOS ผ่านแล้วทั้ง Python 3.10/3.12; ผลนี้ไม่แทน full fault-injection suite ของทุกแพลตฟอร์ม

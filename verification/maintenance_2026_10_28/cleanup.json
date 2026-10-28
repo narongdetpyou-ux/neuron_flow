@@ -1,0 +1,43 @@
+{
+  "tracked_files_before": 315,
+  "exact_duplicate_groups_before": 20,
+  "exact_duplicate_extra_bytes_before": 76324,
+  "policy": "Preserve historical evidence, golden fixtures, prior releases, installed virtual environment and linked candidate snapshots; remove only regenerable ignored caches and the verified duplicate stale root manifest.",
+  "removed_ignored_caches": [
+    {
+      "path": ".mypy_cache",
+      "bytes": 3256544
+    },
+    {
+      "path": ".ruff_cache",
+      "bytes": 1810
+    },
+    {
+      "path": "neuron_flow/__pycache__",
+      "bytes": 138387
+    },
+    {
+      "path": "tests/__pycache__",
+      "bytes": 298302
+    },
+    {
+      "path": "tools/__pycache__",
+      "bytes": 55232
+    }
+  ],
+  "removed_duplicate": {
+    "path": "SHA256SUMS.txt",
+    "retained_identical_file": "release-assets/SHA256SUMS.txt",
+    "sha256": "0af9c310e75717386bcf2cd4cc00a5eeb92a8c5de5ee819bd030681d2ce2f41a"
+  },
+  "archived": {
+    "BUILD_STATUS.json": "verification/archive/pre_release_root_BUILD_STATUS.json",
+    "RELEASE_APPROVAL.json": "verification/archive/RELEASE_APPROVAL_0_2_0.json"
+  },
+  "kept": [
+    ".venv/",
+    "verification/v0_2_0/",
+    "verification/research_2026_10_28/",
+    "release-assets/v0.2.1-research-candidate/"
+  ]
+}

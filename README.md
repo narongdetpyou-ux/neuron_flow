@@ -1,18 +1,19 @@
-# Neuron Flow 0.2.1 — unpublished candidate
+# Neuron Flow 0.2.1 — beta
 
 Validate multiple purchase documents from UTF-8 CSV, verify money with Decimal and an
 independent integer-satang calculation, and deliver reports traceable to original CSV records.
 Python 3.10+ and the standard library; THB, one machine, no API keys.
 See [the Thai guide](README_TH.md) for the complete data contract and operating instructions.
 
-Version 0.2.1 is a development candidate, with no publication approval. It adds submit-only
-intake, batch discovery while a controller runs, supported 0.2.0 workspace reuse and structured
-size-limit failures. Read current test counts and results from `verification/v0_2_1/` rather
-than reusing the previous version's test totals.
+Version 0.2.1 adds submit-only intake, live batch discovery, supported 0.2.0 workspace reuse,
+structured size-limit failures, bounded event cursors and byte-stable Windows fixture checkouts.
+Publication is authorized in `RELEASE_APPROVAL.json`; obtain published downloads and their
+checksums from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases).
+Read the [evidence index](verification/README.md) for dated test results and their scope.
 
-Version 0.2.0 was released with the disclosed absence of actual Google Colab acceptance.
-Its evidence under `verification/v0_2_0/` and its `RELEASE_APPROVAL.json` remain historical;
-that approval does not approve 0.2.1. Actual Colab acceptance remains `not_run`.
+Actual Colab acceptance remains `not_run`. The historical 0.2.0 approval is preserved in
+[the archive](verification/archive/RELEASE_APPROVAL_0_2_0.json); neither local tests nor
+publication approval substitute for actual Colab acceptance.
 
 ## Intended use and operating envelope
 
@@ -24,12 +25,13 @@ see [API examples](docs/PYTHON_API_TH.md) and the [maintainer runbook](docs/MAIN
 
 Development checks: [branch coverage and static gates](docs/QUALITY_TH.md),
 [wheel/sdist installation](docs/PACKAGING_TH.md), and
-[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS CI jobs are configured;
-actual outcomes require runner evidence before claiming platform support.
+[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS smoke checks passed on Python 3.10/3.12 in
+[the Windows-fix CI run](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187).
+Full fault-injection validation remains scoped to Linux.
 
 ## Quick start
 
-Extract candidate `dist/neuron_flow_v0.2.1.zip` and run from its `neuron_flow` directory:
+Download `neuron_flow_v0.2.1.zip` from GitHub Releases, verify its `.sha256`, extract it and run from its `neuron_flow` directory:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
@@ -207,7 +209,7 @@ exit unsuccessfully; omitted evidence remains `not_run`.
 Actual fresh-runtime upload, execution, resume, manually confirmed receipt of the download and
 restore in a second runtime remain required for complete Colab acceptance. Release approval
 does not supply those facts. See [the 0.2.1 development scope](docs/DEVELOPMENT_0_2_1_TH.md).
-Windows/macOS have not been verified in this round.
+Windows/macOS smoke checks have passed; this does not certify the full fault-injection suite on those platforms.
 
 ## Project policies
 
