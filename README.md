@@ -14,6 +14,19 @@ Version 0.2.0 was released with the disclosed absence of actual Google Colab acc
 Its evidence under `verification/v0_2_0/` and its `RELEASE_APPROVAL.json` remain historical;
 that approval does not approve 0.2.1. Actual Colab acceptance remains `not_run`.
 
+## Intended use and operating envelope
+
+For developers and reviewers checking purchase CSVs on one trusted local machine.
+The locked acceptance workload contains 100 documents; parser limits are not a throughput
+or production SLA. Agents are trusted code, documents run sequentially, and users control
+workspace access, backups and retention. Python library APIs are experimental during 0.2.x;
+see [API examples](docs/PYTHON_API_TH.md) and the [maintainer runbook](docs/MAINTAINER_RUNBOOK_TH.md).
+
+Development checks: [branch coverage and static gates](docs/QUALITY_TH.md),
+[wheel/sdist installation](docs/PACKAGING_TH.md), and
+[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS CI jobs are configured;
+actual outcomes require runner evidence before claiming platform support.
+
 ## Quick start
 
 Extract candidate `dist/neuron_flow_v0.2.1.zip` and run from its `neuron_flow` directory:

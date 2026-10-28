@@ -222,3 +222,13 @@ Notebook มีเซลล์คืน backup สำหรับ runtime ให
 ส่ง Issue และ PR เป็นภาษาไทยหรืออังกฤษได้
 [สถานะการตั้งค่านโยบาย GitHub](docs/REPOSITORY_POLICIES_TH.md)
 แยกกติกาที่เตรียมไว้จากการตั้งค่าที่เปิดใช้งานจริง
+
+## ขอบเขตผู้ใช้และการพัฒนาจากรายงานวิจัย
+
+เหมาะสำหรับผู้พัฒนาและผู้ตรวจเอกสารซื้อ CSV บนเครื่องเดียวที่ควบคุมได้
+fixture ที่ล็อกตรวจ 100 เอกสาร; เพดาน parser ไม่ใช่ throughput หรือ SLA production
+Agent code ต้องเชื่อถือได้ งานหลายเอกสารยังเรียงลำดับ ผู้ใช้ควบคุมสิทธิ์ backup และอายุเก็บข้อมูลเอง
+Python API ใน 0.2.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
+[คู่มือผู้ดูแล](docs/MAINTAINER_RUNBOOK_TH.md), [quality gates](docs/QUALITY_TH.md),
+[packaging](docs/PACKAGING_TH.md) และ [runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md)
+เพิ่ม CI smoke สำหรับ Windows/macOS แล้ว แต่ต้องอ่านผล runner จริงก่อนอ้างการรองรับ

@@ -1,0 +1,15 @@
+{
+  "api_example": "custom Agent and idempotent recovery: passed",
+  "backup_restore": "passed",
+  "refuse_existing_target": "passed",
+  "reject_corrupt_backup_before_copy": "passed",
+  "repeat_restore_same_backup": "passed",
+  "counts": {
+    "documents": 2,
+    "VALID": 2,
+    "INVALID": 0,
+    "ERROR": 0
+  },
+  "certified_total": "412.70",
+  "workspace": "/workspace/neuron-maintainer-docs-pyh3g_3s/csv-workspace"
+}
