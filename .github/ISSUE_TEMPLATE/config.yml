@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security reporting policy
+    url: https://github.com/narongdetpyou-ux/neuron_flow/security/policy
+    about: Read the reporting instructions before sharing vulnerability details.
+  - name: Support and usage
+    url: https://github.com/narongdetpyou-ux/neuron_flow/blob/main/SUPPORT.md
+    about: See supported channels and the information needed for help.
+  - name: Code of conduct
+    url: https://github.com/narongdetpyou-ux/neuron_flow/blob/main/CODE_OF_CONDUCT.md
+    about: Read community standards and how to request a confidential contact.

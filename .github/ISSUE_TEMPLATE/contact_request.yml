@@ -1,0 +1,16 @@
+name: Private-contact request / ขอช่องทางติดต่อ
+description: Request a channel for sensitive matters without disclosing details.
+title: "Private contact request"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is visible to everyone with repository access. It is not a private conversation with the maintainer. Do not describe a vulnerability, name affected people, upload evidence or include contact details you do not want shared with repository readers.
+  - type: textarea
+    id: request
+    attributes:
+      label: Contact request only
+      description: A simple request to arrange a private channel is sufficient. The maintainer will respond with next steps.
+      placeholder: Please arrange a private channel before I share details.
+    validations:
+      required: true

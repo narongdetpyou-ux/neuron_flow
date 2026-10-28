@@ -1,0 +1,27 @@
+name: Usage question / ขอความช่วยเหลือ
+description: Ask about the documented CSV workflow or development setup.
+title: "[Question]: "
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: Project version, Python version and operating system
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to do?
+      description: Include the documentation you consulted and what remains unclear.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Command and synthetic example
+      description: Omit credentials, real purchase records and workspace databases.
+  - type: textarea
+    id: result
+    attributes:
+      label: Result or error message
+      description: Include exit code and relevant sanitized output, if any.
