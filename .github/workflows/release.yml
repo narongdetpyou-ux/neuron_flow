@@ -121,7 +121,7 @@ jobs:
           python-version: '3.12'
       - name: Define isolated output path
         run: printf 'PACKAGE_DIR=%s/release-package\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: ${{ needs.build.outputs.artifact_name }}
           path: ${{ env.PACKAGE_DIR }}
