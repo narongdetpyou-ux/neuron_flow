@@ -1,0 +1,94 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "serialNumber": "urn:uuid:7a3f4888-7060-4a9f-a525-a58c486c8284",
+  "metadata": {
+    "timestamp": "2026-10-28T15:10:19.735670+00:00",
+    "component": {
+      "type": "application",
+      "name": "neuron-flow-prototype",
+      "version": "0.2.1",
+      "purl": "pkg:pypi/neuron-flow-prototype@0.2.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "GPL-3.0-only"
+          }
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "neuron-flow:runtime-dependencies",
+        "value": "Python standard library only"
+      },
+      {
+        "name": "neuron-flow:python",
+        "value": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "setuptools",
+      "version": "84.2.1",
+      "purl": "pkg:pypi/setuptools@84.2.1",
+      "properties": [
+        {
+          "name": "neuron-flow:usage",
+          "value": "build tooling, not runtime"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "build",
+      "version": "1.6.1",
+      "purl": "pkg:pypi/build@1.6.1",
+      "properties": [
+        {
+          "name": "neuron-flow:usage",
+          "value": "build tooling, not runtime"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "wheel",
+      "version": "0.48.0",
+      "purl": "pkg:pypi/wheel@0.48.0",
+      "properties": [
+        {
+          "name": "neuron-flow:usage",
+          "value": "build tooling, not runtime"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "packaging",
+      "version": "26.3",
+      "purl": "pkg:pypi/packaging@26.3",
+      "properties": [
+        {
+          "name": "neuron-flow:usage",
+          "value": "build tooling, not runtime"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pyproject-hooks",
+      "version": "1.3.3",
+      "purl": "pkg:pypi/pyproject-hooks@1.3.3",
+      "properties": [
+        {
+          "name": "neuron-flow:usage",
+          "value": "build tooling, not runtime"
+        }
+      ]
+    }
+  ]
+}
