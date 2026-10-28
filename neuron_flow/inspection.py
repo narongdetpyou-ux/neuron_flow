@@ -1,15 +1,38 @@
 """Inspect persisted batches without a Runtime, workers, or database mutations."""
 
 import json
+from os import PathLike
 from pathlib import Path
 import sqlite3
+from typing import TypedDict
+
+
+class BatchSummary(TypedDict):
+    """Discovery metadata; older manifest fields intentionally remain opaque."""
+
+    batch_id: str
+    status: str
+    source_sha256: object
+    created_with_version: object
+    contract_version: object
+    workspace_schema_version: object
+    documents: int
+    engine_counts: dict[str, int]
+    counts: object
+    receipt_available: bool
+    delivery_error: str | None
+
+
+class BatchListing(TypedDict):
+    workspace: str
+    batches: list[BatchSummary]
 
 
 class InspectionError(ValueError):
     pass
 
 
-def list_batches(workspace):
+def list_batches(workspace: str | PathLike[str]) -> BatchListing:
     """Read a consistent metadata snapshot, including while a controller runs.
 
     Inspection deliberately does not apply the current runtime compatibility
@@ -28,13 +51,13 @@ def list_batches(workspace):
         tables = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         if 'csv_batches' not in tables:
             return {'workspace': str(directory), 'batches': []}
-        batches = []
+        batches: list[BatchSummary] = []
         for record in connection.execute('SELECT id,manifest,status,payload,receipt,delivery_error FROM csv_batches ORDER BY id'):
             manifest = json.loads(record['manifest'])
             payload = json.loads(record['payload']) if record['payload'] else None
             if not isinstance(manifest, dict) or (payload is not None and not isinstance(payload, dict)):
                 raise InspectionError('Batch manifest and result must be JSON objects')
-            states = {}
+            states: dict[str, int] = {}
             documents = 0
             if 'csv_batch_documents' in tables:
                 for row in connection.execute('''
