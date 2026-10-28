@@ -183,7 +183,10 @@ Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json`
 หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.2.1; approval ของ 0.2.0 ใช้แทนไม่ได้
 
 มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
-ยังไม่มีผลรัน GitHub Actions จริงในรอบนี้ ช่องทาง native release assets ที่เคยพบ HTTP 401
+รายงานวิจัยวันที่ 28 ตุลาคม 2026 บันทึกว่า main CI ของ commit
+`d5a72ab64a7439c999faf7ba47f77239d1238a11` ผ่านแล้ว
+ผลดังกล่าวเป็น snapshot ไม่ใช่ผล CI ของ commit ที่แก้ภายหลัง
+ดู [บันทึกการลงมือทำ](docs/RESEARCH_IMPLEMENTATION_TH.md) ช่องทาง native release assets ที่เคยพบ HTTP 401
 ต้องตรวจสิทธิ์และการอัปโหลด/ดาวน์โหลดจริงภายหลัง การเพิ่ม workflow ไม่ได้ยืนยันว่าแก้สิทธิ์สำเร็จแล้ว
 
 ## ใช้ Notebook บน Google Colab

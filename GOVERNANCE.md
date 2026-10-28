@@ -7,8 +7,8 @@ repository administration. There is no governing committee or voting process.
 
 Issues and pull requests may be written in English or Thai. Participation follows
 the [Code of Conduct](CODE_OF_CONDUCT.md), and contributions follow
-[CONTRIBUTING.md](CONTRIBUTING.md). The repository is currently private; these
-collaboration routes require repository access.
+[CONTRIBUTING.md](CONTRIBUTING.md). The repository is public; these
+collaboration routes are public, and sensitive details require an agreed private channel.
 
 ## Proposals and decisions
 

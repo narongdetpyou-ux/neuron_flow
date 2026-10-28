@@ -144,7 +144,9 @@ build-status files. Building does not publish. Without `--candidate`, matching a
 The legacy JSON demo remains available through `python -m neuron_flow demo`.
 
 CI is configured for Python 3.10/3.12. The manual release workflow defaults to `publish=false`.
-No actual GitHub Actions run has been observed in this round. The earlier native-release-asset
+The 28 October 2026 research snapshot reports a successful main CI run for
+`d5a72ab64a7439c999faf7ba47f77239d1238a11`; see the [implementation record](docs/RESEARCH_IMPLEMENTATION_TH.md).
+This historical observation does not establish the outcome of later runs. The earlier native-release-asset
 HTTP 401 still requires real authorization/upload/download verification; adding a workflow does
 not establish that runtime credentials have been fixed.
 
