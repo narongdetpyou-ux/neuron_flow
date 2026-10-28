@@ -1,0 +1,89 @@
+[
+  {
+    "suite": "cli",
+    "name": "events_underflow",
+    "command": [
+      "/workspace/neuron_flow/.venv/bin/python",
+      "-B",
+      "-m",
+      "neuron_flow",
+      "events",
+      "nonexistent",
+      "--after",
+      "-9223372036854775809",
+      "--workspace",
+      "/workspace/scratch/neuron-edge-cases-final-20261028/workspaces/events_underflow",
+      "--workers",
+      "1"
+    ],
+    "allowed_exit_codes": [
+      2
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "duration_seconds": 0.05908233200011637,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 109, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 95, in main\n    result = runtime.synapse.events_for(args.recipient, args.job_id, args.after)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/engine.py\", line 148, in events_for\n    return self.store.events_for(recipient, job_id, after)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/storage.py\", line 131, in events_for\n    for row in self.db.execute(\"SELECT * FROM events WHERE job_id=? AND sequence>? ORDER BY sequence\", (job_id, after)):\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOverflowError: Python int too large to convert to SQLite INTEGER\n",
+    "passed": false,
+    "outcome": "unexpected",
+    "problem": "unhandled CLI traceback"
+  },
+  {
+    "suite": "cli",
+    "name": "events_overflow",
+    "command": [
+      "/workspace/neuron_flow/.venv/bin/python",
+      "-B",
+      "-m",
+      "neuron_flow",
+      "events",
+      "nonexistent",
+      "--after",
+      "9223372036854775808",
+      "--workspace",
+      "/workspace/scratch/neuron-edge-cases-final-20261028/workspaces/events_overflow",
+      "--workers",
+      "1"
+    ],
+    "allowed_exit_codes": [
+      2
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "duration_seconds": 0.06067853600006856,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 109, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 95, in main\n    result = runtime.synapse.events_for(args.recipient, args.job_id, args.after)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/engine.py\", line 148, in events_for\n    return self.store.events_for(recipient, job_id, after)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/storage.py\", line 131, in events_for\n    for row in self.db.execute(\"SELECT * FROM events WHERE job_id=? AND sequence>? ORDER BY sequence\", (job_id, after)):\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOverflowError: Python int too large to convert to SQLite INTEGER\n",
+    "passed": false,
+    "outcome": "unexpected",
+    "problem": "unhandled CLI traceback"
+  },
+  {
+    "suite": "cli",
+    "name": "events_huge_integer",
+    "command": [
+      "/workspace/neuron_flow/.venv/bin/python",
+      "-B",
+      "-m",
+      "neuron_flow",
+      "events",
+      "nonexistent",
+      "--after",
+      "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "--workspace",
+      "/workspace/scratch/neuron-edge-cases-final-20261028/workspaces/events_huge_integer",
+      "--workers",
+      "1"
+    ],
+    "allowed_exit_codes": [
+      2
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "duration_seconds": 0.06406005499979983,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 109, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/__main__.py\", line 95, in main\n    result = runtime.synapse.events_for(args.recipient, args.job_id, args.after)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/engine.py\", line 148, in events_for\n    return self.store.events_for(recipient, job_id, after)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/neuron_flow/neuron_flow/storage.py\", line 131, in events_for\n    for row in self.db.execute(\"SELECT * FROM events WHERE job_id=? AND sequence>? ORDER BY sequence\", (job_id, after)):\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOverflowError: Python int too large to convert to SQLite INTEGER\n",
+    "passed": false,
+    "outcome": "unexpected",
+    "problem": "unhandled CLI traceback"
+  }
+]

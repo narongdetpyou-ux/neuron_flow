@@ -1,0 +1,83 @@
+{
+  "criterion": "A07",
+  "source_file": "acceptance/input.csv",
+  "source_sha256": "c04e31ad7277d5eb39264cba8f4d82ea42c49db402e8d71bb6fac9ca4cfb6579",
+  "expected_file": "acceptance/expected_results.json",
+  "passed": true,
+  "comparisons": [
+    {
+      "expected": {
+        "document_id": "INVALID-020",
+        "document_status": "INVALID",
+        "source_rows": [
+          202,
+          203
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.71",
+        "difference": "-0.01",
+        "errors": [
+          {
+            "row_number": 202,
+            "field": "declared_total",
+            "reason_code": "TOTAL_MISMATCH",
+            "expected": "310.70",
+            "actual": "310.71"
+          }
+        ]
+      },
+      "actual": {
+        "document_id": "INVALID-020",
+        "document_status": "INVALID",
+        "source_rows": [
+          202,
+          203
+        ],
+        "computed_total": "310.70",
+        "declared_total": "310.71",
+        "difference": "-0.01",
+        "errors": [
+          {
+            "actual": "310.71",
+            "expected": "310.70",
+            "field": "declared_total",
+            "reason_code": "TOTAL_MISMATCH",
+            "row_number": 202
+          }
+        ]
+      }
+    }
+  ],
+  "receipt": {
+    "batch_id": "golden-100",
+    "status": "DELIVERED",
+    "counts": {
+      "documents": 100,
+      "VALID": 80,
+      "INVALID": 20,
+      "ERROR": 0
+    },
+    "certified_total": "5000239375620.29",
+    "currency": "THB",
+    "ungrouped_rows": 0,
+    "receipt": {
+      "artifacts": {
+        "summary.csv": {
+          "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/golden/batch_reports/golden-100/summary.csv",
+          "sha256": "fa77d5c2ec0f23f39b0f88235a747792c2e01c5ba53700f91302b15d74a5f0c3",
+          "bytes": 5919
+        },
+        "details.json": {
+          "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/golden/batch_reports/golden-100/details.json",
+          "sha256": "db74d4cc6a0a86625adfc80e1ceed8eaec43aae9092da19408c7491b5da1d630",
+          "bytes": 884228
+        },
+        "source.csv": {
+          "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/golden/batch_reports/golden-100/source.csv",
+          "sha256": "c04e31ad7277d5eb39264cba8f4d82ea42c49db402e8d71bb6fac9ca4cfb6579",
+          "bytes": 11461
+        }
+      }
+    }
+  }
+}

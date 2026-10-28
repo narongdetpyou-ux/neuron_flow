@@ -148,6 +148,27 @@ No actual GitHub Actions run has been observed in this round. The earlier native
 HTTP 401 still requires real authorization/upload/download verification; adding a workflow does
 not establish that runtime credentials have been fixed.
 
+## Local performance benchmark
+
+```bash
+python -B tools/benchmark.py --output-dir /tmp/neuron-benchmark
+```
+
+Measure the five core in-memory CSV operations at 10–10,000 items using only the
+standard library. Timing and memory tracing run separately; JSON, CSV and text
+results distinguish extra Python allocations from total worker-process peak RSS.
+See [benchmark methodology and options](docs/BENCHMARK_TH.md).
+
+## Edge cases and mock inputs
+
+```bash
+python -B tools/edge_cases.py --output-dir /tmp/neuron-edge-cases
+```
+
+Generate reproducible CSV/JSON fixtures and run direct-function and isolated CLI
+checks. Unexpected crashes, timeouts, or integrity failures produce exit code 1;
+expected invalid data remains distinct. See [coverage and known findings](docs/EDGE_CASES_TH.md).
+
 ## Colab notebook and backups
 
 Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 candidate ZIP, verify every packaged

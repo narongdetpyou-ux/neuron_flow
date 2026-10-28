@@ -1,0 +1,43 @@
+test_invalid_worker_limits (tests.test_runtime.ContractTests.test_invalid_worker_limits) ... ok
+test_invalid_workflows_fail_before_any_execution (tests.test_runtime.ContractTests.test_invalid_workflows_fail_before_any_execution) ... ok
+test_strict_json_rejects_duplicates_nonfinite_and_invalid_encoding (tests.test_runtime.ContractTests.test_strict_json_rejects_duplicates_nonfinite_and_invalid_encoding) ... ok
+test_actual_worker_crash_does_not_crash_controller (tests.test_runtime.RuntimeTests.test_actual_worker_crash_does_not_crash_controller) ... ok
+test_bad_input_fails_without_retry_and_blocks_dependents (tests.test_runtime.RuntimeTests.test_bad_input_fails_without_retry_and_blocks_dependents) ... ok
+test_buffered_timely_result_not_misclassified_as_timeout (tests.test_runtime.RuntimeTests.test_buffered_timely_result_not_misclassified_as_timeout) ... ok
+test_changed_agent_version_cannot_reuse_previous_results (tests.test_runtime.RuntimeTests.test_changed_agent_version_cannot_reuse_previous_results) ... ok
+test_cli_invalid_json_is_a_clean_nonzero_failure (tests.test_runtime.RuntimeTests.test_cli_invalid_json_is_a_clean_nonzero_failure) ... ok
+test_cli_workflow_invoice_status_and_duplicate_invocation (tests.test_runtime.RuntimeTests.test_cli_workflow_invoice_status_and_duplicate_invocation) ... ok
+test_conflicting_output_is_preserved_and_reported (tests.test_runtime.RuntimeTests.test_conflicting_output_is_preserved_and_reported) ... ok
+test_decimal_rounding_boundary (tests.test_runtime.RuntimeTests.test_decimal_rounding_boundary) ... ok
+test_dendrite_selects_workflow_and_deduplicates_raw_input (tests.test_runtime.RuntimeTests.test_dendrite_selects_workflow_and_deduplicates_raw_input) ... ok
+test_dependency_order_enforced_even_when_declared_in_reverse (tests.test_runtime.RuntimeTests.test_dependency_order_enforced_even_when_declared_in_reverse) ... ok
+test_duplicate_submission_and_repeated_run_reuse_success (tests.test_runtime.RuntimeTests.test_duplicate_submission_and_repeated_run_reuse_success) ... ok
+test_events_only_delivered_to_relevant_recipient (tests.test_runtime.RuntimeTests.test_events_only_delivered_to_relevant_recipient) ... ok
+test_file_written_before_receipt_failure_is_reused (tests.test_runtime.RuntimeTests.test_file_written_before_receipt_failure_is_reused) ... ok
+test_float_price_rejected_instead_of_silently_rounding (tests.test_runtime.RuntimeTests.test_float_price_rejected_instead_of_silently_rounding) ... ok
+test_independent_branch_survives_failed_branch (tests.test_runtime.RuntimeTests.test_independent_branch_survives_failed_branch) ... ok
+test_input_is_snapshot_not_mutable_caller_reference (tests.test_runtime.RuntimeTests.test_input_is_snapshot_not_mutable_caller_reference) ... ok
+test_interrupted_final_attempt_is_not_given_extra_retry (tests.test_runtime.RuntimeTests.test_interrupted_final_attempt_is_not_given_extra_retry) ... ok
+test_invoice_happy_path_exact_money_and_verified_file (tests.test_runtime.RuntimeTests.test_invoice_happy_path_exact_money_and_verified_file) ... ok
+test_output_contract_distinguishes_bool_from_integer (tests.test_runtime.RuntimeTests.test_output_contract_distinguishes_bool_from_integer) ... ok
+test_parallel_load_respects_capacity_and_reuses_workers (tests.test_runtime.RuntimeTests.test_parallel_load_respects_capacity_and_reuses_workers) ... ok
+test_permanent_error_does_not_retry (tests.test_runtime.RuntimeTests.test_permanent_error_does_not_retry) ... ok
+test_programming_error_is_not_blindly_retried (tests.test_runtime.RuntimeTests.test_programming_error_is_not_blindly_retried) ... ok
+test_real_controller_kill_and_restart (tests.test_runtime.RuntimeTests.test_real_controller_kill_and_restart) ... ok
+test_real_hung_process_terminated_and_replaced (tests.test_runtime.RuntimeTests.test_real_hung_process_terminated_and_replaced) ... ok
+test_resume_preserves_completed_steps_and_attempt_budget (tests.test_runtime.RuntimeTests.test_resume_preserves_completed_steps_and_attempt_budget) ... ok
+test_runtime_close_stops_all_worker_processes (tests.test_runtime.RuntimeTests.test_runtime_close_stops_all_worker_processes) ... ok
+test_same_id_different_input_is_rejected (tests.test_runtime.RuntimeTests.test_same_id_different_input_is_rejected) ... ok
+test_terminal_failure_retries_delivery_without_rerunning_agents (tests.test_runtime.RuntimeTests.test_terminal_failure_retries_delivery_without_rerunning_agents) ... ok
+test_timeout_attempt_budget_is_enforced (tests.test_runtime.RuntimeTests.test_timeout_attempt_budget_is_enforced) ... ok
+test_transient_failure_retries_then_succeeds (tests.test_runtime.RuntimeTests.test_transient_failure_retries_then_succeeds) ... ok
+test_validator_cannot_modify_output (tests.test_runtime.RuntimeTests.test_validator_cannot_modify_output) ... ok
+test_validator_false_is_not_ignored (tests.test_runtime.RuntimeTests.test_validator_false_is_not_ignored) ... ok
+test_workspace_rejects_two_controllers_and_releases_lock (tests.test_runtime.RuntimeTests.test_workspace_rejects_two_controllers_and_releases_lock) ... ok
+test_wrong_output_does_not_count_as_success (tests.test_runtime.RuntimeTests.test_wrong_output_does_not_count_as_success) ... ok
+test_wrong_total_rejected_before_terminal_success (tests.test_runtime.RuntimeTests.test_wrong_total_rejected_before_terminal_success) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 5.990s
+
+OK

@@ -1,0 +1,21 @@
+{
+  "criterion": "A02",
+  "passed": true,
+  "cases": [
+    {
+      "source_csv": "document_id,quantity\nA,1\n",
+      "expected": "file rejected with named columns",
+      "actual": "Invalid CSV header: missing=['item_id', 'description', 'unit_price', 'declared_total', 'currency'], extra=[], duplicate=[]"
+    },
+    {
+      "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency,currency\n",
+      "expected": "file rejected with named columns",
+      "actual": "Invalid CSV header: missing=[], extra=[], duplicate=['currency']"
+    },
+    {
+      "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency,unknown\n",
+      "expected": "file rejected with named columns",
+      "actual": "Invalid CSV header: missing=[], extra=['unknown'], duplicate=[]"
+    }
+  ]
+}

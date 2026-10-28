@@ -1,0 +1,620 @@
+{
+  "scenario": "A09_error_report",
+  "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency\nCRASH,I1,/tmp/neuron-delivery-test-mln39qm4/crash-report,2,0.10,0.20,THB\nGOOD,I1,ยอดที่รับรองได้,2,0.10,0.20,THB\n",
+  "source_sha256": "ecd46f5f63dbbdcf67f7824d4ac695e991fe237c7679157c2a9fdeca6835b331",
+  "expected": {
+    "delivery_status": "DELIVERED",
+    "ERROR": 1,
+    "VALID": 1,
+    "certified_total": "0.20"
+  },
+  "actual": {
+    "agent_versions": {
+      "csv_calculate": {
+        "entrypoint": "tests.batch_fault_agents:calculate_fault",
+        "validator": "neuron_flow.csv_agents:calculate_csv_output",
+        "version": "0.2.0-fault-test1"
+      },
+      "csv_validate": {
+        "entrypoint": "neuron_flow.csv_agents:validate_csv",
+        "validator": "neuron_flow.csv_agents:validate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_verify": {
+        "entrypoint": "neuron_flow.csv_agents:verify_csv",
+        "validator": "neuron_flow.csv_agents:verify_csv_output",
+        "version": "0.2.0"
+      }
+    },
+    "batch_id": "error-visible",
+    "certified_total": "0.20",
+    "contract_version": "purchase-csv-v1",
+    "counts": {
+      "ERROR": 1,
+      "INVALID": 0,
+      "VALID": 1,
+      "documents": 2
+    },
+    "currency": "THB",
+    "documents": [
+      {
+        "computed_total": null,
+        "declared_total": "0.20",
+        "difference": null,
+        "document_id": "CRASH",
+        "document_status": "ERROR",
+        "engine_status": "FAILED",
+        "errors": [
+          {
+            "actual": {
+              "delivery_error": null,
+              "engine_status": "FAILED",
+              "failed_steps": {
+                "calculate": {
+                  "message": "",
+                  "type": "EOFError"
+                }
+              }
+            },
+            "expected": "verified document result",
+            "field": "*",
+            "reason_code": "ENGINE_ERROR",
+            "row_number": 2
+          }
+        ],
+        "history": [
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:submitted",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "job.submitted",
+            "payload": {},
+            "sequence": 1,
+            "step_id": null,
+            "timestamp": 1793182408.8766065
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:RUNNING:cd007880378f49a0a6ac4ff659d85b04",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "job.running",
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "sequence": 3,
+            "step_id": null,
+            "timestamp": 1793182408.876899
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:validate:1:RUNNING",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 4,
+            "step_id": "validate",
+            "timestamp": 1793182408.8769486
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:validate:1:SUCCEEDED",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.succeeded",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 5,
+            "step_id": "validate",
+            "timestamp": 1793182408.963146
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:calculate:1:RUNNING",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 6,
+            "step_id": "calculate",
+            "timestamp": 1793182408.963268
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:calculate:1:RETRY_WAIT",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.retry_wait",
+            "payload": {
+              "attempt": 1,
+              "error": {
+                "message": "",
+                "type": "EOFError"
+              }
+            },
+            "sequence": 7,
+            "step_id": "calculate",
+            "timestamp": 1793182408.9736474
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:calculate:2:RUNNING",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 2,
+              "error": null
+            },
+            "sequence": 8,
+            "step_id": "calculate",
+            "timestamp": 1793182409.0247073
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:calculate:2:FAILED",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.failed",
+            "payload": {
+              "attempt": 2,
+              "error": {
+                "message": "",
+                "type": "EOFError"
+              }
+            },
+            "sequence": 9,
+            "step_id": "calculate",
+            "timestamp": 1793182409.110145
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:verify:0:BLOCKED",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "step.blocked",
+            "payload": {
+              "attempt": 0,
+              "error": {
+                "message": "A required step did not succeed",
+                "type": "DependencyFailed"
+              }
+            },
+            "sequence": 10,
+            "step_id": "verify",
+            "timestamp": 1793182409.1102817
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "event_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf:FAILED:1848ec05389246b7ab18712deee26f83",
+            "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+            "kind": "job.failed",
+            "payload": {
+              "error": null,
+              "receipt": {
+                "bytes": 760,
+                "path": "/tmp/neuron-delivery-test-mln39qm4/reports/doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf.json",
+                "sha256": "6598ab1ff0974bfa9f7993ea1ef5a18f1aa4ed097780e9814c56a0ba5300dc6c"
+              }
+            },
+            "sequence": 11,
+            "step_id": null,
+            "timestamp": 1793182409.110703
+          }
+        ],
+        "job_id": "doc_c15b06c6ee3098d5fec0bec10c2a97317a594a9bedd2954274ba62ea8e24abbf",
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "/tmp/neuron-delivery-test-mln39qm4/crash-report",
+              "document_id": "CRASH",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "CRASH",
+              "I1",
+              "/tmp/neuron-delivery-test-mln39qm4/crash-report",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 2
+          }
+        ],
+        "source_rows": [
+          2
+        ],
+        "steps": {
+          "calculate": {
+            "attempts": 2,
+            "error": {
+              "message": "",
+              "type": "EOFError"
+            },
+            "output": null,
+            "status": "FAILED"
+          },
+          "validate": {
+            "attempts": 1,
+            "error": null,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "CRASH",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "CRASH",
+                "items": [
+                  {
+                    "description": "/tmp/neuron-delivery-test-mln39qm4/crash-report",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                2
+              ]
+            },
+            "status": "SUCCEEDED"
+          },
+          "verify": {
+            "attempts": 0,
+            "error": {
+              "message": "A required step did not succeed",
+              "type": "DependencyFailed"
+            },
+            "output": null,
+            "status": "BLOCKED"
+          }
+        }
+      },
+      {
+        "computed_total": "0.20",
+        "declared_total": "0.20",
+        "difference": "0.00",
+        "document_id": "GOOD",
+        "document_status": "VALID",
+        "engine_status": "SUCCEEDED",
+        "errors": [],
+        "history": [
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:submitted",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "job.submitted",
+            "payload": {},
+            "sequence": 2,
+            "step_id": null,
+            "timestamp": 1793182408.8767529
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:RUNNING:030b9b758717400a87462c59ed1a75f5",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "job.running",
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "sequence": 12,
+            "step_id": null,
+            "timestamp": 1793182409.111295
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:validate:1:RUNNING",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 13,
+            "step_id": "validate",
+            "timestamp": 1793182409.1113436
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:validate:1:SUCCEEDED",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.succeeded",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 14,
+            "step_id": "validate",
+            "timestamp": 1793182409.1933277
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:calculate:1:RUNNING",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 15,
+            "step_id": "calculate",
+            "timestamp": 1793182409.1934357
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:calculate:1:SUCCEEDED",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.succeeded",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 16,
+            "step_id": "calculate",
+            "timestamp": 1793182409.2038343
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:verify:1:RUNNING",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.running",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 17,
+            "step_id": "verify",
+            "timestamp": 1793182409.203934
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:verify:1:SUCCEEDED",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "step.succeeded",
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "sequence": 18,
+            "step_id": "verify",
+            "timestamp": 1793182409.2143633
+          },
+          {
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "event_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0:SUCCEEDED:d39ff4b529934107b65aa531f9bca0bb",
+            "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+            "kind": "job.succeeded",
+            "payload": {
+              "error": null,
+              "receipt": {
+                "bytes": 883,
+                "path": "/tmp/neuron-delivery-test-mln39qm4/reports/doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0.json",
+                "sha256": "ff91b43692b4c85f2e44c9da2ea8689134314b9bc5d2b46c3b11b1d6dc004034"
+              }
+            },
+            "sequence": 19,
+            "step_id": null,
+            "timestamp": 1793182409.2150083
+          }
+        ],
+        "job_id": "doc_6421a1529749601d63c78e41308488b534a862d7cdae3592e078f2a976cbe6a0",
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "ยอดที่รับรองได้",
+              "document_id": "GOOD",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "GOOD",
+              "I1",
+              "ยอดที่รับรองได้",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 3
+          }
+        ],
+        "source_rows": [
+          3
+        ],
+        "steps": {
+          "calculate": {
+            "attempts": 1,
+            "error": null,
+            "output": {
+              "currency": "THB",
+              "lines": [
+                {
+                  "amount": "0.20",
+                  "item_id": "I1"
+                }
+              ],
+              "total": "0.20"
+            },
+            "status": "SUCCEEDED"
+          },
+          "validate": {
+            "attempts": 1,
+            "error": null,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "GOOD",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "GOOD",
+                "items": [
+                  {
+                    "description": "ยอดที่รับรองได้",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                3
+              ]
+            },
+            "status": "SUCCEEDED"
+          },
+          "verify": {
+            "attempts": 1,
+            "error": null,
+            "output": {
+              "computed_total": "0.20",
+              "declared_total": "0.20",
+              "difference": "0.00",
+              "document_id": "GOOD",
+              "document_status": "VALID",
+              "errors": [],
+              "source_rows": [
+                3
+              ]
+            },
+            "status": "SUCCEEDED"
+          }
+        }
+      }
+    ],
+    "input_rows": 2,
+    "source_sha256": "ecd46f5f63dbbdcf67f7824d4ac695e991fe237c7679157c2a9fdeca6835b331",
+    "status": "PROCESSED",
+    "system_version": "0.2.1",
+    "ungrouped_rows": []
+  },
+  "receipt": {
+    "artifacts": {
+      "summary.csv": {
+        "path": "/tmp/neuron-delivery-test-mln39qm4/batch_reports/error-visible/summary.csv",
+        "sha256": "c0e16bb8e9e6c415c0834f94564c4e5f8f0f035d0e5ee797470acf2ed0539554",
+        "bytes": 181
+      },
+      "details.json": {
+        "path": "/tmp/neuron-delivery-test-mln39qm4/batch_reports/error-visible/details.json",
+        "sha256": "299a17e396e82618293d179e1515a09d8a3a4fbe519edc496c5c9eba48524649",
+        "bytes": 17410
+      },
+      "source.csv": {
+        "path": "/tmp/neuron-delivery-test-mln39qm4/batch_reports/error-visible/source.csv",
+        "sha256": "ecd46f5f63dbbdcf67f7824d4ac695e991fe237c7679157c2a9fdeca6835b331",
+        "bytes": 219
+      }
+    }
+  },
+  "summary": [
+    {
+      "document_id": "CRASH",
+      "document_status": "ERROR",
+      "declared_total": "0.20",
+      "computed_total": "",
+      "difference": "",
+      "error_count": "1",
+      "source_rows": "[2]",
+      "engine_status": "FAILED"
+    },
+    {
+      "document_id": "GOOD",
+      "document_status": "VALID",
+      "declared_total": "0.20",
+      "computed_total": "0.20",
+      "difference": "0.00",
+      "error_count": "0",
+      "source_rows": "[3]",
+      "engine_status": "SUCCEEDED"
+    }
+  ]
+}
