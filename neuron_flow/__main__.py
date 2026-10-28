@@ -11,6 +11,7 @@ from . import Runtime
 from .model import MAX_MESSAGE_BYTES, decode
 from .batch import BatchRuntime
 from .csv_input import MAX_SOURCE_BYTES
+from .inspection import list_batches
 
 
 DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
@@ -22,14 +23,17 @@ DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Neuron Flow supervised workflow prototype")
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("csv", "batch-resume", "batch-status"):
+    for name in ("csv", "batch-resume", "batch-status", "batch-list"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", default="batch_workspace")
-        command.add_argument("--workers", type=int, default=3)
+        if name != "batch-list":
+            command.add_argument("--workers", type=int, default=3)
         if name == "csv":
             command.add_argument("source", type=Path)
             command.add_argument("--batch-id")
-        else:
+            command.add_argument("--submit-only", action="store_true",
+                                 help="Persist CSV and return batch_id before running Agents")
+        elif name != "batch-list":
             command.add_argument("batch_id")
     for name in ("demo", "invoice", "run", "resume", "status", "events"):
         command = commands.add_parser(name)
@@ -47,13 +51,20 @@ def main(argv=None):
             command.add_argument("--after", type=int, default=0)
     args = parser.parse_args(argv)
     try:
+        if args.command == "batch-list":
+            print(json.dumps(list_batches(args.workspace), ensure_ascii=False, indent=2, allow_nan=False))
+            return 0
         if args.command in {"csv", "batch-resume", "batch-status"}:
             with BatchRuntime(args.workspace, max_workers=args.workers) as batch:
                 if args.command == "csv":
                     with args.source.open("rb") as stream:
                         source = stream.read(MAX_SOURCE_BYTES + 1)
                     submitted = batch.submit(source, args.batch_id)
-                    result = batch.deliver(submitted["batch_id"])
+                    if args.submit_only:
+                        snapshot = batch.status(submitted["batch_id"])
+                        result = {**submitted, "status": snapshot.get("batch_status", snapshot["status"])}
+                    else:
+                        result = batch.deliver(submitted["batch_id"])
                 elif args.command == "batch-resume":
                     result = batch.deliver(args.batch_id)
                 else:

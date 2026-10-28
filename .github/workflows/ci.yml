@@ -1,0 +1,54 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12']
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Verify the locked 100-document reference fixture
+        run: python -B tools/build_acceptance_fixture.py --check
+      - name: Run all runtime and CSV/batch regression tests
+        env:
+          NEURON_EVIDENCE_DIR: ${{ runner.temp }}/evidence-${{ matrix.python-version }}
+        run: python -B -m unittest discover -s tests -t . -v
+      - name: Test release guards without any network or publishing
+        run: python -B .github/workflows/test_release_support.py -v
+      - name: Compile source and notebook cells
+        run: |
+          python -B - <<'PY'
+          import ast
+          import json
+          from pathlib import Path
+          paths = list(Path('neuron_flow').glob('*.py')) + list(Path('tools').glob('*.py'))
+          for path in paths:
+              ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+          notebook = json.loads(Path('START_COLAB.ipynb').read_text(encoding='utf-8'))
+          cells = [cell for cell in notebook['cells'] if cell['cell_type'] == 'code']
+          for index, cell in enumerate(cells):
+              ast.parse(''.join(cell['source']), filename=f'notebook-cell-{index}')
+          print(f'Parsed {len(paths)} Python files and {len(cells)} notebook code cells. This is not actual Colab acceptance.')
+          PY

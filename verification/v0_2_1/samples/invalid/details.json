@@ -1,0 +1,858 @@
+{
+  "agent_versions": {
+    "csv_calculate": {
+      "entrypoint": "neuron_flow.csv_agents:calculate_csv",
+      "validator": "neuron_flow.csv_agents:calculate_csv_output",
+      "version": "0.2.0"
+    },
+    "csv_validate": {
+      "entrypoint": "neuron_flow.csv_agents:validate_csv",
+      "validator": "neuron_flow.csv_agents:validate_csv_output",
+      "version": "0.2.0"
+    },
+    "csv_verify": {
+      "entrypoint": "neuron_flow.csv_agents:verify_csv",
+      "validator": "neuron_flow.csv_agents:verify_csv_output",
+      "version": "0.2.0"
+    }
+  },
+  "batch_id": "invalid",
+  "certified_total": "10.00",
+  "contract_version": "purchase-csv-v1",
+  "counts": {
+    "ERROR": 0,
+    "INVALID": 2,
+    "VALID": 1,
+    "documents": 3
+  },
+  "currency": "THB",
+  "documents": [
+    {
+      "computed_total": null,
+      "declared_total": "10.00",
+      "difference": null,
+      "document_id": "BAD-QUANTITY",
+      "document_status": "INVALID",
+      "engine_status": "SUCCEEDED",
+      "errors": [
+        {
+          "actual": "0",
+          "expected": "integer:1..1000000",
+          "field": "quantity",
+          "reason_code": "QUANTITY_RANGE",
+          "row_number": 2
+        }
+      ],
+      "history": [
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:submitted",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "job.submitted",
+          "payload": {},
+          "sequence": 1,
+          "step_id": null,
+          "timestamp": 1793146938.10029
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:RUNNING:6b13709f4cd94223bd6e8633c1aeffaf",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "job.running",
+          "payload": {
+            "error": null,
+            "receipt": null
+          },
+          "sequence": 4,
+          "step_id": null,
+          "timestamp": 1793146938.101968
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:validate:1:RUNNING",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 5,
+          "step_id": "validate",
+          "timestamp": 1793146938.102295
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:calculate",
+            "step:verify"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:validate:1:SUCCEEDED",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 6,
+          "step_id": "validate",
+          "timestamp": 1793146938.171361
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:calculate:1:RUNNING",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 7,
+          "step_id": "calculate",
+          "timestamp": 1793146938.171875
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:verify"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:calculate:1:SUCCEEDED",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 8,
+          "step_id": "calculate",
+          "timestamp": 1793146938.1825235
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:verify:1:RUNNING",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 9,
+          "step_id": "verify",
+          "timestamp": 1793146938.1830301
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:verify:1:SUCCEEDED",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 10,
+          "step_id": "verify",
+          "timestamp": 1793146938.193643
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a:SUCCEEDED:78409720d1744409bae61c22137958f2",
+          "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+          "kind": "job.succeeded",
+          "payload": {
+            "error": null,
+            "receipt": {
+              "bytes": 1158,
+              "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/invalid/reports/doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a.json",
+              "sha256": "db93edf4a2ae008d48ef2fdff3bfe2dbf85b37957c1831976730fe48647e6079"
+            }
+          },
+          "sequence": 11,
+          "step_id": null,
+          "timestamp": 1793146938.1963022
+        }
+      ],
+      "job_id": "doc_b42d046bb585c16ec1dae01ca8c578c5582b99fa0a672c47b9a83c98ef4a709a",
+      "source_records": [
+        {
+          "errors": [],
+          "fields": {
+            "currency": "THB",
+            "declared_total": "10.00",
+            "description": "จำนวนผิด",
+            "document_id": "BAD-QUANTITY",
+            "item_id": "A",
+            "quantity": "0",
+            "unit_price": "10.00"
+          },
+          "raw_fields": [
+            "BAD-QUANTITY",
+            "A",
+            "จำนวนผิด",
+            "0",
+            "10.00",
+            "10.00",
+            "THB"
+          ],
+          "source_row": 2
+        }
+      ],
+      "source_rows": [
+        2
+      ],
+      "steps": {
+        "calculate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": null,
+            "declared_total": "10.00",
+            "difference": null,
+            "document_id": "BAD-QUANTITY",
+            "document_status": "INVALID",
+            "errors": [
+              {
+                "actual": "0",
+                "expected": "integer:1..1000000",
+                "field": "quantity",
+                "reason_code": "QUANTITY_RANGE",
+                "row_number": 2
+              }
+            ],
+            "source_rows": [
+              2
+            ]
+          },
+          "status": "SUCCEEDED"
+        },
+        "validate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": null,
+            "declared_total": "10.00",
+            "declared_total_raw": "10.00",
+            "difference": null,
+            "document_id": "BAD-QUANTITY",
+            "document_status": "INVALID",
+            "errors": [
+              {
+                "actual": "0",
+                "expected": "integer:1..1000000",
+                "field": "quantity",
+                "reason_code": "QUANTITY_RANGE",
+                "row_number": 2
+              }
+            ],
+            "invoice": null,
+            "source_rows": [
+              2
+            ]
+          },
+          "status": "SUCCEEDED"
+        },
+        "verify": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": null,
+            "declared_total": "10.00",
+            "difference": null,
+            "document_id": "BAD-QUANTITY",
+            "document_status": "INVALID",
+            "errors": [
+              {
+                "actual": "0",
+                "expected": "integer:1..1000000",
+                "field": "quantity",
+                "reason_code": "QUANTITY_RANGE",
+                "row_number": 2
+              }
+            ],
+            "source_rows": [
+              2
+            ]
+          },
+          "status": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "computed_total": "10.00",
+      "declared_total": "10.00",
+      "difference": "0.00",
+      "document_id": "GOOD",
+      "document_status": "VALID",
+      "engine_status": "SUCCEEDED",
+      "errors": [],
+      "history": [
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:submitted",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "job.submitted",
+          "payload": {},
+          "sequence": 2,
+          "step_id": null,
+          "timestamp": 1793146938.1008956
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:RUNNING:873feb583b9947459744bfa454b6fe8b",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "job.running",
+          "payload": {
+            "error": null,
+            "receipt": null
+          },
+          "sequence": 12,
+          "step_id": null,
+          "timestamp": 1793146938.1972115
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:validate:1:RUNNING",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 13,
+          "step_id": "validate",
+          "timestamp": 1793146938.1976428
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:calculate",
+            "step:verify"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:validate:1:SUCCEEDED",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 14,
+          "step_id": "validate",
+          "timestamp": 1793146938.2082605
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:calculate:1:RUNNING",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 15,
+          "step_id": "calculate",
+          "timestamp": 1793146938.208763
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:verify"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:calculate:1:SUCCEEDED",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 16,
+          "step_id": "calculate",
+          "timestamp": 1793146938.2193413
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:verify:1:RUNNING",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 17,
+          "step_id": "verify",
+          "timestamp": 1793146938.2200565
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:verify:1:SUCCEEDED",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 18,
+          "step_id": "verify",
+          "timestamp": 1793146938.2309456
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4:SUCCEEDED:874602767ee94e98ac84d1ab2d02f1da",
+          "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+          "kind": "job.succeeded",
+          "payload": {
+            "error": null,
+            "receipt": {
+              "bytes": 893,
+              "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/invalid/reports/doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4.json",
+              "sha256": "5781de4109fb49d4993d84205453cd5bf64f70b91932da4efd56853b54138565"
+            }
+          },
+          "sequence": 19,
+          "step_id": null,
+          "timestamp": 1793146938.232925
+        }
+      ],
+      "job_id": "doc_7b5bc252de76f56caf266b76341c98f6956e10e5704a11045aad4879f84adab4",
+      "source_records": [
+        {
+          "errors": [],
+          "fields": {
+            "currency": "THB",
+            "declared_total": "10.00",
+            "description": "รายการที่ทำต่อได้",
+            "document_id": "GOOD",
+            "item_id": "A",
+            "quantity": "2",
+            "unit_price": "5.00"
+          },
+          "raw_fields": [
+            "GOOD",
+            "A",
+            "รายการที่ทำต่อได้",
+            "2",
+            "5.00",
+            "10.00",
+            "THB"
+          ],
+          "source_row": 3
+        }
+      ],
+      "source_rows": [
+        3
+      ],
+      "steps": {
+        "calculate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "currency": "THB",
+            "lines": [
+              {
+                "amount": "10.00",
+                "item_id": "A"
+              }
+            ],
+            "total": "10.00"
+          },
+          "status": "SUCCEEDED"
+        },
+        "validate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": null,
+            "declared_total": "10.00",
+            "declared_total_raw": "10.00",
+            "difference": null,
+            "document_id": "GOOD",
+            "document_status": null,
+            "errors": [],
+            "invoice": {
+              "currency": "THB",
+              "document_id": "GOOD",
+              "items": [
+                {
+                  "description": "รายการที่ทำต่อได้",
+                  "item_id": "A",
+                  "quantity": 2,
+                  "unit_price": "5.00"
+                }
+              ]
+            },
+            "source_rows": [
+              3
+            ]
+          },
+          "status": "SUCCEEDED"
+        },
+        "verify": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": "10.00",
+            "declared_total": "10.00",
+            "difference": "0.00",
+            "document_id": "GOOD",
+            "document_status": "VALID",
+            "errors": [],
+            "source_rows": [
+              3
+            ]
+          },
+          "status": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "computed_total": "10.00",
+      "declared_total": "11.00",
+      "difference": "-1.00",
+      "document_id": "BAD-TOTAL",
+      "document_status": "INVALID",
+      "engine_status": "SUCCEEDED",
+      "errors": [
+        {
+          "actual": "11.00",
+          "expected": "10.00",
+          "field": "declared_total",
+          "reason_code": "TOTAL_MISMATCH",
+          "row_number": 4
+        }
+      ],
+      "history": [
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:submitted",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "job.submitted",
+          "payload": {},
+          "sequence": 3,
+          "step_id": null,
+          "timestamp": 1793146938.101379
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:RUNNING:448317c0a2764d818fde792289bcdad9",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "job.running",
+          "payload": {
+            "error": null,
+            "receipt": null
+          },
+          "sequence": 20,
+          "step_id": null,
+          "timestamp": 1793146938.2335699
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:validate:1:RUNNING",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 21,
+          "step_id": "validate",
+          "timestamp": 1793146938.2339456
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:calculate",
+            "step:verify"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:validate:1:SUCCEEDED",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 22,
+          "step_id": "validate",
+          "timestamp": 1793146938.2445943
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:calculate:1:RUNNING",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 23,
+          "step_id": "calculate",
+          "timestamp": 1793146938.2451234
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "step:verify"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:calculate:1:SUCCEEDED",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 24,
+          "step_id": "calculate",
+          "timestamp": 1793146938.2558062
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:verify:1:RUNNING",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.running",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 25,
+          "step_id": "verify",
+          "timestamp": 1793146938.256343
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:verify:1:SUCCEEDED",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "step.succeeded",
+          "payload": {
+            "attempt": 1,
+            "error": null
+          },
+          "sequence": 26,
+          "step_id": "verify",
+          "timestamp": 1793146938.2670448
+        },
+        {
+          "audience": [
+            "soma",
+            "monitor",
+            "terminal"
+          ],
+          "event_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3:SUCCEEDED:ec2e9b270d13463d86ba9a46f3859f2d",
+          "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+          "kind": "job.succeeded",
+          "payload": {
+            "error": null,
+            "receipt": {
+              "bytes": 995,
+              "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/invalid/reports/doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3.json",
+              "sha256": "274cea06b4e73cd0683b6ddd990a00c9a240882f487cc4c585664bb00c495967"
+            }
+          },
+          "sequence": 27,
+          "step_id": null,
+          "timestamp": 1793146938.2688804
+        }
+      ],
+      "job_id": "doc_28594401985724bfd019703eea10c33a418d528263ad4a6bfab0a4f94f81bbf3",
+      "source_records": [
+        {
+          "errors": [],
+          "fields": {
+            "currency": "THB",
+            "declared_total": "11.00",
+            "description": "ยอดไม่ตรง",
+            "document_id": "BAD-TOTAL",
+            "item_id": "A",
+            "quantity": "2",
+            "unit_price": "5.00"
+          },
+          "raw_fields": [
+            "BAD-TOTAL",
+            "A",
+            "ยอดไม่ตรง",
+            "2",
+            "5.00",
+            "11.00",
+            "THB"
+          ],
+          "source_row": 4
+        }
+      ],
+      "source_rows": [
+        4
+      ],
+      "steps": {
+        "calculate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "currency": "THB",
+            "lines": [
+              {
+                "amount": "10.00",
+                "item_id": "A"
+              }
+            ],
+            "total": "10.00"
+          },
+          "status": "SUCCEEDED"
+        },
+        "validate": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": null,
+            "declared_total": "11.00",
+            "declared_total_raw": "11.00",
+            "difference": null,
+            "document_id": "BAD-TOTAL",
+            "document_status": null,
+            "errors": [],
+            "invoice": {
+              "currency": "THB",
+              "document_id": "BAD-TOTAL",
+              "items": [
+                {
+                  "description": "ยอดไม่ตรง",
+                  "item_id": "A",
+                  "quantity": 2,
+                  "unit_price": "5.00"
+                }
+              ]
+            },
+            "source_rows": [
+              4
+            ]
+          },
+          "status": "SUCCEEDED"
+        },
+        "verify": {
+          "attempts": 1,
+          "error": null,
+          "output": {
+            "computed_total": "10.00",
+            "declared_total": "11.00",
+            "difference": "-1.00",
+            "document_id": "BAD-TOTAL",
+            "document_status": "INVALID",
+            "errors": [
+              {
+                "actual": "11.00",
+                "expected": "10.00",
+                "field": "declared_total",
+                "reason_code": "TOTAL_MISMATCH",
+                "row_number": 4
+              }
+            ],
+            "source_rows": [
+              4
+            ]
+          },
+          "status": "SUCCEEDED"
+        }
+      }
+    }
+  ],
+  "input_rows": 4,
+  "source_sha256": "5f925b58e2479ffdfe0025e06da4fa211d1e4299294e493e36a0e65f1970473f",
+  "status": "PROCESSED",
+  "system_version": "0.2.1",
+  "ungrouped_rows": [
+    {
+      "errors": [
+        {
+          "actual": "",
+          "expected": "non-empty text",
+          "field": "document_id",
+          "reason_code": "REQUIRED",
+          "row_number": 5
+        }
+      ],
+      "fields": {
+        "currency": "THB",
+        "declared_total": "1.00",
+        "description": "แถวที่จัดกลุ่มไม่ได้",
+        "document_id": "",
+        "item_id": "A",
+        "quantity": "1",
+        "unit_price": "1.00"
+      },
+      "raw_fields": [
+        "",
+        "A",
+        "แถวที่จัดกลุ่มไม่ได้",
+        "1",
+        "1.00",
+        "1.00",
+        "THB"
+      ],
+      "source_row": 5
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 """Reproducible delivery verification using only the Python standard library."""
 
 import compileall
+import argparse
 from datetime import datetime, timezone
 import hashlib
 import io
@@ -17,10 +18,13 @@ PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 
 
-def main():
+def main(argv=None):
     from neuron_flow import __version__
-    destination = PROJECT / "verification"
-    destination.mkdir(exist_ok=True)
+    parser = argparse.ArgumentParser(description="Run the original 38-case baseline")
+    parser.add_argument("--output-dir", type=Path, default=PROJECT / "verification")
+    args = parser.parse_args(argv)
+    destination = args.output_dir.resolve()
+    destination.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
     # Keep the original 38-case baseline separate from 0.2.0 acceptance.
     # New CSV/batch checks are recorded by tools/verify_v020.py.
@@ -68,7 +72,7 @@ def main():
 
 สถานะ: {'ผ่าน' if successful else 'ไม่ผ่าน'}
 
-ชุดตรวจฐานเดิม 38 กรณี รันกับโค้ดรุ่น {__version__}; ผลรุ่นใหม่แยกใน `v0_2_0/test_results.json`
+ชุดตรวจฐานเดิม 38 กรณี รันกับโค้ดรุ่น {__version__}; ผลรุ่นใหม่บันทึกแยกจากชุดฐานนี้
 
 - เวลา UTC: {summary['created_at_utc']}
 - Python: {summary['python']}

@@ -7,3 +7,4 @@ neuron_workspace/
 batch_workspace/
 .venv/
 verification/v0_2_0/_sample_workspaces/
+verification/**/_sample_workspaces/

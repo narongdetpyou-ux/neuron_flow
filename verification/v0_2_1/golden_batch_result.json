@@ -1,0 +1,44 @@
+{
+  "source": "acceptance/input.csv",
+  "expected": "acceptance/expected_results.json",
+  "documents_compared": 100,
+  "all_fields_match": true,
+  "counts": {
+    "ERROR": 0,
+    "INVALID": 20,
+    "VALID": 80,
+    "documents": 100
+  },
+  "receipt": {
+    "batch_id": "golden-100",
+    "status": "DELIVERED",
+    "counts": {
+      "documents": 100,
+      "VALID": 80,
+      "INVALID": 20,
+      "ERROR": 0
+    },
+    "certified_total": "5000239375620.29",
+    "currency": "THB",
+    "ungrouped_rows": 0,
+    "receipt": {
+      "artifacts": {
+        "summary.csv": {
+          "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/golden/batch_reports/golden-100/summary.csv",
+          "sha256": "fa77d5c2ec0f23f39b0f88235a747792c2e01c5ba53700f91302b15d74a5f0c3",
+          "bytes": 5919
+        },
+        "details.json": {
+          "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/golden/batch_reports/golden-100/details.json",
+          "sha256": "d0840cf4d2950014b14df59535177c1b016410867ebe70e0af4f3364cf67320c",
+          "bytes": 883433
+        },
+        "source.csv": {
+          "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/golden/batch_reports/golden-100/source.csv",
+          "sha256": "c04e31ad7277d5eb39264cba8f4d82ea42c49db402e8d71bb6fac9ca4cfb6579",
+          "bytes": 11461
+        }
+      }
+    }
+  }
+}

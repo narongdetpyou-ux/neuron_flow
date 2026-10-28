@@ -1,6 +1,7 @@
 """Create durable normal/invalid/system-failure reports and A01-A08 evidence."""
 
 import hashlib
+import argparse
 import json
 from pathlib import Path
 import shutil
@@ -10,6 +11,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 
 from neuron_flow.batch import BatchRuntime
+from neuron_flow import __version__
 from neuron_flow.csv_agents import FINAL_FIELDS
 from neuron_flow.csv_input import CsvInputError, read_csv_bytes
 from tests.batch_fault_agents import fault_definitions, purchase_source
@@ -19,8 +21,12 @@ def save(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
-def main():
-    destination = PROJECT / 'verification' / 'v0_2_0'
+def main(argv=None):
+    parser = argparse.ArgumentParser(description='Record acceptance evidence for the current implementation')
+    parser.add_argument('--output-dir', type=Path,
+                        default=PROJECT / 'verification' / ('v' + __version__.replace('.', '_')))
+    args = parser.parse_args(argv)
+    destination = args.output_dir.resolve()
     evidence = destination / 'acceptance_evidence'
     evidence.mkdir(parents=True, exist_ok=True)
     samples = destination / 'samples'

@@ -1,0 +1,4 @@
+document_id,document_status,declared_total,computed_total,difference,error_count,source_rows,engine_status
+BAD-QUANTITY,INVALID,10.00,,,1,[2],SUCCEEDED
+GOOD,VALID,10.00,10.00,0.00,0,[3],SUCCEEDED
+BAD-TOTAL,INVALID,11.00,10.00,-1.00,1,[4],SUCCEEDED

@@ -17,9 +17,21 @@ import tempfile
 import threading
 import time
 
-from .model import (MAX_MESSAGE_BYTES, SpecError, TransientAgentError,
+from .model import (MAX_MESSAGE_BYTES, MessageSizeError, SpecError, TransientAgentError,
                     encode, fingerprint, normalize_spec)
 from .storage import Store, WorkspaceLock
+
+
+_DELIVERY_ERROR_PREFIX = "neuron-flow-structured-error:"
+
+
+def _error_record(exc, error_type=None):
+    error = {"type": error_type or type(exc).__name__, "message": str(exc)[:1000]}
+    if isinstance(exc, MessageSizeError):
+        error.update(exc.details())
+        if error_type is not None:
+            error["cause"] = type(exc).__name__
+    return error
 
 
 @dataclass(frozen=True)
@@ -57,13 +69,13 @@ def _worker_main(connection):
                 function = getattr(importlib.import_module(module_name), function_name)
                 output = function(command["message"])
                 response = encode({"kind": "result", "work_id": work_id, "output": output,
-                                   "finished": time.monotonic()})
+                                   "finished": time.monotonic()}, phase="agent_response")
             except BaseException as exc:
                 # SystemExit is an agent failure, not permission to stop the controller.
                 response = encode({"kind": "error", "work_id": work_id,
                                    "finished": time.monotonic(),
                                    "retryable": isinstance(exc, TransientAgentError),
-                                   "error": {"type": type(exc).__name__, "message": str(exc)[:1000]}})
+                                   "error": _error_record(exc)}, phase="agent_error_response")
             connection.send_bytes(response)
     finally:
         connection.close()
@@ -88,7 +100,8 @@ class Worker:
             raise
 
     def dispatch(self, definition, message, step):
-        data = encode({"kind": "run", "entrypoint": definition.entrypoint, "message": message})
+        data = encode({"kind": "run", "entrypoint": definition.entrypoint, "message": message},
+                      phase="agent_request")
         started = time.monotonic()
         self.connection.send_bytes(data)
         self.busy = {"message": message, "step": step, "started": started}
@@ -121,11 +134,11 @@ class Synapse:
 
     def validate(self, agent_name, message, output):
         # Reject NaN, huge outputs, and non-JSON objects before persistence.
-        before = encode(output)
+        before = encode(output, phase="agent_output_validation")
         result = self.agents[agent_name].validator(message, output)
         if result is not None and result is not True:
             raise ValueError("Validator rejected the result; return None/True or raise an error")
-        if before != encode(output):
+        if before != encode(output, phase="agent_output_validation"):
             raise ValueError("Validator must check results without modifying them")
 
     def audience(self, step_id, spec):
@@ -148,6 +161,9 @@ class Dendrite:
                             "version": self.synapse.agents[step["agent"]].version}
             for step in normalized["steps"]
         }
+        # Normalization and Agent metadata can make the stored workflow larger
+        # than its original source spec, which may have fit within the cap.
+        encode(normalized, phase="workflow_submission")
         created = self.store.submit(normalized)
         return {"job_id": normalized["job_id"], "created": created}
 
@@ -173,8 +189,12 @@ class Axon:
             "input": spec["input"], "params": step["params"],
             "dependencies": {dep: state[dep]["output"] for dep in step["depends_on"]},
         }
-        # JSON round-trip creates a detached message snapshot.
-        return self.synapse.agents[step["agent"]], json.loads(encode(message))
+        # Preflight the complete command before allocating a worker. Its input
+        # and dependency outputs may fit separately yet overflow when combined.
+        definition = self.synapse.agents[step["agent"]]
+        command = {"kind": "run", "entrypoint": definition.entrypoint, "message": message}
+        detached = json.loads(encode(command, phase="agent_request"))
+        return definition, detached["message"]
 
 
 class AxonTerminal:
@@ -185,7 +205,9 @@ class AxonTerminal:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def deliver(self, report):
-        data = encode(report) + b"\n"
+        data = encode(report, phase="terminal_report") + b"\n"
+        if len(data) > MAX_MESSAGE_BYTES:
+            raise MessageSizeError(len(data), phase="terminal_report")
         path = self.output_dir / f"{report['job_id']}.json"
         digest = hashlib.sha256(data).hexdigest()
         if path.exists():
@@ -265,7 +287,7 @@ class Soma:
                         self.synapse.validate(step["agent"], message, response["output"])
                     except Exception as exc:
                         self._failure(spec, step, message["attempt"],
-                                      {"type": "OutputValidationError", "message": str(exc)[:1000]}, False)
+                                      _error_record(exc, "OutputValidationError"), False)
                     else:
                         self.store.transition(spec["job_id"], step["id"], "SUCCEEDED", message["attempt"],
                                               output=response["output"],
@@ -319,7 +341,7 @@ class Soma:
                         self.peak_workers = max(self.peak_workers, len(self.workers))
                     idle.dispatch(definition, message, step)
                 except SpecError as exc:
-                    self._failure(spec, step, attempt, {"type": "InputContractError", "message": str(exc)}, False)
+                    self._failure(spec, step, attempt, _error_record(exc, "InputContractError"), False)
                 except (OSError, RuntimeError, EOFError) as exc:
                     if idle is not None:
                         idle.close()
@@ -338,16 +360,32 @@ class Soma:
         try:
             receipt = self.terminal.deliver(report)
         except Exception as exc:
-            self.store.job_status(job_id, "DELIVERY_FAILED", error=str(exc)[:1000])
+            error = str(exc)[:1000]
+            if isinstance(exc, MessageSizeError):
+                # Keep the existing TEXT column and readable snapshot field.
+                # A reserved prefix distinguishes our record from old messages.
+                error = _DELIVERY_ERROR_PREFIX + json.dumps(_error_record(exc), sort_keys=True)
+            self.store.job_status(job_id, "DELIVERY_FAILED", error=error)
         else:
             self.store.job_status(job_id, status, receipt=receipt)
         return self.snapshot(job_id)
 
     def snapshot(self, job_id):
         job = self.store.job(job_id)
-        return {"job_id": job_id, "status": job["status"], "receipt": job["receipt"],
-                "delivery_error": job["delivery_error"], "steps": self.store.steps(job_id),
-                "peak_workers": self.peak_workers}
+        result = {"job_id": job_id, "status": job["status"], "receipt": job["receipt"],
+                  "delivery_error": job["delivery_error"], "steps": self.store.steps(job_id),
+                  "peak_workers": self.peak_workers}
+        error = job["delivery_error"]
+        if isinstance(error, str) and error.startswith(_DELIVERY_ERROR_PREFIX):
+            try:
+                details = json.loads(error[len(_DELIVERY_ERROR_PREFIX):])
+            except (ValueError, TypeError):
+                details = None
+            if (isinstance(details, dict) and details.get("type") == "MessageSizeError"
+                    and isinstance(details.get("message"), str)):
+                result["delivery_error"] = details["message"]
+                result["delivery_error_details"] = details
+        return result
 
     def close(self):
         for worker in self.workers:
