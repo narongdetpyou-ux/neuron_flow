@@ -155,9 +155,23 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          python -B source/.github/workflows/release_support.py publish \
-            --directory "$PACKAGE_DIR" --expected-commit "$EXPECTED_COMMIT" \
-            --repository "$GH_REPO"
+          publish_log="$RUNNER_TEMP/neuron-release-publish.log"
+          if python -B source/.github/workflows/release_support.py publish \
+              --directory "$PACKAGE_DIR" --expected-commit "$EXPECTED_COMMIT" \
+              --repository "$GH_REPO" > "$publish_log" 2>&1; then
+            cat "$publish_log"
+          else
+            publish_status=$?
+            cat "$publish_log"
+            python - "$publish_log" <<'PY'
+          from pathlib import Path
+          import sys
+          message = Path(sys.argv[1]).read_text(encoding='utf-8', errors='replace')[-48000:]
+          message = message.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+          print('::error title=Release publication failed::' + message)
+          PY
+            exit "$publish_status"
+          fi
       - name: Record publication result
         env:
           RELEASE_TAG: ${{ inputs.tag }}
