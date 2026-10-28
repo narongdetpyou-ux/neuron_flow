@@ -38,7 +38,7 @@ jobs:
       commit: ${{ steps.source.outputs.commit }}
       artifact_name: ${{ steps.artifact.outputs.name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag }}
           fetch-depth: 0
@@ -111,7 +111,7 @@ jobs:
       PYTHONDONTWRITEBYTECODE: '1'
       EXPECTED_COMMIT: ${{ inputs.expected_commit }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ needs.build.outputs.commit }}
           path: source
