@@ -124,4 +124,4 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Validate CSV, money verification, SQLite cursors and CLI recovery
-        run: python -B -m unittest tests.test_csv_input tests.test_csv_agents tests.test_event_cursors tests.test_batch_cli -v
+        run: python -B tools/platform_smoke.py

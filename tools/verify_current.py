@@ -33,7 +33,7 @@ def project_fingerprint(root):
     """Bind a result to code, tests, workflow, notebook and locked inputs."""
     digest = hashlib.sha256()
     directories = {'neuron_flow', 'tools', 'tests', '.github', 'acceptance', 'docs'}
-    files = {'pyproject.toml', 'requirements-build.txt', 'requirements-dev.txt', '.coveragerc',
+    files = {'pyproject.toml', 'requirements-build.txt', 'requirements-dev.txt', '.coveragerc', '.gitattributes',
              'START_COLAB.ipynb', 'RELEASE_APPROVAL.json',
              'RELEASE_NOTES.md', 'README.md', 'README_TH.md'}
     for path in sorted(Path(root).rglob('*')):
