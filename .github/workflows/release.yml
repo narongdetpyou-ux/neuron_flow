@@ -89,7 +89,7 @@ jobs:
           VERIFIED_VERSION: ${{ steps.source.outputs.version }}
           VERIFIED_COMMIT: ${{ steps.source.outputs.commit }}
         run: echo "name=neuron-flow-${VERIFIED_VERSION}-${VERIFIED_COMMIT}" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.artifact.outputs.name }}
           path: ${{ env.PACKAGE_DIR }}/
