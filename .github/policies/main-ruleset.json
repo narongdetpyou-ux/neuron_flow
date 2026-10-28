@@ -5,13 +5,19 @@
   "bypass_actors": [],
   "conditions": {
     "ref_name": {
-      "include": ["refs/heads/main"],
+      "include": [
+        "refs/heads/main"
+      ],
       "exclude": []
     }
   },
   "rules": [
-    {"type": "deletion"},
-    {"type": "non_fast_forward"},
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    },
     {
       "type": "pull_request",
       "parameters": {
@@ -26,8 +32,26 @@
       "type": "required_status_checks",
       "parameters": {
         "required_status_checks": [
-          {"context": "test (3.10)", "integration_id": 15368},
-          {"context": "test (3.12)", "integration_id": 15368}
+          {
+            "context": "test (3.10)",
+            "integration_id": 15368
+          },
+          {
+            "context": "test (3.12)",
+            "integration_id": 15368
+          },
+          {
+            "context": "quality",
+            "integration_id": 15368
+          },
+          {
+            "context": "distribution (3.10)",
+            "integration_id": 15368
+          },
+          {
+            "context": "distribution (3.12)",
+            "integration_id": 15368
+          }
         ],
         "strict_required_status_checks_policy": true
       }

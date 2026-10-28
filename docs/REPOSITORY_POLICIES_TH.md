@@ -30,8 +30,9 @@ Dependabot config เป็นการตรวจเวอร์ชัน depe
 **เป็นค่าที่เสนอไว้ ยังไม่ได้บังคับใช้** แม้ใน payload ระบุ `enforcement: active`
 
 - เข้า `main` ผ่าน PR และแก้ review conversations ให้ครบ
-- ต้องผ่าน `test (3.10)` และ `test (3.12)` จาก GitHub Actions app ID 15368
-  ยืนยันชื่อและ app จาก check runs จริงแล้ว
+- payload ใหม่กำหนด `test (3.10)`, `test (3.12)`, `quality`, `distribution (3.10)` และ `distribution (3.12)`
+  ใช้ GitHub Actions app ID 15368 ตามหลักฐานเดิม; ชื่อ baseline ยืนยันจาก check runs เดิม
+  ส่วน quality/distribution เป็นชื่อที่คาดจาก workflow ใหม่ ต้องตรวจ run จริงก่อน apply ruleset
 - branch ต้องอัปเดตกับฐานก่อน merge; ไม่อนุญาต force-push หรือลบ `main`
 - ไม่ตั้ง bypass actor; ไม่บังคับ signed commits, deployments หรือ manual release jobs
 - required approval เท่ากับ 0 ในขณะมีผู้ดูแลคนเดียว ไม่บังคับ code-owner/last-push approval

@@ -19,7 +19,9 @@ from tools.verify_current import project_fingerprint
 from tools.verify_v020 import release_approval
 
 TOP_LEVEL = {'.gitignore', 'LICENSE', 'README.md', 'README_TH.md', 'RELEASE_APPROVAL.json',
-             'RELEASE_NOTES.md', 'START_COLAB.ipynb', 'pyproject.toml'}
+             'RELEASE_NOTES.md', 'START_COLAB.ipynb', 'pyproject.toml',
+             'requirements-build.txt', 'requirements-dev.txt', '.coveragerc',
+             'CONTRIBUTING.md', 'GOVERNANCE.md', 'SECURITY.md', 'SUPPORT.md', 'CODE_OF_CONDUCT.md'}
 DIRECTORIES = {'neuron_flow', 'tools', 'tests', 'examples', 'docs', 'acceptance', '.github', 'verification'}
 EXCLUDED = {'__pycache__', '_sample_workspaces', '.venv', '.git', 'dist', 'build'}
 

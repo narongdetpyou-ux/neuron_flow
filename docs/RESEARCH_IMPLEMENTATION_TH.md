@@ -41,3 +41,6 @@ Git read/write ใช้งานผ่าน platform HTTPS proxy ได้เ�
 
 ผลแต่ละชุดและสถานะสุดท้ายอยู่ใน `verification/research_2026_10_28/`
 หลักฐานเก่า รวมทั้ง edge crash เดิมและสถานะ Colab `not_run` เก็บไว้ตามจริง
+
+รายการข้อเสนอทั้งหมดพร้อมสถานะและเกณฑ์ปิดงานอยู่ใน [RESEARCH_BACKLOG.json](RESEARCH_BACKLOG.json)
+ผลรวมที่ตรวจเสร็จจริงอ่านจาก [บันทึกผล](../verification/research_2026_10_28/README_TH.md)

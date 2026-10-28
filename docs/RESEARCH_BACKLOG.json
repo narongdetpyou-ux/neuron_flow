@@ -1,0 +1,104 @@
+{
+  "source": "deep-research-report.md, uploaded by owner on 2026-10-28",
+  "scope": "Recommendation inventory, not live GitHub Issues; external and future work remains explicit",
+  "items": [
+    {
+      "id": "R01",
+      "priority": "P0",
+      "recommendation": "Event cursor overflow",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "2a994d3; signed-int64 CLI/API validation + original 1608-case runner"
+    },
+    {
+      "id": "R02",
+      "priority": "P0",
+      "recommendation": "Refresh repository status claims",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "dc4fa46; dated research snapshot qualified separately from live API evidence"
+    },
+    {
+      "id": "R03",
+      "priority": "P0",
+      "recommendation": "Build dependency hardening",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "fd96fa0; official advisory checked, patched floor, hash-locked build tools"
+    },
+    {
+      "id": "R04",
+      "priority": "P0",
+      "recommendation": "Main-branch enforcement",
+      "status": "blocked_external",
+      "evidence_or_exit_criterion": "Updated payload only; API Forbidden; inspect existing rules + apply/read-back requires API/admin access"
+    },
+    {
+      "id": "R05",
+      "priority": "P1",
+      "recommendation": "Coverage and static gates",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "7996e38; branch coverage with worker instrumentation, lint; strict typing limited to discovery boundary"
+    },
+    {
+      "id": "R06",
+      "priority": "P1",
+      "recommendation": "Platform acceptance",
+      "status": "partially_implemented",
+      "evidence_or_exit_criterion": "Windows/macOS CI smoke added; actual runner results unavailable; Colab upload/download/restore requires real Colab runtimes"
+    },
+    {
+      "id": "R07",
+      "priority": "P1",
+      "recommendation": "Native release publication proof",
+      "status": "blocked_external",
+      "evidence_or_exit_criterion": "Source push does not authorize release; requires exact version/commit approval and actual publish/download/hash evidence"
+    },
+    {
+      "id": "R08",
+      "priority": "P1",
+      "recommendation": "Packaging",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "fd96fa0; wheel+sdist each clean installed, metadata added; existing distribution name retained"
+    },
+    {
+      "id": "R09",
+      "priority": "P1",
+      "recommendation": "Full runtime benchmark",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "1ece76d; CLI/IPC/SQLite/delivery, 1/10/100 docs, completed resume and real kill/recovery"
+    },
+    {
+      "id": "R10",
+      "priority": "P2",
+      "recommendation": "Domain types and duplication",
+      "status": "scoped_implementation",
+      "evidence_or_exit_criterion": "Typed immutable-by-convention discovery contracts added; money/parser consolidation deferred to preserve independent verifier and persistence contract"
+    },
+    {
+      "id": "R11",
+      "priority": "P2",
+      "recommendation": "Tracked backlog",
+      "status": "repository_inventory",
+      "evidence_or_exit_criterion": "This versioned inventory records all report recommendations; live Issues/Milestones blocked by API access"
+    },
+    {
+      "id": "R12",
+      "priority": "P2",
+      "recommendation": "Supply-chain hardening",
+      "status": "partially_implemented",
+      "evidence_or_exit_criterion": "Immutable Actions refs + CycloneDX SBOM + local unsigned provenance; signed tags/remote attestation require actual identity and runner"
+    },
+    {
+      "id": "R13",
+      "priority": "P2",
+      "recommendation": "Maintainer continuity",
+      "status": "implemented",
+      "evidence_or_exit_criterion": "Verified maintainer backup/restore and handover runbook; does not invent or appoint additional people"
+    },
+    {
+      "id": "R14",
+      "priority": "P2",
+      "recommendation": "Relocation and parallel scheduling",
+      "status": "proposal",
+      "evidence_or_exit_criterion": "New features outside 0.2.1 patch contract; evaluate future architecture from benchmark and compatibility requirements"
+    }
+  ]
+}
