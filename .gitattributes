@@ -1,0 +1,3 @@
+# Golden fixtures are byte-locked. Preserve their committed bytes on every OS,
+# including when Git for Windows has core.autocrlf=true.
+/acceptance/** -text
