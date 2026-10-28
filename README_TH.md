@@ -71,7 +71,7 @@ python -m neuron_flow batch-resume queued --workspace batch_workspace
 รองรับรูปแบบ workspace schema 1 รวมรูปแบบ 0.2.0 ที่ยังไม่มี marker ของ schema/execution
 เมื่อสัญญา CSV, Agent definitions/versions และค่าควบคุมงานตรงกับ policy ที่รองรับ
 ไม่เปลี่ยน identity รุ่นต้นทาง frozen payload หรือรายงานเดิม งานที่สร้างจาก 0.2.0
-ยังระบุ provenance เป็น 0.2.0; งานใหม่ของ candidate ระบุ 0.2.1 ตามจริง
+ยังระบุ provenance เป็น 0.2.0; งานใหม่รุ่นนี้ระบุ 0.2.1 ตามจริง
 ไม่รับรองทุกรุ่นจากหมายเลข patch อย่างเดียว และข้อมูล/สัญญาที่ขัดกันยังถูกปฏิเสธ
 การคืน backup ยังต้องใช้ absolute path เดิม ไม่รองรับย้าย workspace ไป path ใหม่ในรอบนี้
 
@@ -173,7 +173,7 @@ python tools/build_delivery.py --candidate --output-dir dist
 พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 จำนวน baseline/new tests,
 failures/errors/skipped และข้อมูล Python อ่านจาก `verification/v0_2_1/test_results.json`
 กับรายงานย่อยจริง `--output-dir` แยกผลปัจจุบันจากหลักฐาน 0.2.0 ที่ไม่ควรเขียนทับ
-`verify_v020.py` เก็บไว้เป็นเครื่องมือประวัติของ 0.2.0 ไม่ใช้ตรวจ candidate
+`verify_v020.py` เก็บไว้เป็นเครื่องมือประวัติของ 0.2.0 ไม่ใช้ตรวจรุ่นปัจจุบัน
 คำตอบอ้างอิงและ SHA-256 ที่ล็อกอยู่ใน `acceptance/` ห้ามสร้างคำตอบจากผลของ validator รุ่นใหม่
 การเปลี่ยนเกณฑ์ต้องบันทึกเหตุผลและตรวจกรณีที่ได้รับผลกระทบใหม่
 
@@ -193,7 +193,7 @@ Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json`
 ## ใช้ Notebook บน Google Colab
 
 เปิด `START_COLAB.ipynb` ใน Colab runtime ใหม่ แล้วรันเซลล์ตามคำอธิบาย:
-อัปโหลด ZIP candidate รุ่น 0.2.1 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รับงาน/รัน CLI
+อัปโหลด ZIP รุ่น 0.2.1 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รับงาน/รัน CLI
 → ดูรายงาน → เปิดต่อโดยไม่อัปโหลด CSV ซ้ำ → ตรวจทั้งชุด → ดาวน์โหลด backup
 ไม่มี Agent อยู่ในเซลล์ Notebook; เซลล์เรียก Python ผ่าน subprocess
 

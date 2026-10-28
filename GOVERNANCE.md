@@ -49,7 +49,9 @@ a candidate package or creating a tag does not provide release approval.
 Preserve the existing manual release workflow: publication defaults to
 `publish=false`; the requested tag, exact commit and package version are checked;
 and publication requires the matching committed version-specific approval. The
-historical approval for 0.2.0 does not approve the 0.2.1 development candidate.
+historical approval for 0.2.0 does not approve a later version; it is preserved in
+`verification/archive/RELEASE_APPROVAL_0_2_0.json`. The root approval applies only
+to its explicitly recorded version and owner instruction.
 Actual Colab acceptance and other unverified environments must remain disclosed
 separately from local validation and publication approval.
 

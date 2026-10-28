@@ -75,7 +75,7 @@ still uses the Runtime workspace lock.
 Candidate 0.2.1 can reuse supported schema-1 workspaces, including the markerless 0.2.0 format,
 when the CSV contract, Agent definitions/versions and workflow settings match the compatibility
 policy. Existing identity, creation-version provenance, frozen payloads and reports stay unchanged.
-Old results still identify 0.2.0; new candidate work identifies 0.2.1. Compatibility does not
+Old results still identify 0.2.0; new work identifies 0.2.1. Compatibility does not
 implicitly accept every patch version or changed contract. Backup restoration still requires
 the original absolute workspace path; relocation support is outside this patch.
 
@@ -135,7 +135,7 @@ DELIVERY_FAILED state; 2 for invalid setup/input or an exception, including deli
 Submit-only returns 0 for accepted intake and batch-list returns 0 for successful inspection;
 neither certifies that documents are VALID. Inspect processing counts and receipts as well as the exit code.
 
-## Verification and candidate packaging
+## Verification and packaging
 
 ```bash
 python tools/verify.py --output-dir verification/v0_2_1/baseline
@@ -148,10 +148,10 @@ python tools/build_delivery.py --candidate --output-dir dist
 tests and compares the locked 100-document reference. Actual baseline/new counts, failures,
 errors, skipped cases and environment are recorded under `verification/v0_2_1/`.
 The output-directory options keep current results separate from immutable 0.2.0 evidence.
-`verify_v020.py` is retained for historical 0.2.0 use, rather than candidate verification.
+`verify_v020.py` is retained for historical 0.2.0 use, rather than current-version verification.
 Reference answers and their lock remain in `acceptance/`.
 
-The candidate builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
+The package builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
 `.sha256`, the Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` and `delivery_checks.json` to
 the chosen output directory. Inspect these current output files instead of historical 0.2.0
 build-status files. Building does not publish. Without `--candidate`, matching approval for
@@ -188,7 +188,7 @@ expected invalid data remains distinct. See [coverage and known findings](docs/E
 
 ## Colab notebook and backups
 
-Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 candidate ZIP, verify every packaged
+Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 ZIP, verify every packaged
 file against `SHA256SUMS.txt`, upload exactly one CSV, submit/run the CLI, inspect reports, resume,
 run the full verifier and download the backup. Notebook code invokes importable project modules
 through subprocesses; no agents are defined in notebook cells.
