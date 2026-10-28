@@ -1,22 +1,26 @@
-# Neuron Flow 0.2.0
+# Neuron Flow 0.2.1 — candidate ยังไม่เผยแพร่
 
 รับ CSV รายการซื้อหลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมรายงานย้อนถึงแถวต้นทาง
 เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
 ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ใช้ THB ไม่ต้องมี API key
 
-**สถานะ:** ผู้ใช้อนุมัติให้ปิดรุ่นและเผยแพร่ 0.2.0 โดยรับทราบว่า **ยังไม่ได้ตรวจบน Google Colab จริง**
-ขั้น 1–5 ผ่านการตรวจในเครื่องแล้ว ฐานเดิม 38 กรณีและชุดใหม่ 65 กรณีผ่านแยกกัน
-ชุดตรวจรับ 100 เอกสารตรงคำตอบที่ล็อกไว้ครบ ส่วนการตรวจรับขั้น 6 บน Colab ยังเป็นข้อจำกัดที่เปิดเผย
-ไม่ได้ถือว่าผ่านครบทั้ง 6 ขั้น ดูหลักฐานการอนุมัติใน `RELEASE_APPROVAL.json`
-และผลจริงใน `verification/v0_2_0/test_results.json` กับ `BUILD_STATUS.json`
+**สถานะ:** 0.2.1 เป็น candidate สำหรับตรวจในเครื่อง ยังไม่ได้รับอนุมัติหรือเผยแพร่
+เพิ่มการรับงานก่อนประมวลผล การค้นหา batch ระหว่าง controller ทำงาน ความเข้ากันได้กับ workspace
+0.2.0 และรายละเอียดข้อผิดพลาดเรื่องขนาด ข้อมูลตรวจปัจจุบันอยู่ใน `verification/v0_2_1/`
+ให้อ่านจำนวน tests และผลจริงจากรายงาน ไม่ใช้จำนวนชุดใหม่ของรุ่นก่อนแทนผลของ candidate
+
+รุ่น 0.2.0 เผยแพร่แล้วโดยมีการอนุมัติพร้อมข้อจำกัดว่า **Colab จริงยังไม่ได้ตรวจ**
+หลักฐานเดิมใน `verification/v0_2_0/` และ `RELEASE_APPROVAL.json` ยังคงเป็นของ 0.2.0
+การอนุมัตินั้นไม่อนุมัติ 0.2.1 โดยอัตโนมัติ สถานะ Colab ของรอบนี้ยังเป็น `not_run`
 
 ## เริ่มใช้ CSV
 
-แตก `dist/neuron_flow_v0.2.0.zip` แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
+แตก ZIP candidate `dist/neuron_flow_v0.2.1.zip` แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
 ที่มีไฟล์นี้ ไม่ต้องติดตั้ง dependency เพิ่ม:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
+python -m neuron_flow batch-list --workspace batch_workspace
 python -m neuron_flow batch-status demo --workspace batch_workspace
 python -m neuron_flow batch-resume demo --workspace batch_workspace
 ```
@@ -43,8 +47,32 @@ INVALID บอก `row_number`, `field`, `reason_code`, `expected`, `actual` โ
 หัวตารางผิด/ซ้ำ/ขาด หรือมีชื่อช่องเกินหัวตาราง หรือ UTF-8/ไวยากรณ์ CSV ผิด จะปฏิเสธทั้งไฟล์พร้อมเหตุผล
 แถวข้อมูลที่จำนวนช่องไม่ครบ/เกินยังถูกเก็บพร้อมข้อผิดพลาดรายแถว
 
-ละ `--batch-id` เพื่อให้ระบบสร้างรหัสจาก hash ต้นทาง สัญญาข้อมูล รุ่นระบบ/Agent และค่าควบคุมงาน
-ถ้าแก้ข้อมูลให้ใช้รหัสใหม่ รหัสเดิมกับข้อมูลหรือรุ่นที่เปลี่ยนจะเป็น conflict และรักษาผลเดิมไว้
+ละ `--batch-id` เพื่อให้ระบบสร้างหรือค้นรหัสจากข้อมูลและสัญญาการทำงานที่เข้ากันได้
+ถ้ามี batch ที่เข้ากันได้หลายรายการ ระบบจะให้ระบุรหัสอย่างชัดเจน ใช้ `batch-list` ค้นแล้วระบุ `--batch-id`
+ถ้าแก้ข้อมูลให้ใช้รหัสใหม่ รหัสเดิมกับข้อมูล contract, Agent หรือ settings ที่ขัดกันยังเป็น conflict
+
+## รับงานก่อน แล้วเลือกเวลาประมวลผล
+
+```bash
+python -m neuron_flow csv examples/purchases.csv --submit-only --batch-id queued --workspace batch_workspace
+python -m neuron_flow batch-list --workspace batch_workspace
+python -m neuron_flow batch-resume queued --workspace batch_workspace
+```
+
+`--submit-only` เก็บ source/identity และคืน batch_id พร้อมสถานะจริงก่อนเริ่ม Agent
+งานใหม่ยังไม่ใช้ attempts; หากรับรหัสเดิมซ้ำ สถานะที่คืนอาจเป็นสถานะงานที่ทำเสร็จแล้ว
+เมื่อ CLI ถูกหยุดก่อนคืนผลหรือไม่มี session metadata ให้ใช้ `batch-list` หา batch เดิมแล้วเปิดต่อ
+คำสั่งนี้อ่านอย่างเดียว ไม่เปิด worker ไม่ยึด controller lock และใช้ได้ขณะ controller ทำงาน
+ส่วน `batch-status` ยังคงเป็นคำสั่งผ่าน Runtime ที่ใช้ workspace lock
+
+## เปิด workspace 0.2.0 ด้วย 0.2.1
+
+รองรับรูปแบบ workspace schema 1 รวมรูปแบบ 0.2.0 ที่ยังไม่มี marker ของ schema/execution
+เมื่อสัญญา CSV, Agent definitions/versions และค่าควบคุมงานตรงกับ policy ที่รองรับ
+ไม่เปลี่ยน identity รุ่นต้นทาง frozen payload หรือรายงานเดิม งานที่สร้างจาก 0.2.0
+ยังระบุ provenance เป็น 0.2.0; งานใหม่ของ candidate ระบุ 0.2.1 ตามจริง
+ไม่รับรองทุกรุ่นจากหมายเลข patch อย่างเดียว และข้อมูล/สัญญาที่ขัดกันยังถูกปฏิเสธ
+การคืน backup ยังต้องใช้ absolute path เดิม ไม่รองรับย้าย workspace ไป path ใหม่ในรอบนี้
 
 ## สัญญาข้อมูล purchase-csv-v1
 
@@ -88,7 +116,8 @@ engine_status เป็น SUCCEEDED ได้ ส่วน ERROR ยังค�
 
 CLI คืน 0 เมื่อประมวลผล/ส่งรายงานสำเร็จหรืออ่านสถานะได้ และไม่มีเอกสาร ERROR;
 คืน 1 เมื่อมี ERROR หรือสถานะ DELIVERY_FAILED; คืน 2 เมื่อคำสั่ง ข้อมูลตั้งต้น หรือการส่งมอบเกิด exception
-ตรวจ `counts` และ `receipt` ร่วมกับ exit code เสมอ
+`--submit-only` คืน 0 เมื่อรับงานได้ และ `batch-list` คืน 0 เมื่ออ่านได้ ซึ่งยังไม่รับรองว่าเอกสาร VALID
+ตรวจ `counts` และ `receipt` ร่วมกับ exit code ของการประมวลผลเสมอ
 
 ## หยุดและทำต่อ
 
@@ -106,7 +135,8 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 
 รุ่นนี้จัดเอกสารทีละใบและใช้ worker เดิมซ้ำ `--workers` ตั้งเพดาน worker (1–32 ค่าเริ่มต้น 3)
 จึงไม่ใช่ตัวเลขรับรองว่าเอกสารหลายใบจะรันพร้อมกัน เปิด controller เดียวต่อ workspace
-ผูกงานกับสัญญาข้อมูล รุ่นระบบ/Agent และ timeout การเปลี่ยนรุ่นต้องคืนรุ่นเดิมหรือใช้รหัสใหม่
+ผูกงานกับสัญญาข้อมูล/schema/execution, Agent และ timeout รุ่น 0.2.0 → 0.2.1 ใช้ policy
+ความเข้ากันได้ข้างต้น การเปลี่ยนสัญญาหรือรุ่นนอก policy ต้องคืน runtime ที่รองรับหรือใช้รหัสใหม่
 
 ## ขอบเขตการใช้งาน
 
@@ -116,6 +146,11 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 - ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
 - worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
 - ทดสอบใน Linux ตามรุ่น Python ที่บันทึกในรายงาน ยังไม่ได้ยืนยัน Windows/macOS หรือ Google Colab จริง
+
+ข้อผิดพลาด `MessageSizeError` ระบุ `phase`, `observed_bytes`, `limit_bytes` และ `retryable: false`
+เพื่อบอกว่าขนาดเกินในช่วงใดและลองข้อมูลเดิมซ้ำไม่ช่วย ถ้า job report เกินขนาดแบบถาวร
+batch จะแสดงเอกสารนั้นเป็น ERROR และส่งรายงานชุดได้ โดยไม่ติดลูปรอส่ง job report เดิมไม่สิ้นสุด
+ERROR ยังคงอยู่ในผลสุดท้ายแม้ batch ส่งรายงานสำเร็จ
 
 โครงห้าส่วนคงเดิม: Dendrite รับงาน, Soma จัดคิว/กู้คืน, Axon ส่ง dependency,
 Synapse ตรวจสัญญา/ผล และ Axon terminal ส่งมอบพร้อม receipt
@@ -127,36 +162,51 @@ Agent ต้องเป็นฟังก์ชันในโมดูลท�
 ## ตรวจซ้ำและสร้างชุดส่งมอบ
 
 ```bash
-python tools/verify.py
+python tools/verify.py --output-dir verification/v0_2_1/baseline
 python tools/build_acceptance_fixture.py --check
-python tools/verify_v020.py
-python tools/build_delivery.py
+python tools/verify_current.py --output-dir verification/v0_2_1
+python tools/build_delivery.py --candidate --output-dir dist
 ```
 
-`verify.py` ตรวจฐานเดิม **38 กรณี** แยกจาก `verify_v020.py` ที่ตรวจรุ่นใหม่ **65 กรณี**
-พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 ผลชุดใหม่อยู่ใน
-`verification/v0_2_0/` ตัวอย่างรายงานอยู่ใน `verification/v0_2_0/samples/`
+`verify.py` ตรวจ baseline เดิมแยกจาก `verify_current.py` ที่ค้น tests ของรุ่นปัจจุบัน
+พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 จำนวน baseline/new tests,
+failures/errors/skipped และข้อมูล Python อ่านจาก `verification/v0_2_1/test_results.json`
+กับรายงานย่อยจริง `--output-dir` แยกผลปัจจุบันจากหลักฐาน 0.2.0 ที่ไม่ควรเขียนทับ
+`verify_v020.py` เก็บไว้เป็นเครื่องมือประวัติของ 0.2.0 ไม่ใช้ตรวจ candidate
 คำตอบอ้างอิงและ SHA-256 ที่ล็อกอยู่ใน `acceptance/` ห้ามสร้างคำตอบจากผลของ validator รุ่นใหม่
 การเปลี่ยนเกณฑ์ต้องบันทึกเหตุผลและตรวจกรณีที่ได้รับผลกระทบใหม่
 
-`build_delivery.py` สร้าง `dist/neuron_flow_v0.2.0.zip` พร้อม `SHA256SUMS.txt` และตรวจจากการแตกไฟล์ใหม่
-ผลตรวจตัว ZIP อยู่ใน `verification/v0_2_0/delivery_checks.json` ซึ่งอยู่นอก ZIP
-เพื่อหลีกเลี่ยงการอ้าง hash ของ ZIP กลับเข้าหาตัวเอง
+`build_delivery.py --candidate` ตรวจแล้วสร้าง `dist/neuron_flow_v0.2.1.zip` พร้อมไฟล์ `.sha256`,
+Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json` ใน output directory
+มีการตรวจจากการแตก ZIP ใหม่ ไฟล์สถานะของ candidate ให้ดูใน output directory;
+ไฟล์สถานะ/ผลตรวจ 0.2.0 ที่เก็บไว้ไม่ใช่ผลปัจจุบัน การสร้าง ZIP ไม่เผยแพร่ภายนอก
+หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.2.1; approval ของ 0.2.0 ใช้แทนไม่ได้
+
+มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
+ยังไม่มีผลรัน GitHub Actions จริงในรอบนี้ ช่องทาง native release assets ที่เคยพบ HTTP 401
+ต้องตรวจสิทธิ์และการอัปโหลด/ดาวน์โหลดจริงภายหลัง การเพิ่ม workflow ไม่ได้ยืนยันว่าแก้สิทธิ์สำเร็จแล้ว
 
 ## ใช้ Notebook บน Google Colab
 
 เปิด `START_COLAB.ipynb` ใน Colab runtime ใหม่ แล้วรันเซลล์ตามคำอธิบาย:
-อัปโหลด ZIP รุ่น 0.2.0 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รัน CLI
+อัปโหลด ZIP candidate รุ่น 0.2.1 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รับงาน/รัน CLI
 → ดูรายงาน → เปิดต่อโดยไม่อัปโหลด CSV ซ้ำ → ตรวจทั้งชุด → ดาวน์โหลด backup
 ไม่มี Agent อยู่ในเซลล์ Notebook; เซลล์เรียก Python ผ่าน subprocess
 
 Colab เก็บไฟล์ในพื้นที่ชั่วคราว ต้องดาวน์โหลด ZIP สำรองก่อนจบ session
 backup รวม workspace SQLite ที่สำรองอย่างสอดคล้อง รายงาน verification และ session metadata
-การคืน backup ต้องใช้ ZIP โปรเจกต์เดิมและ workspace path เดิม
+การคืน backup รุ่นเดียวกันใช้ ZIP โปรเจกต์เดิมและ workspace path เดิม
 (`/content/neuron_flow_workspace`) เพราะ receipt เก็บ absolute path
 Notebook มีเซลล์คืน backup สำหรับ runtime ใหม่ โดยไม่เขียนทับ workspace ที่มีข้อมูลอยู่
 
 การตรวจ syntax ของเซลล์และการทดสอบในเครื่องยังไม่ใช่การตรวจบน Colab จริง
-หลักฐาน runtime ใหม่ที่อัปโหลด ZIP/CSV รัน เปิดต่อ และดาวน์โหลดได้จริงยังอยู่ใน
-`remaining_acceptance` ตามขั้น 6 ค่า `release_ready` อิงผลตรวจในเครื่องและการอนุมัติใน
-`RELEASE_APPROVAL.json` ส่วน `colab_acceptance_complete` ยังคงเป็น false จนตรวจ Colab จริงครบ
+ทำตาม [รายการตรวจ Colab](docs/COLAB_ACCEPTANCE_TH.md) และใช้
+[template หลักฐาน](docs/colab_acceptance_TEMPLATE.json) เริ่มที่ `not_run`/checks=false
+เมื่อมีหลักฐานจริงครบแล้วจึงส่งไฟล์ให้ verifier ด้วย `--colab-evidence path/to/evidence.json`
+ตัวตรวจตรวจ assertion ที่ผู้ใช้ส่งกับรุ่น package/fixture hashes และความสอดคล้องของข้อมูล
+ไม่ใช่การรับรอง runtime ระยะไกลอัตโนมัติ tests ของตัวตรวจใช้ข้อมูลจำลอง ไม่ใช่หลักฐาน Colab
+ไฟล์ที่ส่งไม่ครบ/ขัดกันเป็น `invalid` และคำสั่งตรวจคืนผลไม่สำเร็จ; ไม่ส่งไฟล์เป็น `not_run`
+
+ต้องมีหลักฐานอัปโหลด รัน เปิดต่อ ดาวน์โหลดที่ผู้ใช้ยืนยันว่าได้รับจริง และคืนใน runtime ใหม่
+ก่อนถือว่า Colab acceptance ครบ การอนุมัติ release ไม่เปลี่ยนข้อเท็จจริงนี้
+ดูขอบเขต patch และเกณฑ์เพิ่มเติมใน [แผน 0.2.1](docs/DEVELOPMENT_0_2_1_TH.md)

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "not_run",
+  "version": "0.2.1",
+  "package_manifest_sha256": "",
+  "fixture_sha256": "",
+  "source_sha256": "",
+  "recorded_at_utc": "",
+  "actual_runtime": {
+    "google_colab_importable": false,
+    "runtime_marker_names": [],
+    "python_version": "",
+    "runtime_version": "",
+    "started_at_utc": ""
+  },
+  "checks": {
+    "fresh_runtime": false,
+    "csv_uploaded": false,
+    "fixture_100_matched": false,
+    "resume_no_repeated_steps": false,
+    "artifact_hashes_match": false,
+    "backup_received_confirmed": false,
+    "restore_in_second_runtime": false,
+    "resume_after_restore_no_repeated_steps": false
+  },
+  "before": {
+    "artifact_hashes": {
+      "summary.csv": "",
+      "details.json": "",
+      "source.csv": ""
+    },
+    "step_attempts": {}
+  },
+  "after": {
+    "artifact_hashes": {
+      "summary.csv": "",
+      "details.json": "",
+      "source.csv": ""
+    },
+    "step_attempts": {}
+  },
+  "manual_download_confirmation": {
+    "actor": "",
+    "confirmed_at_utc": "",
+    "received": false
+  }
+}

@@ -1,0 +1,3 @@
+document_id,item_id,description,quantity,unit_price,declared_total,currency
+HANG,I1,/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/system_failure/hang-worker,2,0.10,0.20,THB
+GOOD-AFTER,I1,ใบอื่นจบได้,2,0.10,0.20,THB

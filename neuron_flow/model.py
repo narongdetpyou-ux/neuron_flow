@@ -13,6 +13,20 @@ class SpecError(ValueError):
     pass
 
 
+class MessageSizeError(SpecError):
+    """A deterministic transport/storage limit; repeating input cannot fix it."""
+
+    def __init__(self, observed_bytes, *, phase="serialization", limit_bytes=MAX_MESSAGE_BYTES):
+        self.phase = phase
+        self.observed_bytes = observed_bytes
+        self.limit_bytes = limit_bytes
+        super().__init__(f"{phase} message is {observed_bytes} bytes; limit is {limit_bytes} bytes")
+
+    def details(self):
+        return {"phase": self.phase, "observed_bytes": self.observed_bytes,
+                "limit_bytes": self.limit_bytes, "retryable": False}
+
+
 class TransientAgentError(Exception):
     """The same work may succeed on a bounded retry."""
 
@@ -21,7 +35,7 @@ class PermanentAgentError(Exception):
     """Retrying the same input will not fix it."""
 
 
-def encode(value):
+def encode(value, *, phase="serialization"):
     """A bounded JSON-only wire format, also used for fingerprints."""
     try:
         data = json.dumps(value, ensure_ascii=False, sort_keys=True,
@@ -29,7 +43,7 @@ def encode(value):
     except (ValueError, TypeError, RecursionError) as exc:
         raise SpecError("Data must be finite, JSON-serializable values") from exc
     if len(data) > MAX_MESSAGE_BYTES:
-        raise SpecError(f"Message exceeds {MAX_MESSAGE_BYTES} bytes")
+        raise MessageSizeError(len(data), phase=phase)
     return data
 
 
@@ -50,8 +64,9 @@ def decode(data):
     def invalid_constant(value):
         raise SpecError(f"Non-finite JSON number: {value}")
 
-    if len(data.encode("utf-8") if isinstance(data, str) else data) > MAX_MESSAGE_BYTES:
-        raise SpecError("Input JSON exceeds the message limit")
+    input_bytes = len(data.encode("utf-8") if isinstance(data, str) else data)
+    if input_bytes > MAX_MESSAGE_BYTES:
+        raise MessageSizeError(input_bytes, phase="json_input")
     try:
         return json.loads(data, object_pairs_hook=unique_fields, parse_constant=invalid_constant)
     except (json.JSONDecodeError, UnicodeDecodeError, RecursionError) as exc:
@@ -72,7 +87,7 @@ def _number(value, minimum, maximum, label):
 
 def normalize_spec(spec, known_agents):
     # Serialize first: reject live Python objects and detach caller-owned data.
-    spec = json.loads(encode(spec))
+    spec = json.loads(encode(spec, phase="workflow_submission"))
     if not isinstance(spec, dict) or set(spec) - {"job_id", "input", "steps"}:
         raise SpecError("Workflow must contain only job_id, input and steps")
     job_id = spec.get("job_id")

@@ -15,7 +15,12 @@ from . import __version__
 from .csv_agents import CONTRACT_VERSION, FINAL_FIELDS, csv_agent_definitions, csv_workflow
 from .csv_input import read_csv_bytes
 from .engine import Runtime
-from .model import NAME, SpecError, encode
+from .model import NAME, MessageSizeError, SpecError, encode
+
+
+WORKSPACE_SCHEMA_VERSION = 1
+EXECUTION_CONTRACT_VERSION = 'purchase-batch-v1'
+SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1'})
 
 
 def _json(value):
@@ -28,6 +33,11 @@ def _digest(value):
 
 def _money(cents):
     return f'{cents // 100}.{cents % 100:02d}'
+
+
+def _permanent_delivery_error(details):
+    return (isinstance(details, dict) and details.get('type') == 'MessageSizeError'
+            and details.get('phase') == 'terminal_report' and details.get('retryable') is False)
 
 
 class BatchConflict(ValueError):
@@ -77,6 +87,46 @@ class BatchRuntime:
     def close(self):
         self.runtime.close()
 
+    @staticmethod
+    def _legacy_manifest(manifest):
+        return ('workspace_schema_version' not in manifest
+                and 'execution_contract_version' not in manifest
+                and manifest.get('system_version') == '0.2.0')
+
+    @classmethod
+    def _execution_binding(cls, manifest):
+        """Normalize supported operational identity without changing its storage.
+
+        0.2.0 is the only supported markerless format. Package version records
+        provenance; schema, contracts, agents and workflow settings determine
+        whether persisted work can be reused.
+        """
+        if not isinstance(manifest, dict):
+            raise BatchConflict('Batch manifest must be a JSON object')
+        creation_version = manifest.get('system_version')
+        if not isinstance(creation_version, str) or creation_version not in SUPPORTED_CREATION_VERSIONS:
+            raise BatchConflict('Unsupported batch creation version; restore its supported runtime')
+        legacy = cls._legacy_manifest(manifest)
+        schema = WORKSPACE_SCHEMA_VERSION if legacy else manifest.get('workspace_schema_version')
+        execution = EXECUTION_CONTRACT_VERSION if legacy else manifest.get('execution_contract_version')
+        if type(schema) is not int or schema != WORKSPACE_SCHEMA_VERSION:
+            raise BatchConflict('Unsupported workspace schema version')
+        if execution != EXECUTION_CONTRACT_VERSION:
+            raise BatchConflict('Unsupported batch execution contract version')
+        timeout = manifest.get('timeout_s')
+        if (isinstance(timeout, bool) or not isinstance(timeout, (int, float))
+                or not 0.05 <= timeout <= 3600 or not math.isfinite(timeout)
+                or type(manifest.get('max_attempts')) is not int or manifest['max_attempts'] != 2):
+            raise BatchConflict('Unsupported batch workflow settings')
+        try:
+            return {'source_sha256': manifest['source_sha256'],
+                    'workspace_schema_version': schema, 'execution_contract_version': execution,
+                    'contract_version': manifest['contract_version'],
+                    'agent_versions': manifest['agent_versions'],
+                    'timeout_s': float(timeout), 'max_attempts': 2}
+        except KeyError as exc:
+            raise BatchConflict(f'Batch manifest is missing {exc.args[0]}') from exc
+
     def _batch(self, batch_id):
         self.__enter__()
         row = self.runtime.store.db.execute('SELECT * FROM csv_batches WHERE id=?', (batch_id,)).fetchone()
@@ -87,10 +137,18 @@ class BatchRuntime:
             if row[name] is not None:
                 row[name] = json.loads(row[name])
         manifest = row['manifest']
+        binding = self._execution_binding(manifest)
         if (manifest['contract_version'] != CONTRACT_VERSION
-                or manifest['system_version'] != __version__
                 or manifest['agent_versions'] != self.agent_versions):
-            raise BatchConflict('Batch contract, system or Agent version changed; restore it or use a new batch_id')
+            raise BatchConflict('Batch data contract or Agent version changed; restore it or use a new batch_id')
+        if self._legacy_manifest(manifest):
+            original_binding = {key: manifest[key] for key in (
+                'source_sha256', 'contract_version', 'system_version',
+                'agent_versions', 'timeout_s', 'max_attempts')}
+        else:
+            original_binding = binding
+        if _digest(original_binding) != row['identity']:
+            raise BatchConflict('Stored batch identity no longer matches its immutable manifest')
         if hashlib.sha256(row['source']).hexdigest() != manifest['source_sha256']:
             raise BatchConflict('Stored source bytes no longer match their SHA-256')
         return row
@@ -104,20 +162,35 @@ class BatchRuntime:
         self.__enter__()
         parsed = read_csv_bytes(source)
         binding = {'source_sha256': parsed['source_sha256'], 'contract_version': CONTRACT_VERSION,
-                   'system_version': __version__, 'agent_versions': self.agent_versions,
+                   'workspace_schema_version': WORKSPACE_SCHEMA_VERSION,
+                   'execution_contract_version': EXECUTION_CONTRACT_VERSION,
+                   'agent_versions': self.agent_versions,
                    'timeout_s': self.timeout_s, 'max_attempts': 2}
         identity = _digest(binding)
-        batch_id = f'batch_{identity[:32]}' if batch_id is None else batch_id
+        if batch_id is None:
+            matches = []
+            for record in self.runtime.store.db.execute('SELECT id,manifest FROM csv_batches ORDER BY id'):
+                manifest = json.loads(record['manifest'])
+                if isinstance(manifest, dict) and manifest.get('source_sha256') == parsed['source_sha256']:
+                    if self._execution_binding(manifest) == binding:
+                        self._batch(record['id'])
+                        matches.append(record['id'])
+            if len(matches) > 1:
+                raise BatchConflict('Multiple compatible batches match this source; specify an explicit batch_id')
+            if matches:
+                return {'batch_id': matches[0], 'created': False}
+            batch_id = f'batch_{identity[:32]}'
         if not isinstance(batch_id, str) or not NAME.fullmatch(batch_id):
             raise ValueError('batch_id must use 1-80 letters, digits, hyphens or underscores')
         existing = self.runtime.store.db.execute('SELECT identity FROM csv_batches WHERE id=?', (batch_id,)).fetchone()
         if existing:
-            if existing['identity'] != identity:
+            previous = self._batch(batch_id)
+            if self._execution_binding(previous['manifest']) != binding:
                 raise BatchConflict('batch_id conflicts with different source bytes, contract, Agent versions or workflow settings')
-            self._batch(batch_id)
             return {'batch_id': batch_id, 'created': False}
-        manifest = {**binding, 'input_rows': parsed['input_rows'],
+        manifest = {**binding, 'system_version': __version__, 'input_rows': parsed['input_rows'],
                     'ungrouped_rows': parsed['ungrouped_rows']}
+        self._execution_binding(manifest)
         records = []
         for ordinal, document in enumerate(parsed['documents']):
             job_id = 'doc_' + _digest([batch_id, document['document_id']])
@@ -174,6 +247,11 @@ class BatchRuntime:
             snapshot = self.runtime.status(record['job_id'])
             if snapshot['status'] in {'SUCCEEDED', 'FAILED'} and snapshot['receipt'] is not None:
                 self._verify_job_receipt(snapshot)
+            elif (snapshot['status'] == 'DELIVERY_FAILED'
+                  and _permanent_delivery_error(snapshot.get('delivery_error_details'))):
+                # The unchanged result cannot fit the terminal contract. Keep
+                # its successful steps and report ERROR without delivery loops.
+                pass
             else:
                 snapshot = self.runtime.run(record['job_id'])
                 if snapshot['receipt'] is not None:
@@ -185,6 +263,8 @@ class BatchRuntime:
                 error = {'engine_status': snapshot['status'], 'delivery_error': snapshot['delivery_error'],
                          'failed_steps': {key: value['error'] for key, value in snapshot['steps'].items()
                                           if value['status'] == 'FAILED'}}
+                if snapshot.get('delivery_error_details'):
+                    error['delivery_error_details'] = snapshot['delivery_error_details']
                 result = self._error_document(document, error)
                 validated = snapshot['steps']['validate']['output']
                 if validated is not None:
@@ -214,6 +294,8 @@ class BatchRuntime:
                                                   batch['manifest']['timeout_s']))
             except SpecError as exc:
                 error = {'type': type(exc).__name__, 'message': str(exc)}
+                if isinstance(exc, MessageSizeError):
+                    error.update(exc.details())
                 with db:
                     db.execute('UPDATE csv_batch_documents SET preparation_error=? WHERE batch_id=? AND ordinal=?',
                                (_json(error), batch_id, record['ordinal']))
@@ -227,7 +309,11 @@ class BatchRuntime:
                 certified_cents += int(whole) * 100 + int(fraction)
         assert counts['documents'] == counts['VALID'] + counts['INVALID'] + counts['ERROR']
         manifest = batch['manifest']
-        delivery_pending = any(document['engine_status'] == 'DELIVERY_FAILED' for document in documents)
+        delivery_pending = any(
+            document['engine_status'] == 'DELIVERY_FAILED'
+            and not any(_permanent_delivery_error(error.get('actual', {}).get('delivery_error_details'))
+                        for error in document['errors'] if isinstance(error.get('actual'), dict))
+            for document in documents)
         status = 'DELIVERY_FAILED' if delivery_pending else 'PROCESSED'
         payload = {'batch_id': batch_id, 'status': status, 'source_sha256': manifest['source_sha256'],
                    'contract_version': manifest['contract_version'], 'system_version': manifest['system_version'],

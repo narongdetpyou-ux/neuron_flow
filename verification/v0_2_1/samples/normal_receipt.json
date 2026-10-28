@@ -1,0 +1,49 @@
+{
+  "batch_id": "normal",
+  "status": "DELIVERED",
+  "counts": {
+    "documents": 2,
+    "VALID": 2,
+    "INVALID": 0,
+    "ERROR": 0
+  },
+  "certified_total": "412.70",
+  "currency": "THB",
+  "ungrouped_rows": 0,
+  "receipt": {
+    "artifacts": {
+      "summary.csv": {
+        "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/normal/batch_reports/normal/summary.csv",
+        "sha256": "26d5140538bc171aa5bff35498cb5834a2423b27b4f5264c8d55afad8a4799c5",
+        "bytes": 209
+      },
+      "details.json": {
+        "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/normal/batch_reports/normal/details.json",
+        "sha256": "ff2cf02932cc38d4ff2db069be5e1eae5fc28b6baabb38d680bd0e46371a070c",
+        "bytes": 17289
+      },
+      "source.csv": {
+        "path": "/workspace/neuron_flow/verification/v0_2_1/_sample_workspaces/normal/batch_reports/normal/source.csv",
+        "sha256": "238dcc545c6bbf14d54ccd0a272384d47e3ca0fdbdb61f996e4ed174922709d2",
+        "bytes": 206
+      }
+    }
+  },
+  "example_artifact_copies": {
+    "summary.csv": {
+      "path": "/workspace/neuron_flow/verification/v0_2_1/samples/normal/summary.csv",
+      "sha256": "26d5140538bc171aa5bff35498cb5834a2423b27b4f5264c8d55afad8a4799c5",
+      "bytes": 209
+    },
+    "details.json": {
+      "path": "/workspace/neuron_flow/verification/v0_2_1/samples/normal/details.json",
+      "sha256": "ff2cf02932cc38d4ff2db069be5e1eae5fc28b6baabb38d680bd0e46371a070c",
+      "bytes": 17289
+    },
+    "source.csv": {
+      "path": "/workspace/neuron_flow/verification/v0_2_1/samples/normal/source.csv",
+      "sha256": "238dcc545c6bbf14d54ccd0a272384d47e3ca0fdbdb61f996e4ed174922709d2",
+      "bytes": 206
+    }
+  }
+}
