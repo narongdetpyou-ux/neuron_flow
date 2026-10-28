@@ -1,13 +1,30 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=84.1.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "neuron-flow-prototype"
 version = "0.2.1"
 description = "Supervised purchase CSV validation with persistent document recovery"
+readme = "README.md"
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
+maintainers = [{name = "narongdetpyou-ux"}]
 requires-python = ">=3.10"
 dependencies = []
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+]
+
+[project.urls]
+Repository = "https://github.com/narongdetpyou-ux/neuron_flow"
+Issues = "https://github.com/narongdetpyou-ux/neuron_flow/issues"
+Documentation = "https://github.com/narongdetpyou-ux/neuron_flow#readme"
 
 [project.scripts]
 neuron-flow = "neuron_flow.__main__:main"
