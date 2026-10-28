@@ -1,0 +1,49 @@
+{
+  "batch_id": "invalid",
+  "status": "DELIVERED",
+  "counts": {
+    "documents": 3,
+    "VALID": 1,
+    "INVALID": 2,
+    "ERROR": 0
+  },
+  "certified_total": "10.00",
+  "currency": "THB",
+  "ungrouped_rows": 1,
+  "receipt": {
+    "artifacts": {
+      "summary.csv": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/invalid/batch_reports/invalid/summary.csv",
+        "sha256": "a3b779703181198931b655b1deb497510190bbb4828e43987d846226ed528c92",
+        "bytes": 248
+      },
+      "details.json": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/invalid/batch_reports/invalid/details.json",
+        "sha256": "fcd515f70cdff4a2ce9496d7cf5927ec667c5dd5379ceb99653c41a46db450cb",
+        "bytes": 26161
+      },
+      "source.csv": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/invalid/batch_reports/invalid/source.csv",
+        "sha256": "5f925b58e2479ffdfe0025e06da4fa211d1e4299294e493e36a0e65f1970473f",
+        "bytes": 347
+      }
+    }
+  },
+  "example_artifact_copies": {
+    "summary.csv": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/invalid/summary.csv",
+      "sha256": "a3b779703181198931b655b1deb497510190bbb4828e43987d846226ed528c92",
+      "bytes": 248
+    },
+    "details.json": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/invalid/details.json",
+      "sha256": "fcd515f70cdff4a2ce9496d7cf5927ec667c5dd5379ceb99653c41a46db450cb",
+      "bytes": 26161
+    },
+    "source.csv": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/invalid/source.csv",
+      "sha256": "5f925b58e2479ffdfe0025e06da4fa211d1e4299294e493e36a0e65f1970473f",
+      "bytes": 347
+    }
+  }
+}

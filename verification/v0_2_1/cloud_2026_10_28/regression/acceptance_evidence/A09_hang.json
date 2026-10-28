@@ -1,0 +1,590 @@
+{
+  "scenario": "A09_hang",
+  "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency\nHANG,I1,/tmp/neuron-batch-test-r9qc85dq/hang-worker,2,0.10,0.20,THB\nGOOD-AFTER,I1,ใบอื่นต้องทำต่อ,2,0.10,0.20,THB\n",
+  "source_sha256": "06cbc9aacda7842c7536402b812114ddffd5ee3a7656f6a7b30a83849975a4cb",
+  "expected": {
+    "HANG": "ERROR",
+    "GOOD-AFTER": "VALID",
+    "max_attempts": 2
+  },
+  "actual": {
+    "batch_id": "hang",
+    "status": "PROCESSED",
+    "source_sha256": "06cbc9aacda7842c7536402b812114ddffd5ee3a7656f6a7b30a83849975a4cb",
+    "contract_version": "purchase-csv-v1",
+    "system_version": "0.2.1",
+    "agent_versions": {
+      "csv_calculate": {
+        "entrypoint": "tests.batch_fault_agents:calculate_fault",
+        "validator": "neuron_flow.csv_agents:calculate_csv_output",
+        "version": "0.2.0-fault-test1"
+      },
+      "csv_validate": {
+        "entrypoint": "neuron_flow.csv_agents:validate_csv",
+        "validator": "neuron_flow.csv_agents:validate_csv_output",
+        "version": "0.2.0"
+      },
+      "csv_verify": {
+        "entrypoint": "neuron_flow.csv_agents:verify_csv",
+        "validator": "neuron_flow.csv_agents:verify_csv_output",
+        "version": "0.2.0"
+      }
+    },
+    "input_rows": 2,
+    "counts": {
+      "documents": 2,
+      "VALID": 1,
+      "INVALID": 0,
+      "ERROR": 1
+    },
+    "certified_total": "0.20",
+    "currency": "THB",
+    "ungrouped_rows": [],
+    "documents": [
+      {
+        "document_id": "HANG",
+        "document_status": "ERROR",
+        "source_rows": [
+          2
+        ],
+        "computed_total": null,
+        "declared_total": "0.20",
+        "difference": null,
+        "errors": [
+          {
+            "row_number": 2,
+            "field": "*",
+            "reason_code": "ENGINE_ERROR",
+            "expected": "verified document result",
+            "actual": {
+              "engine_status": "FAILED",
+              "delivery_error": null,
+              "failed_steps": {
+                "calculate": {
+                  "message": "Agent exceeded 0.15 seconds",
+                  "type": "TimeoutError"
+                }
+              }
+            }
+          }
+        ],
+        "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+        "engine_status": "FAILED",
+        "steps": {
+          "validate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "HANG",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "HANG",
+                "items": [
+                  {
+                    "description": "/tmp/neuron-batch-test-r9qc85dq/hang-worker",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                2
+              ]
+            },
+            "error": null
+          },
+          "calculate": {
+            "status": "FAILED",
+            "attempts": 2,
+            "output": null,
+            "error": {
+              "message": "Agent exceeded 0.15 seconds",
+              "type": "TimeoutError"
+            }
+          },
+          "verify": {
+            "status": "BLOCKED",
+            "attempts": 0,
+            "output": null,
+            "error": {
+              "message": "A required step did not succeed",
+              "type": "DependencyFailed"
+            }
+          }
+        },
+        "history": [
+          {
+            "sequence": 1,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:submitted",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": null,
+            "kind": "job.submitted",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {},
+            "timestamp": 1793182401.758589
+          },
+          {
+            "sequence": 3,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:RUNNING:e51f887d7dc54efcba788de094940c0d",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": null,
+            "kind": "job.running",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "timestamp": 1793182401.7590837
+          },
+          {
+            "sequence": 4,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:validate:1:RUNNING",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "validate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182401.7591395
+          },
+          {
+            "sequence": 5,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:validate:1:SUCCEEDED",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "validate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182401.8460393
+          },
+          {
+            "sequence": 6,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:calculate:1:RUNNING",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "calculate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182401.8461735
+          },
+          {
+            "sequence": 7,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:calculate:1:RETRY_WAIT",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "calculate",
+            "kind": "step.retry_wait",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": {
+                "message": "Agent exceeded 0.15 seconds",
+                "type": "TimeoutError"
+              }
+            },
+            "timestamp": 1793182402.000695
+          },
+          {
+            "sequence": 8,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:calculate:2:RUNNING",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "calculate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 2,
+              "error": null
+            },
+            "timestamp": 1793182402.0518084
+          },
+          {
+            "sequence": 9,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:calculate:2:FAILED",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "calculate",
+            "kind": "step.failed",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 2,
+              "error": {
+                "message": "Agent exceeded 0.15 seconds",
+                "type": "TimeoutError"
+              }
+            },
+            "timestamp": 1793182402.2937179
+          },
+          {
+            "sequence": 10,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:verify:0:BLOCKED",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": "verify",
+            "kind": "step.blocked",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 0,
+              "error": {
+                "message": "A required step did not succeed",
+                "type": "DependencyFailed"
+              }
+            },
+            "timestamp": 1793182402.293938
+          },
+          {
+            "sequence": 11,
+            "event_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f:FAILED:2a042ded393c49a09ed74a9513a3d63b",
+            "job_id": "doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f",
+            "step_id": null,
+            "kind": "job.failed",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": {
+                "bytes": 785,
+                "path": "/tmp/neuron-batch-test-r9qc85dq/reports/doc_d7def041cb8d895f3152ec3ecc62b0dbd15bfa23f3070d8167d9ddad0b3ac01f.json",
+                "sha256": "9d7c9f4c78581f599913542659fa79d03943529f404905ddd286e7ea5b644b2b"
+              }
+            },
+            "timestamp": 1793182402.2944677
+          }
+        ],
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "/tmp/neuron-batch-test-r9qc85dq/hang-worker",
+              "document_id": "HANG",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "HANG",
+              "I1",
+              "/tmp/neuron-batch-test-r9qc85dq/hang-worker",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 2
+          }
+        ]
+      },
+      {
+        "document_id": "GOOD-AFTER",
+        "document_status": "VALID",
+        "source_rows": [
+          3
+        ],
+        "computed_total": "0.20",
+        "declared_total": "0.20",
+        "difference": "0.00",
+        "errors": [],
+        "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+        "engine_status": "SUCCEEDED",
+        "steps": {
+          "validate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": null,
+              "declared_total": "0.20",
+              "declared_total_raw": "0.20",
+              "difference": null,
+              "document_id": "GOOD-AFTER",
+              "document_status": null,
+              "errors": [],
+              "invoice": {
+                "currency": "THB",
+                "document_id": "GOOD-AFTER",
+                "items": [
+                  {
+                    "description": "ใบอื่นต้องทำต่อ",
+                    "item_id": "I1",
+                    "quantity": 2,
+                    "unit_price": "0.10"
+                  }
+                ]
+              },
+              "source_rows": [
+                3
+              ]
+            },
+            "error": null
+          },
+          "calculate": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "currency": "THB",
+              "lines": [
+                {
+                  "amount": "0.20",
+                  "item_id": "I1"
+                }
+              ],
+              "total": "0.20"
+            },
+            "error": null
+          },
+          "verify": {
+            "status": "SUCCEEDED",
+            "attempts": 1,
+            "output": {
+              "computed_total": "0.20",
+              "declared_total": "0.20",
+              "difference": "0.00",
+              "document_id": "GOOD-AFTER",
+              "document_status": "VALID",
+              "errors": [],
+              "source_rows": [
+                3
+              ]
+            },
+            "error": null
+          }
+        },
+        "history": [
+          {
+            "sequence": 2,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:submitted",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": null,
+            "kind": "job.submitted",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {},
+            "timestamp": 1793182401.758848
+          },
+          {
+            "sequence": 12,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:RUNNING:a546730207dc48b1ab01c6c955414768",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": null,
+            "kind": "job.running",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": null
+            },
+            "timestamp": 1793182402.2953672
+          },
+          {
+            "sequence": 13,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:validate:1:RUNNING",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "validate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.2954195
+          },
+          {
+            "sequence": 14,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:validate:1:SUCCEEDED",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "validate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:calculate",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.4010603
+          },
+          {
+            "sequence": 15,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:calculate:1:RUNNING",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "calculate",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.4012263
+          },
+          {
+            "sequence": 16,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:calculate:1:SUCCEEDED",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "calculate",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "step:verify"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.4117362
+          },
+          {
+            "sequence": 17,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:verify:1:RUNNING",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "verify",
+            "kind": "step.running",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.4118388
+          },
+          {
+            "sequence": 18,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:verify:1:SUCCEEDED",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": "verify",
+            "kind": "step.succeeded",
+            "audience": [
+              "soma",
+              "monitor"
+            ],
+            "payload": {
+              "attempt": 1,
+              "error": null
+            },
+            "timestamp": 1793182402.4223132
+          },
+          {
+            "sequence": 19,
+            "event_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398:SUCCEEDED:443545c2de32455b974f49c24fea4717",
+            "job_id": "doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398",
+            "step_id": null,
+            "kind": "job.succeeded",
+            "audience": [
+              "soma",
+              "monitor",
+              "terminal"
+            ],
+            "payload": {
+              "error": null,
+              "receipt": {
+                "bytes": 901,
+                "path": "/tmp/neuron-batch-test-r9qc85dq/reports/doc_7de0303bc79ad2745b15feeeadad8cdf020f1e5936f44fad8794138a658c4398.json",
+                "sha256": "8501817c3e16a084ed1290258db82a7e227d5cbe74f9a2487d6761644b8c1f93"
+              }
+            },
+            "timestamp": 1793182402.422961
+          }
+        ],
+        "source_records": [
+          {
+            "errors": [],
+            "fields": {
+              "currency": "THB",
+              "declared_total": "0.20",
+              "description": "ใบอื่นต้องทำต่อ",
+              "document_id": "GOOD-AFTER",
+              "item_id": "I1",
+              "quantity": "2",
+              "unit_price": "0.10"
+            },
+            "raw_fields": [
+              "GOOD-AFTER",
+              "I1",
+              "ใบอื่นต้องทำต่อ",
+              "2",
+              "0.10",
+              "0.20",
+              "THB"
+            ],
+            "source_row": 3
+          }
+        ]
+      }
+    ]
+  },
+  "processes": [
+    {
+      "attempt": 1,
+      "worker_pid": 3099,
+      "stopped": true
+    },
+    {
+      "attempt": 2,
+      "worker_pid": 3102,
+      "stopped": true
+    }
+  ]
+}

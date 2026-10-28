@@ -1,0 +1,26 @@
+Function               Items   Median ms     Min ms     Max ms   Python KiB   RSS MiB
+read_csv_bytes            10       0.024      0.021      0.028         30.8     15.25
+validate_document         10       0.052      0.050      0.058          6.0     15.25
+compute_document          10       0.008      0.008      0.010          4.3     15.25
+verify_document           10       0.025      0.024      0.027          5.3     15.25
+csv_pipeline              10       0.109      0.106      0.128         30.8     15.25
+read_csv_bytes           100       0.169      0.160      0.192        135.1     15.38
+validate_document        100       0.505      0.497      0.526         35.0     15.38
+compute_document         100       0.072      0.067      0.083         25.1     15.38
+verify_document          100       0.184      0.162      0.205         34.6     15.38
+csv_pipeline             100       0.987      0.957      1.059        176.5     15.38
+read_csv_bytes          1000       1.702      1.646      1.828       1222.1     16.38
+validate_document       1000       5.181      4.919      5.296        275.9     16.62
+compute_document        1000       0.649      0.618      0.691        234.8     16.62
+verify_document         1000       1.749      1.595      1.836        338.5     16.88
+csv_pipeline            1000       9.174      8.854     11.518       1765.2     17.88
+read_csv_bytes         10000      22.050     20.997     23.897      12376.4     28.51
+validate_document      10000      55.166     54.924     58.324       2926.6     28.52
+compute_document       10000       6.938      6.628      8.357       2336.2     28.66
+verify_document        10000      15.228     14.926     15.600       3431.7     31.61
+csv_pipeline           10000     103.895     99.882    118.071      17794.0     35.94
+Python KiB = additional peak Python-traced allocations per call.
+RSS MiB = absolute worker process peak before tracing, including interpreter and fixtures.
+Median/min/max summarize sample averages per call, not individual-call latency.
+Timing and allocation tracing use separate passes; fixtures/checks are outside timing.
+Direct functions only: Runtime, SQLite, worker IPC and report/file I/O are excluded.

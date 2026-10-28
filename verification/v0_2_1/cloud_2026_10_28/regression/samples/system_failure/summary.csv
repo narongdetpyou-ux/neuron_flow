@@ -1,0 +1,3 @@
+document_id,document_status,declared_total,computed_total,difference,error_count,source_rows,engine_status
+HANG,ERROR,0.20,,,1,[2],FAILED
+GOOD-AFTER,VALID,0.20,0.20,0.00,0,[3],SUCCEEDED

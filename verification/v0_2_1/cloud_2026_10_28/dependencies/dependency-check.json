@@ -1,0 +1,12 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "runtime_dependencies": [],
+  "build_requirements": [
+    "setuptools>=61"
+  ],
+  "installed_setuptools": "84.2.1",
+  "pip_check_exit_code": 0,
+  "pip_check_output": "No broken requirements found.\n",
+  "parsed_python_files": 18,
+  "parsed_notebook_code_cells": 7
+}

@@ -1,0 +1,49 @@
+{
+  "batch_id": "system-failure",
+  "status": "DELIVERED",
+  "counts": {
+    "documents": 2,
+    "VALID": 1,
+    "INVALID": 0,
+    "ERROR": 1
+  },
+  "certified_total": "0.20",
+  "currency": "THB",
+  "ungrouped_rows": 0,
+  "receipt": {
+    "artifacts": {
+      "summary.csv": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/system_failure/batch_reports/system-failure/summary.csv",
+        "sha256": "7dc23fb8af9f0027915ad344e611a9e55e4ab25739db0e64176707c898c47c03",
+        "bytes": 186
+      },
+      "details.json": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/system_failure/batch_reports/system-failure/details.json",
+        "sha256": "6ef3ffbe813446ba6e980f199c1513d62e11db7c0772a478e037916b1e8d7000",
+        "bytes": 17779
+      },
+      "source.csv": {
+        "path": "/workspace/scratch/neuron-edge-regression-20261028/_sample_workspaces/system_failure/batch_reports/system-failure/source.csv",
+        "sha256": "39774f0af14b51a8dfc5ed4213512379b46258ea5de6405d2bd365a342fa0b24",
+        "bytes": 261
+      }
+    }
+  },
+  "example_artifact_copies": {
+    "summary.csv": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/system_failure/summary.csv",
+      "sha256": "7dc23fb8af9f0027915ad344e611a9e55e4ab25739db0e64176707c898c47c03",
+      "bytes": 186
+    },
+    "details.json": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/system_failure/details.json",
+      "sha256": "6ef3ffbe813446ba6e980f199c1513d62e11db7c0772a478e037916b1e8d7000",
+      "bytes": 17779
+    },
+    "source.csv": {
+      "path": "/workspace/scratch/neuron-edge-regression-20261028/samples/system_failure/source.csv",
+      "sha256": "39774f0af14b51a8dfc5ed4213512379b46258ea5de6405d2bd365a342fa0b24",
+      "bytes": 261
+    }
+  }
+}

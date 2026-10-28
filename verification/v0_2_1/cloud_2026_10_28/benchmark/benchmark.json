@@ -1,0 +1,618 @@
+{
+  "created_at_utc": "2026-10-28T10:03:25.713669+00:00",
+  "project_version": "0.2.1",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "logical_cpu_count": 5,
+  "elapsed_seconds": 12.680321434000007,
+  "settings": {
+    "sizes": [
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "cases": [
+      "read_csv_bytes",
+      "validate_document",
+      "compute_document",
+      "verify_document",
+      "csv_pipeline"
+    ],
+    "repeats": 7,
+    "warmups": 2,
+    "memory_repeats": 3,
+    "target_ms": 25,
+    "max_iterations": 1000,
+    "worker_timeout_seconds": 180
+  },
+  "methodology": {
+    "workload": "One deterministic VALID UTF-8 purchase document per call, varied quantities/prices.",
+    "timing": "perf_counter_ns; each sample is average time per call over its iterations; median/min/max summarize those sample averages, not individual-call latency. Includes output destruction. Imports, fixture preparation, checks, GC collection, warmups and calibration excluded. Tracing disabled; GC enabled during calls.",
+    "python_peak_bytes": "Maximum extra Python-traced allocation peak for one call, over separate memory repeats. Prepared inputs excluded; output retained until reading the peak. Not total RAM or all native allocations.",
+    "process_peak_rss_bytes": "Absolute peak RSS of a fresh worker before tracemalloc passes. Includes interpreter/imports, fixtures, warmups, calibration and timing. Not incremental function memory; unavailable systems return null.",
+    "scope": "Direct in-memory functions; csv_pipeline is parse/validate/compute/verify. Excludes Runtime, SQLite, worker IPC and filesystem/report I/O. Large direct-function inputs do not establish Runtime message-limit compatibility."
+  },
+  "results": [
+    {
+      "case": "read_csv_bytes",
+      "items": 10,
+      "documents": 1,
+      "source_bytes": 676,
+      "expected_total_thb": "31.55",
+      "iterations_per_sample": 419,
+      "timing_samples_ms": [
+        0.02374789021479714,
+        0.027597957040572794,
+        0.02464819570405728,
+        0.022437947494033415,
+        0.02502083293556086,
+        0.021397980906921243,
+        0.022088326968973747
+      ],
+      "median_ms": 0.02374789021479714,
+      "min_ms": 0.021397980906921243,
+      "max_ms": 0.027597957040572794,
+      "items_per_second": 421090.0382960787,
+      "python_peak_samples_bytes": [
+        31521,
+        31521,
+        31521
+      ],
+      "python_peak_bytes": 31521,
+      "process_peak_rss_bytes": 15990784,
+      "correctness_checked": true
+    },
+    {
+      "case": "validate_document",
+      "items": 10,
+      "documents": 1,
+      "source_bytes": 676,
+      "expected_total_thb": "31.55",
+      "iterations_per_sample": 315,
+      "timing_samples_ms": [
+        0.05649925714285715,
+        0.05190962222222223,
+        0.05194773968253968,
+        0.05009759047619048,
+        0.05152376825396826,
+        0.05223305714285715,
+        0.0582633746031746
+      ],
+      "median_ms": 0.05194773968253968,
+      "min_ms": 0.05009759047619048,
+      "max_ms": 0.0582633746031746,
+      "items_per_second": 192501.15714584463,
+      "python_peak_samples_bytes": [
+        6118,
+        6118,
+        6118
+      ],
+      "python_peak_bytes": 6118,
+      "process_peak_rss_bytes": 15990784,
+      "correctness_checked": true
+    },
+    {
+      "case": "compute_document",
+      "items": 10,
+      "documents": 1,
+      "source_bytes": 676,
+      "expected_total_thb": "31.55",
+      "iterations_per_sample": 748,
+      "timing_samples_ms": [
+        0.00829581550802139,
+        0.008400745989304813,
+        0.008181430481283423,
+        0.00867377540106952,
+        0.00813857219251337,
+        0.007975907754010695,
+        0.009889858288770053
+      ],
+      "median_ms": 0.00829581550802139,
+      "min_ms": 0.007975907754010695,
+      "max_ms": 0.009889858288770053,
+      "items_per_second": 1205426.9999532655,
+      "python_peak_samples_bytes": [
+        4402,
+        4402,
+        4402
+      ],
+      "python_peak_bytes": 4402,
+      "process_peak_rss_bytes": 15990784,
+      "correctness_checked": true
+    },
+    {
+      "case": "verify_document",
+      "items": 10,
+      "documents": 1,
+      "source_bytes": 676,
+      "expected_total_thb": "31.55",
+      "iterations_per_sample": 535,
+      "timing_samples_ms": [
+        0.026255945794392523,
+        0.027220185046728972,
+        0.024565065420560746,
+        0.024153942056074768,
+        0.024593220560747663,
+        0.023634917757009346,
+        0.024758385046728972
+      ],
+      "median_ms": 0.024593220560747663,
+      "min_ms": 0.023634917757009346,
+      "max_ms": 0.027220185046728972,
+      "items_per_second": 406616.12314251484,
+      "python_peak_samples_bytes": [
+        5457,
+        5457,
+        5457
+      ],
+      "python_peak_bytes": 5457,
+      "process_peak_rss_bytes": 15990784,
+      "correctness_checked": true
+    },
+    {
+      "case": "csv_pipeline",
+      "items": 10,
+      "documents": 1,
+      "source_bytes": 676,
+      "expected_total_thb": "31.55",
+      "iterations_per_sample": 141,
+      "timing_samples_ms": [
+        0.12750566666666666,
+        0.11049466666666667,
+        0.10928426241134752,
+        0.12043090070921986,
+        0.10628244680851064,
+        0.1061474964539007,
+        0.10881824822695035
+      ],
+      "median_ms": 0.10928426241134752,
+      "min_ms": 0.1061474964539007,
+      "max_ms": 0.12750566666666666,
+      "items_per_second": 91504.4836223523,
+      "python_peak_samples_bytes": [
+        31521,
+        31521,
+        31521
+      ],
+      "python_peak_bytes": 31521,
+      "process_peak_rss_bytes": 15990784,
+      "correctness_checked": true
+    },
+    {
+      "case": "read_csv_bytes",
+      "items": 100,
+      "documents": 1,
+      "source_bytes": 6266,
+      "expected_total_thb": "450.50",
+      "iterations_per_sample": 149,
+      "timing_samples_ms": [
+        0.16441006711409395,
+        0.1919285302013423,
+        0.16860611409395973,
+        0.16870223489932887,
+        0.1635999865771812,
+        0.1752301812080537,
+        0.1595866308724832
+      ],
+      "median_ms": 0.16860611409395973,
+      "min_ms": 0.1595866308724832,
+      "max_ms": 0.1919285302013423,
+      "items_per_second": 593098.3021426651,
+      "python_peak_samples_bytes": [
+        138347,
+        138347,
+        138347
+      ],
+      "python_peak_bytes": 138347,
+      "process_peak_rss_bytes": 16121856,
+      "correctness_checked": true
+    },
+    {
+      "case": "validate_document",
+      "items": 100,
+      "documents": 1,
+      "source_bytes": 6266,
+      "expected_total_thb": "450.50",
+      "iterations_per_sample": 50,
+      "timing_samples_ms": [
+        0.49817819999999996,
+        0.51005026,
+        0.5054305,
+        0.49688546,
+        0.50179564,
+        0.52639926,
+        0.5117336
+      ],
+      "median_ms": 0.5054305,
+      "min_ms": 0.49688546,
+      "max_ms": 0.52639926,
+      "items_per_second": 197851.13878169205,
+      "python_peak_samples_bytes": [
+        35881,
+        35881,
+        35881
+      ],
+      "python_peak_bytes": 35881,
+      "process_peak_rss_bytes": 16121856,
+      "correctness_checked": true
+    },
+    {
+      "case": "compute_document",
+      "items": 100,
+      "documents": 1,
+      "source_bytes": 6266,
+      "expected_total_thb": "450.50",
+      "iterations_per_sample": 336,
+      "timing_samples_ms": [
+        0.08265276190476191,
+        0.07504136607142857,
+        0.07133397023809523,
+        0.06955498214285714,
+        0.07175773214285715,
+        0.07157716071428571,
+        0.06687732142857143
+      ],
+      "median_ms": 0.07157716071428571,
+      "min_ms": 0.06687732142857143,
+      "max_ms": 0.08265276190476191,
+      "items_per_second": 1397093.6958392304,
+      "python_peak_samples_bytes": [
+        25748,
+        25748,
+        25748
+      ],
+      "python_peak_bytes": 25748,
+      "process_peak_rss_bytes": 16121856,
+      "correctness_checked": true
+    },
+    {
+      "case": "verify_document",
+      "items": 100,
+      "documents": 1,
+      "source_bytes": 6266,
+      "expected_total_thb": "450.50",
+      "iterations_per_sample": 134,
+      "timing_samples_ms": [
+        0.18380297761194028,
+        0.20532275373134326,
+        0.17008561940298508,
+        0.18918301492537312,
+        0.16864531343283584,
+        0.18806394029850745,
+        0.1621734104477612
+      ],
+      "median_ms": 0.18380297761194028,
+      "min_ms": 0.1621734104477612,
+      "max_ms": 0.20532275373134326,
+      "items_per_second": 544060.8269748931,
+      "python_peak_samples_bytes": [
+        35463,
+        35463,
+        35463
+      ],
+      "python_peak_bytes": 35463,
+      "process_peak_rss_bytes": 16121856,
+      "correctness_checked": true
+    },
+    {
+      "case": "csv_pipeline",
+      "items": 100,
+      "documents": 1,
+      "source_bytes": 6266,
+      "expected_total_thb": "450.50",
+      "iterations_per_sample": 26,
+      "timing_samples_ms": [
+        1.0105732692307692,
+        0.9574040384615384,
+        1.0249368461538462,
+        0.9869315384615385,
+        1.0587761923076924,
+        0.9616870384615385,
+        0.9839378076923077
+      ],
+      "median_ms": 0.9869315384615385,
+      "min_ms": 0.9574040384615384,
+      "max_ms": 1.0587761923076924,
+      "items_per_second": 101324.15076721867,
+      "python_peak_samples_bytes": [
+        180696,
+        180696,
+        180696
+      ],
+      "python_peak_bytes": 180696,
+      "process_peak_rss_bytes": 16121856,
+      "correctness_checked": true
+    },
+    {
+      "case": "read_csv_bytes",
+      "items": 1000,
+      "documents": 1,
+      "source_bytes": 65066,
+      "expected_total_thb": "18005.00",
+      "iterations_per_sample": 15,
+      "timing_samples_ms": [
+        1.6502036666666666,
+        1.8284813333333332,
+        1.7303028666666667,
+        1.6462450666666666,
+        1.7020857333333335,
+        1.7026499333333334,
+        1.6903080000000001
+      ],
+      "median_ms": 1.7020857333333335,
+      "min_ms": 1.6462450666666666,
+      "max_ms": 1.8284813333333332,
+      "items_per_second": 587514.4714606229,
+      "python_peak_samples_bytes": [
+        1251387,
+        1251387,
+        1251387
+      ],
+      "python_peak_bytes": 1251387,
+      "process_peak_rss_bytes": 17170432,
+      "correctness_checked": true
+    },
+    {
+      "case": "validate_document",
+      "items": 1000,
+      "documents": 1,
+      "source_bytes": 65066,
+      "expected_total_thb": "18005.00",
+      "iterations_per_sample": 5,
+      "timing_samples_ms": [
+        5.2961852,
+        5.1838902,
+        4.9194442,
+        5.2564934,
+        5.1728174000000005,
+        5.0992628,
+        5.1807976
+      ],
+      "median_ms": 5.1807976,
+      "min_ms": 4.9194442,
+      "max_ms": 5.2961852,
+      "items_per_second": 193020.47236896495,
+      "python_peak_samples_bytes": [
+        282559,
+        282559,
+        282559
+      ],
+      "python_peak_bytes": 282559,
+      "process_peak_rss_bytes": 17432576,
+      "correctness_checked": true
+    },
+    {
+      "case": "compute_document",
+      "items": 1000,
+      "documents": 1,
+      "source_bytes": 65066,
+      "expected_total_thb": "18005.00",
+      "iterations_per_sample": 41,
+      "timing_samples_ms": [
+        0.6595783170731707,
+        0.6510972926829268,
+        0.6912916585365854,
+        0.6493424146341463,
+        0.6457077073170732,
+        0.6485815365853659,
+        0.6184158780487805
+      ],
+      "median_ms": 0.6493424146341463,
+      "min_ms": 0.6184158780487805,
+      "max_ms": 0.6912916585365854,
+      "items_per_second": 1540019.5297013237,
+      "python_peak_samples_bytes": [
+        240427,
+        240427,
+        240427
+      ],
+      "python_peak_bytes": 240427,
+      "process_peak_rss_bytes": 17432576,
+      "correctness_checked": true
+    },
+    {
+      "case": "verify_document",
+      "items": 1000,
+      "documents": 1,
+      "source_bytes": 65066,
+      "expected_total_thb": "18005.00",
+      "iterations_per_sample": 16,
+      "timing_samples_ms": [
+        1.74043575,
+        1.748864,
+        1.824112875,
+        1.5961229375,
+        1.8364715,
+        1.5953678125,
+        1.7690366875
+      ],
+      "median_ms": 1.748864,
+      "min_ms": 1.5953678125,
+      "max_ms": 1.8364715,
+      "items_per_second": 571799.7511527484,
+      "python_peak_samples_bytes": [
+        346579,
+        346579,
+        346579
+      ],
+      "python_peak_bytes": 346579,
+      "process_peak_rss_bytes": 17694720,
+      "correctness_checked": true
+    },
+    {
+      "case": "csv_pipeline",
+      "items": 1000,
+      "documents": 1,
+      "source_bytes": 65066,
+      "expected_total_thb": "18005.00",
+      "iterations_per_sample": 3,
+      "timing_samples_ms": [
+        9.002952,
+        9.060202,
+        11.517523333333335,
+        9.17422,
+        8.853627333333334,
+        9.373589666666666,
+        9.453683666666667
+      ],
+      "median_ms": 9.17422,
+      "min_ms": 8.853627333333334,
+      "max_ms": 11.517523333333335,
+      "items_per_second": 109001.09219094375,
+      "python_peak_samples_bytes": [
+        1807575,
+        1807575,
+        1807575
+      ],
+      "python_peak_bytes": 1807575,
+      "process_peak_rss_bytes": 18743296,
+      "correctness_checked": true
+    },
+    {
+      "case": "read_csv_bytes",
+      "items": 10000,
+      "documents": 1,
+      "source_bytes": 688166,
+      "expected_total_thb": "1530050.00",
+      "iterations_per_sample": 2,
+      "timing_samples_ms": [
+        22.050239,
+        21.328578,
+        20.996899,
+        21.2273055,
+        22.5344685,
+        22.102873,
+        23.8970535
+      ],
+      "median_ms": 22.050239,
+      "min_ms": 20.996899,
+      "max_ms": 23.8970535,
+      "items_per_second": 453509.8236350182,
+      "python_peak_samples_bytes": [
+        12673407,
+        12673407,
+        12673407
+      ],
+      "python_peak_bytes": 12673407,
+      "process_peak_rss_bytes": 29892608,
+      "correctness_checked": true
+    },
+    {
+      "case": "validate_document",
+      "items": 10000,
+      "documents": 1,
+      "source_bytes": 688166,
+      "expected_total_thb": "1530050.00",
+      "iterations_per_sample": 1,
+      "timing_samples_ms": [
+        54.956626,
+        54.963326,
+        54.923997,
+        55.800877,
+        58.324244,
+        55.609819,
+        55.166211
+      ],
+      "median_ms": 55.166211,
+      "min_ms": 54.923997,
+      "max_ms": 58.324244,
+      "items_per_second": 181270.37943570205,
+      "python_peak_samples_bytes": [
+        2996821,
+        2996821,
+        2996821
+      ],
+      "python_peak_bytes": 2996821,
+      "process_peak_rss_bytes": 29900800,
+      "correctness_checked": true
+    },
+    {
+      "case": "compute_document",
+      "items": 10000,
+      "documents": 1,
+      "source_bytes": 688166,
+      "expected_total_thb": "1530050.00",
+      "iterations_per_sample": 4,
+      "timing_samples_ms": [
+        6.62808,
+        6.677722,
+        6.9375655,
+        8.3574575,
+        7.0481695,
+        6.63760425,
+        7.21687325
+      ],
+      "median_ms": 6.9375655,
+      "min_ms": 6.62808,
+      "max_ms": 8.3574575,
+      "items_per_second": 1441427.832284971,
+      "python_peak_samples_bytes": [
+        2392280,
+        2392280,
+        2392280
+      ],
+      "python_peak_bytes": 2392280,
+      "process_peak_rss_bytes": 30056448,
+      "correctness_checked": true
+    },
+    {
+      "case": "verify_document",
+      "items": 10000,
+      "documents": 1,
+      "source_bytes": 688166,
+      "expected_total_thb": "1530050.00",
+      "iterations_per_sample": 2,
+      "timing_samples_ms": [
+        15.4634515,
+        15.043219,
+        15.599952,
+        14.926213,
+        15.2099505,
+        15.2275165,
+        15.430116
+      ],
+      "median_ms": 15.2275165,
+      "min_ms": 14.926213,
+      "max_ms": 15.599952,
+      "items_per_second": 656705.9047350236,
+      "python_peak_samples_bytes": [
+        3514039,
+        3514039,
+        3514039
+      ],
+      "python_peak_bytes": 3514039,
+      "process_peak_rss_bytes": 33144832,
+      "correctness_checked": true
+    },
+    {
+      "case": "csv_pipeline",
+      "items": 10000,
+      "documents": 1,
+      "source_bytes": 688166,
+      "expected_total_thb": "1530050.00",
+      "iterations_per_sample": 1,
+      "timing_samples_ms": [
+        116.102527,
+        118.071249,
+        104.670021,
+        103.894714,
+        101.348343,
+        103.430906,
+        99.881916
+      ],
+      "median_ms": 103.894714,
+      "min_ms": 99.881916,
+      "max_ms": 118.071249,
+      "items_per_second": 96251.28762566304,
+      "python_peak_samples_bytes": [
+        18221052,
+        18221052,
+        18221052
+      ],
+      "python_peak_bytes": 18221052,
+      "process_peak_rss_bytes": 37687296,
+      "correctness_checked": true
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "scenario": "A11_repeat_delivery",
+  "source_csv": "document_id,item_id,description,quantity,unit_price,declared_total,currency\nGOOD,I1,ส่งซ้ำได้,2,0.10,0.20,THB\n",
+  "source_sha256": "8adefbb952bbe1dd2335a73f3783207b4a201644c0e2c7a34506d7a1018eda30",
+  "expected": {
+    "receipt_unchanged": true,
+    "files_unchanged": true,
+    "engine_unchanged": true
+  },
+  "actual": {
+    "batch_id": "repeat-delivery",
+    "status": "DELIVERED",
+    "counts": {
+      "ERROR": 0,
+      "INVALID": 0,
+      "VALID": 1,
+      "documents": 1
+    },
+    "certified_total": "0.20",
+    "currency": "THB",
+    "ungrouped_rows": 0,
+    "receipt": {
+      "artifacts": {
+        "summary.csv": {
+          "path": "/tmp/neuron-delivery-test-hp8g5c2_/batch_reports/repeat-delivery/summary.csv",
+          "sha256": "43f762369df34b0cc2a5b82b99b70492c90837508aa82b8e99c475c8d53642e5",
+          "bytes": 149
+        },
+        "details.json": {
+          "path": "/tmp/neuron-delivery-test-hp8g5c2_/batch_reports/repeat-delivery/details.json",
+          "sha256": "e9d1c33e1e8398f4b4d523f545be9e0e8f52c17d7eeb57d874cf9c6d9a544620",
+          "bytes": 8662
+        },
+        "source.csv": {
+          "path": "/tmp/neuron-delivery-test-hp8g5c2_/batch_reports/repeat-delivery/source.csv",
+          "sha256": "8adefbb952bbe1dd2335a73f3783207b4a201644c0e2c7a34506d7a1018eda30",
+          "bytes": 128
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "details.json": {
+      "sha256": "e9d1c33e1e8398f4b4d523f545be9e0e8f52c17d7eeb57d874cf9c6d9a544620",
+      "size_bytes": 8662,
+      "mtime_ns": 1793182409768625288
+    },
+    "source.csv": {
+      "sha256": "8adefbb952bbe1dd2335a73f3783207b4a201644c0e2c7a34506d7a1018eda30",
+      "size_bytes": 128,
+      "mtime_ns": 1793182409768872149
+    },
+    "summary.csv": {
+      "sha256": "43f762369df34b0cc2a5b82b99b70492c90837508aa82b8e99c475c8d53642e5",
+      "size_bytes": 149,
+      "mtime_ns": 1793182409768462042
+    }
+  }
+}

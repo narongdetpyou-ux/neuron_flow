@@ -1,0 +1,21 @@
+{
+  "tested_implementation_version": "0.2.1",
+  "suite_origin_version": "0.1.0",
+  "created_at_utc": "2026-10-28T10:13:20.692059+00:00",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "test_cases": 38,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "test_duration_seconds": 5.994,
+  "checks": {
+    "syntax_compiles": true,
+    "fresh_cli_run_succeeds": true,
+    "independent_check_total_310_70": true,
+    "report_hash_matches_receipt": true,
+    "second_run_does_not_repeat_steps": true,
+    "second_run_does_not_rewrite_report": true
+  },
+  "successful": true
+}

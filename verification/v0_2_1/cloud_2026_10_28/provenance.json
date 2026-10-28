@@ -1,0 +1,25 @@
+{
+  "assembled_at_utc": "2026-10-28T10:58:03.422747+00:00",
+  "repository": "narongdetpyou-ux/neuron_flow",
+  "base_commit": "dd745da71efbc1e52966f87ffcd0d217c4c93b63",
+  "project_fingerprint": "d4fd8b5457c3870ea66f3b682797a02d8d96df1bf188e5aed8dfd4c33e7db99f",
+  "fingerprint_algorithm": "tools.verify_current.project_fingerprint",
+  "tested_source_note": "Runs used the base checkout with the added benchmark/edge tools and documentation, before those changes were committed. The current source fingerprint matches the latest regression result. Benchmark/edge raw reports do not embed source fingerprints; their scripts are recorded below.",
+  "source_files_sha256": {
+    "README.md": "9a2716c35e6f2b963e9700a1555ab8a690fe8737f0a4227424ff2931e28a1d49",
+    "tools/benchmark.py": "2ffa6b85144f419643f7cde2a05cc9846278416571ae68cf66f8b37cf04a44e9",
+    "tools/edge_cases.py": "1afdc2358757d538f18a804ec84ebfd7d81b5b5533e0b119f957293850c3690c",
+    "docs/BENCHMARK_TH.md": "d239de1d5fb3121e229c27334d1444caf01c88c2f02730cc6eb44c90c22ba697",
+    "docs/EDGE_CASES_TH.md": "c89b68629357dffb2a58c7fccc0688b14c07b496b863d3b024df4d000ea468fa"
+  },
+  "artifact_origins": {
+    "benchmark": "/workspace/scratch/neuron-benchmark-20261028",
+    "edge_cases": "/workspace/scratch/neuron-edge-cases-final-20261028",
+    "regression": "/workspace/scratch/neuron-edge-regression-20261028",
+    "dependencies": "/workspace/scratch/neuron-flow-tests-20261028T095230122316Z"
+  },
+  "excluded": "Live workspace databases, locks, virtualenv, caches and duplicate exploratory runs. The complete generated mock corpus is in edge_cases/mock-data.zip.",
+  "original_paths": "Absolute /workspace paths in raw logs/receipts are original run locations and have been preserved. They are not portable replay instructions.",
+  "known_defect": "Three events --after values outside SQLite signed int64 produce one unfixed OverflowError defect. Edge runner exits 1 for these failures.",
+  "cloud_publication": "This evidence package does not publish environment settings or a software release."
+}
