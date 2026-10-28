@@ -1,3 +1,18 @@
+# Release assets index
+
+Use [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases) for current published downloads.
+Normal publication verifies native assets and preserves old releases without overwriting them.
+
+- Files directly in this directory are the immutable **0.2.0 fallback** assets described below.
+- `v0.2.1-research-candidate/` is the earlier research snapshot before the Windows fixture fix.
+  It is retained for provenance, not the current 0.2.1 release. Its embedded status and checksums
+  describe that original snapshot; do not replace them with later artifacts.
+- Future development builds belong in ignored `dist/` or an external temporary directory.
+  Generate `BUILD_STATUS.json` and `SHA256SUMS.txt` for each exact package rather than copying
+  generated status/manifests into the changing source root.
+
+## Historical 0.2.0 fallback record
+
 # Neuron Flow 0.2.0 release files
 
 Code tag: v0.2.0

@@ -2,7 +2,7 @@
 
 ชื่อ distribution คงเป็น `neuron-flow-prototype` เพื่อรักษาวิธีติดตั้งเดิม
 ชื่อ import คือ `neuron_flow` และคำสั่งที่ติดตั้งคือ `neuron-flow`
-รุ่น 0.2.1 ยังคงเป็น candidate; การ build หรือ push โค้ดไม่ใช่การอนุมัติ release
+รุ่น 0.2.1 เป็น beta ที่เจ้าของอนุมัติให้เผยแพร่แล้ว; การ build หรือ push โค้ดในอนาคตไม่ใช่การอนุมัติ release
 และไม่เผยแพร่ไป PyPI
 
 ## Build tools และความปลอดภัย

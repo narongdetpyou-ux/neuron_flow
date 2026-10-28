@@ -1,18 +1,19 @@
-# Neuron Flow 0.2.1 — unpublished candidate
+# Neuron Flow 0.2.1 — beta
 
 Validate multiple purchase documents from UTF-8 CSV, verify money with Decimal and an
 independent integer-satang calculation, and deliver reports traceable to original CSV records.
 Python 3.10+ and the standard library; THB, one machine, no API keys.
 See [the Thai guide](README_TH.md) for the complete data contract and operating instructions.
 
-Version 0.2.1 is a development candidate, with no publication approval. It adds submit-only
-intake, batch discovery while a controller runs, supported 0.2.0 workspace reuse and structured
-size-limit failures. Read current test counts and results from `verification/v0_2_1/` rather
-than reusing the previous version's test totals.
+Version 0.2.1 adds submit-only intake, live batch discovery, supported 0.2.0 workspace reuse,
+structured size-limit failures, bounded event cursors and byte-stable Windows fixture checkouts.
+Publication is authorized in `RELEASE_APPROVAL.json`; obtain published downloads and their
+checksums from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases).
+Read the [evidence index](verification/README.md) for dated test results and their scope.
 
-Version 0.2.0 was released with the disclosed absence of actual Google Colab acceptance.
-Its evidence under `verification/v0_2_0/` and its `RELEASE_APPROVAL.json` remain historical;
-that approval does not approve 0.2.1. Actual Colab acceptance remains `not_run`.
+Actual Colab acceptance remains `not_run`. The historical 0.2.0 approval is preserved in
+[the archive](verification/archive/RELEASE_APPROVAL_0_2_0.json); neither local tests nor
+publication approval substitute for actual Colab acceptance.
 
 ## Intended use and operating envelope
 
@@ -24,12 +25,13 @@ see [API examples](docs/PYTHON_API_TH.md) and the [maintainer runbook](docs/MAIN
 
 Development checks: [branch coverage and static gates](docs/QUALITY_TH.md),
 [wheel/sdist installation](docs/PACKAGING_TH.md), and
-[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS CI jobs are configured;
-actual outcomes require runner evidence before claiming platform support.
+[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS smoke checks passed on Python 3.10/3.12 in
+[the Windows-fix CI run](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187).
+Full fault-injection validation remains scoped to Linux.
 
 ## Quick start
 
-Extract candidate `dist/neuron_flow_v0.2.1.zip` and run from its `neuron_flow` directory:
+Download `neuron_flow_v0.2.1.zip` from GitHub Releases, verify its `.sha256`, extract it and run from its `neuron_flow` directory:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
@@ -73,7 +75,7 @@ still uses the Runtime workspace lock.
 Candidate 0.2.1 can reuse supported schema-1 workspaces, including the markerless 0.2.0 format,
 when the CSV contract, Agent definitions/versions and workflow settings match the compatibility
 policy. Existing identity, creation-version provenance, frozen payloads and reports stay unchanged.
-Old results still identify 0.2.0; new candidate work identifies 0.2.1. Compatibility does not
+Old results still identify 0.2.0; new work identifies 0.2.1. Compatibility does not
 implicitly accept every patch version or changed contract. Backup restoration still requires
 the original absolute workspace path; relocation support is outside this patch.
 
@@ -133,7 +135,7 @@ DELIVERY_FAILED state; 2 for invalid setup/input or an exception, including deli
 Submit-only returns 0 for accepted intake and batch-list returns 0 for successful inspection;
 neither certifies that documents are VALID. Inspect processing counts and receipts as well as the exit code.
 
-## Verification and candidate packaging
+## Verification and packaging
 
 ```bash
 python tools/verify.py --output-dir verification/v0_2_1/baseline
@@ -146,10 +148,10 @@ python tools/build_delivery.py --candidate --output-dir dist
 tests and compares the locked 100-document reference. Actual baseline/new counts, failures,
 errors, skipped cases and environment are recorded under `verification/v0_2_1/`.
 The output-directory options keep current results separate from immutable 0.2.0 evidence.
-`verify_v020.py` is retained for historical 0.2.0 use, rather than candidate verification.
+`verify_v020.py` is retained for historical 0.2.0 use, rather than current-version verification.
 Reference answers and their lock remain in `acceptance/`.
 
-The candidate builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
+The package builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
 `.sha256`, the Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` and `delivery_checks.json` to
 the chosen output directory. Inspect these current output files instead of historical 0.2.0
 build-status files. Building does not publish. Without `--candidate`, matching approval for
@@ -186,7 +188,7 @@ expected invalid data remains distinct. See [coverage and known findings](docs/E
 
 ## Colab notebook and backups
 
-Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 candidate ZIP, verify every packaged
+Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 ZIP, verify every packaged
 file against `SHA256SUMS.txt`, upload exactly one CSV, submit/run the CLI, inspect reports, resume,
 run the full verifier and download the backup. Notebook code invokes importable project modules
 through subprocesses; no agents are defined in notebook cells.
@@ -207,7 +209,7 @@ exit unsuccessfully; omitted evidence remains `not_run`.
 Actual fresh-runtime upload, execution, resume, manually confirmed receipt of the download and
 restore in a second runtime remain required for complete Colab acceptance. Release approval
 does not supply those facts. See [the 0.2.1 development scope](docs/DEVELOPMENT_0_2_1_TH.md).
-Windows/macOS have not been verified in this round.
+Windows/macOS smoke checks have passed; this does not certify the full fault-injection suite on those platforms.
 
 ## Project policies
 

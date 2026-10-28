@@ -69,6 +69,9 @@ def main(argv=None):
                         default=PROJECT / 'verification' / ('v' + __version__.replace('.', '_')))
     parser.add_argument('--colab-evidence', type=Path)
     args = parser.parse_args(argv)
+    if args.colab_evidence and not (PROJECT / 'SHA256SUMS.txt').is_file():
+        parser.error('--colab-evidence requires the SHA256SUMS.txt from the verified extracted package; '
+                     'a source checkout has no package manifest. Build and extract a fresh package first.')
     destination = args.output_dir.resolve()
     historical = PROJECT / 'verification' / 'v0_2_0'
     if destination == historical or historical in destination.parents:
