@@ -1,9 +1,8 @@
 # Contributing to Neuron Flow
 
 Bug reports, documentation improvements, tests and focused code changes are welcome.
-Issues and pull requests may be written in English or Thai. This repository is
-currently private; its GitHub collaboration features are available to people with
-repository access.
+Issues and pull requests may be written in English or Thai. The repository is public; issues and pull requests are visible publicly.
+Use synthetic data and keep confidential material out of these channels.
 
 Read the [README](README.md), [Code of Conduct](CODE_OF_CONDUCT.md) and
 [governance policy](GOVERNANCE.md) before contributing. For usage questions, see
@@ -60,6 +59,15 @@ make a check pass. A deliberate contract or reference change needs an explanatio
 and maintainer review. Local notebook tests do not establish actual Google Colab
 acceptance.
 
+## Additional development checks
+
+Optional tooling is separate from the standard-library runtime. Follow the pinned-tool
+installation and measured scope in [quality gates](docs/QUALITY_TH.md) and
+[Python packaging](docs/PACKAGING_TH.md). Run `python -B tools/check_repository_docs.py`
+when changing repository status claims. New evidence belongs in a fresh directory.
+The [API guide](docs/PYTHON_API_TH.md) and [maintainer runbook](docs/MAINTAINER_RUNBOOK_TH.md)
+cover custom Agents, backups and recovery; they do not promise a stable 0.2.x Python API.
+
 ## Pull requests
 
 - Explain the problem and resulting behavior, with a minimal synthetic example
@@ -70,8 +78,8 @@ acceptance.
   failures. For performance claims, include workload, environment and measurement
   method.
 - Remove credentials, personal data and real financial documents from examples,
-  logs, screenshots and attachments. A private repository still requires care
-  with sensitive data.
+  logs, screenshots and attachments. Public contributions must not contain
+  sensitive data.
 
 The maintainer makes acceptance and merge decisions under
 [GOVERNANCE.md](GOVERNANCE.md). A merged pull request or successful build does not

@@ -183,7 +183,10 @@ Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json`
 หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.2.1; approval ของ 0.2.0 ใช้แทนไม่ได้
 
 มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
-ยังไม่มีผลรัน GitHub Actions จริงในรอบนี้ ช่องทาง native release assets ที่เคยพบ HTTP 401
+รายงานวิจัยวันที่ 28 ตุลาคม 2026 บันทึกว่า main CI ของ commit
+`d5a72ab64a7439c999faf7ba47f77239d1238a11` ผ่านแล้ว
+ผลดังกล่าวเป็น snapshot ไม่ใช่ผล CI ของ commit ที่แก้ภายหลัง
+ดู [บันทึกการลงมือทำ](docs/RESEARCH_IMPLEMENTATION_TH.md) ช่องทาง native release assets ที่เคยพบ HTTP 401
 ต้องตรวจสิทธิ์และการอัปโหลด/ดาวน์โหลดจริงภายหลัง การเพิ่ม workflow ไม่ได้ยืนยันว่าแก้สิทธิ์สำเร็จแล้ว
 
 ## ใช้ Notebook บน Google Colab
@@ -219,3 +222,13 @@ Notebook มีเซลล์คืน backup สำหรับ runtime ให
 ส่ง Issue และ PR เป็นภาษาไทยหรืออังกฤษได้
 [สถานะการตั้งค่านโยบาย GitHub](docs/REPOSITORY_POLICIES_TH.md)
 แยกกติกาที่เตรียมไว้จากการตั้งค่าที่เปิดใช้งานจริง
+
+## ขอบเขตผู้ใช้และการพัฒนาจากรายงานวิจัย
+
+เหมาะสำหรับผู้พัฒนาและผู้ตรวจเอกสารซื้อ CSV บนเครื่องเดียวที่ควบคุมได้
+fixture ที่ล็อกตรวจ 100 เอกสาร; เพดาน parser ไม่ใช่ throughput หรือ SLA production
+Agent code ต้องเชื่อถือได้ งานหลายเอกสารยังเรียงลำดับ ผู้ใช้ควบคุมสิทธิ์ backup และอายุเก็บข้อมูลเอง
+Python API ใน 0.2.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
+[คู่มือผู้ดูแล](docs/MAINTAINER_RUNBOOK_TH.md), [quality gates](docs/QUALITY_TH.md),
+[packaging](docs/PACKAGING_TH.md) และ [runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md)
+เพิ่ม CI smoke สำหรับ Windows/macOS แล้ว แต่ต้องอ่านผล runner จริงก่อนอ้างการรองรับ

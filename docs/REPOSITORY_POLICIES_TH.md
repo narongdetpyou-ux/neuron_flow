@@ -30,8 +30,9 @@ Dependabot config เป็นการตรวจเวอร์ชัน depe
 **เป็นค่าที่เสนอไว้ ยังไม่ได้บังคับใช้** แม้ใน payload ระบุ `enforcement: active`
 
 - เข้า `main` ผ่าน PR และแก้ review conversations ให้ครบ
-- ต้องผ่าน `test (3.10)` และ `test (3.12)` จาก GitHub Actions app ID 15368
-  ยืนยันชื่อและ app จาก check runs จริงแล้ว
+- payload ใหม่กำหนด `test (3.10)`, `test (3.12)`, `quality`, `distribution (3.10)` และ `distribution (3.12)`
+  ใช้ GitHub Actions app ID 15368 ตามหลักฐานเดิม; ชื่อ baseline ยืนยันจาก check runs เดิม
+  ส่วน quality/distribution เป็นชื่อที่คาดจาก workflow ใหม่ ต้องตรวจ run จริงก่อน apply ruleset
 - branch ต้องอัปเดตกับฐานก่อน merge; ไม่อนุญาต force-push หรือลบ `main`
 - ไม่ตั้ง bypass actor; ไม่บังคับ signed commits, deployments หรือ manual release jobs
 - required approval เท่ากับ 0 ในขณะมีผู้ดูแลคนเดียว ไม่บังคับ code-owner/last-push approval
@@ -40,9 +41,9 @@ Dependabot config เป็นการตรวจเวอร์ชัน depe
 หากเพิ่มผู้ดูแล ควรพิจารณา approval อย่างน้อย 1 คนและปรับ CODEOWNERS พร้อมกัน
 กติกานี้ไม่เปลี่ยน merge methods เดิม และไม่อนุมัติการเผยแพร่ release
 
-## สถานะที่ตรวจจริง — 28 ตุลาคม 2026
+## ประวัติการตรวจเมื่อ repository ยังเป็น private — 28 ตุลาคม 2026
 
-repository เป็น **private**, default branch คือ `main` และมี owner/admin หนึ่งราย
+ขณะตรวจครั้งเดิม repository เป็น **private**, default branch คือ `main` และมี owner/admin หนึ่งราย
 ผล API ในช่วงจัดทำครั้งนี้:
 
 | การตั้งค่า | ผลตรวจ/การดำเนินการ |
@@ -56,7 +57,7 @@ repository เป็น **private**, default branch คือ `main` และ�
 | Private vulnerability reporting | API ตอบ 404; ไม่ยืนยันว่ามีช่องทางนี้ |
 
 GitHub ตอบข้อความสำหรับ rulesets ว่า “Upgrade to GitHub Pro or make this repository public to enable this feature.”
-คงความเป็น private ไว้ ผู้ดูแลสามารถเลือกแผนที่รองรับ private repository ได้
+ข้อจำกัดนี้เป็นผลตรวจในอดีตเมื่อยังเป็น private ไม่ใช่สถานะปัจจุบัน
 ไม่มีการอัปเกรดแผน เปลี่ยน visibility หรือเพิ่มสิทธิ์ integration โดยอัตโนมัติ
 
 Owner ต้องใช้ Settings ที่มีสิทธิ์เพียงพอหากจะเปิดการตั้งค่าที่ถูกบล็อก:
@@ -78,3 +79,14 @@ CI เดิมระบุ `contents: read` และ release publish job ร�
 คำขอนี้มองเห็นได้โดยผู้มีสิทธิ์อ่าน repository และไม่ใช่ข้อความส่วนตัวถึง maintainer
 รอช่องทางที่ตกลงกันก่อนส่งรายละเอียดช่องโหว่หรือหลักฐานเกี่ยวกับบุคคล
 ดู [SECURITY.md](../SECURITY.md) และ [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)
+
+## Snapshot จากรายงานวิจัยภายหลังในวันเดียวกัน
+
+รายงานวิจัยที่เจ้าของแนบระบุว่า repository เปลี่ยนเป็น **public** และ main CI ของ
+`d5a72ab64a7439c999faf7ba47f77239d1238a11` ผ่านแล้ว rulesets endpoint คืน `[]`
+ส่วน classic branch protection ยังอ่านไม่ได้ จึงไม่ยืนยันว่ามีหรือไม่มี protection
+นี่เป็นข้อมูลจากรายงาน ไม่ใช่การตรวจ API ซ้ำในงานนี้
+
+งานแก้จากรายงานครั้งนี้ทดสอบ Git read/write ผ่าน HTTPS proxy ได้ แต่ `gh api` ตอบ Forbidden
+จึงยังไม่เปลี่ยนหรืออ้างว่าเปิด ruleset/security settings สำเร็จ payload ที่เตรียมไว้ยังเป็นข้อเสนอ
+ดู [แผนและข้อจำกัด](RESEARCH_IMPLEMENTATION_TH.md) และผลตรวจใหม่ใน `verification/research_2026_10_28/`

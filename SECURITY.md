@@ -18,8 +18,8 @@ purchase documents in an issue, pull request or CI log.
    available, use that private reporting flow.
 2. If that flow is unavailable, submit a [private-contact request][contact]
    containing only a request to arrange a confidential channel. Do not include
-   vulnerability details. The request is visible to people with repository
-   access and is not itself a confidential reporting channel.
+   vulnerability details. The request is publicly visible and is not itself a confidential
+   reporting channel.
 3. Wait for maintainer `@narongdetpyou-ux` to agree a suitable private channel
    before sending sensitive information. No separate security email address or
    private reporting endpoint is currently promised by this policy.
@@ -31,7 +31,7 @@ the maintainer so affected users can receive a fix or mitigation first; there
 is no fixed embargo period or bounty program.
 
 GitHub private vulnerability reporting has not been verified available for
-this private repository. Adding this document does not enable that feature.
+this public repository. Adding this document does not enable that feature.
 
 ## Threat model and handling data
 

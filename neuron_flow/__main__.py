@@ -12,6 +12,7 @@ from .model import MAX_MESSAGE_BYTES, decode
 from .batch import BatchRuntime
 from .csv_input import MAX_SOURCE_BYTES
 from .inspection import list_batches
+from .storage import validate_event_cursor
 
 
 DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
@@ -51,6 +52,9 @@ def main(argv=None):
             command.add_argument("--after", type=int, default=0)
     args = parser.parse_args(argv)
     try:
+        if args.command == "events":
+            # Validate before opening or creating any workspace state.
+            validate_event_cursor(args.after)
         if args.command == "batch-list":
             print(json.dumps(list_batches(args.workspace), ensure_ascii=False, indent=2, allow_nan=False))
             return 0

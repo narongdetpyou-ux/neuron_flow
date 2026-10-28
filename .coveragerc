@@ -1,0 +1,14 @@
+[run]
+branch = True
+source = neuron_flow
+parallel = True
+concurrency = multiprocessing
+patch = subprocess, _exit
+sigterm = True
+relative_files = True
+
+[report]
+show_missing = True
+precision = 2
+fail_under = 89
+

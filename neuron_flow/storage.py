@@ -9,6 +9,13 @@ import uuid
 from .model import encode, fingerprint
 
 
+def validate_event_cursor(after):
+    """Reject cursors SQLite cannot bind without changing pagination semantics."""
+    if type(after) is not int or not -(2 ** 63) <= after <= 2 ** 63 - 1:
+        raise ValueError("Event cursor 'after' must be an integer in the signed 64-bit range "
+                         "[-9223372036854775808, 9223372036854775807]")
+
+
 class WorkspaceBusy(RuntimeError):
     pass
 
@@ -127,6 +134,7 @@ class Store:
                         ["soma", "monitor", "terminal"], {"error": error, "receipt": receipt})
 
     def events_for(self, recipient, job_id, after=0):
+        validate_event_cursor(after)
         result = []
         for row in self.db.execute("SELECT * FROM events WHERE job_id=? AND sequence>? ORDER BY sequence", (job_id, after)):
             event = dict(row)

@@ -1,0 +1,81 @@
+{
+  "A01": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A01_golden.json"
+    ]
+  },
+  "A02": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A02_header.json"
+    ]
+  },
+  "A03": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A03_golden.json"
+    ]
+  },
+  "A04": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A04_golden.json",
+      "acceptance_evidence/A04_invalid_no_retry.json"
+    ]
+  },
+  "A05": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A05_golden.json"
+    ]
+  },
+  "A06": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A06_golden.json"
+    ]
+  },
+  "A07": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A07_golden.json"
+    ]
+  },
+  "A08": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A08_reports_traceability.json"
+    ]
+  },
+  "A09": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A09_hang.json",
+      "acceptance_evidence/A09_crash.json",
+      "acceptance_evidence/A09_error_report.json"
+    ]
+  },
+  "A10": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A10_controller.json",
+      "acceptance_evidence/A10_document_receipt_window.json",
+      "acceptance_evidence/A10_batch_receipt_window.json",
+      "acceptance_evidence/A10_partial_delivery.json"
+    ]
+  },
+  "A11": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A11_duplicate.json",
+      "acceptance_evidence/A11_repeat_delivery.json"
+    ]
+  },
+  "A12": {
+    "local_status": "passed",
+    "evidence": [
+      "acceptance_evidence/A12_conflict.json"
+    ]
+  }
+}

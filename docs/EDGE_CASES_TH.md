@@ -31,18 +31,21 @@ CLI แต่ละกรณีใช้ workspace ของตัวเอง�
 จะถูกบันทึกใน `failures.json` และทำให้สคริปต์คืน exit code 1
 Mutation tests ตรวจความทนทานและ invariants ไม่ใช่หลักฐานว่าครอบคลุม input ทุกแบบ
 
-## จุดที่ตรวจพบในรุ่น 0.2.1 ปัจจุบัน
+## Regression ที่แก้จากผลตรวจรุ่น 0.2.1
 
 ```bash
 .venv/bin/python -B -m neuron_flow events nonexistent \
   --after 9223372036854775808 --workspace /tmp/neuron-events-overflow
 ```
 
-`--after` รับ integer ที่เกินช่วง SQLite signed int64 แล้วหลุดเป็น `OverflowError`
-พร้อม traceback ช่วงที่ SQL รองรับคือ −9,223,372,036,854,775,808 ถึง
-9,223,372,036,854,775,807 สคริปต์ทดสอบคาดหวังการปฏิเสธด้วย JSON/exit code 2
-และยังรายงานกรณีนี้เป็น **fail** จนกว่าจะมีการแก้โค้ดหลัก ไม่ได้กลบ exception
-หรือปรับ expected result ให้ crash กลายเป็นผ่าน
+ผลตรวจเดิมพบว่า `--after` ที่เกินช่วง SQLite signed int64 หลุดเป็น `OverflowError`
+พร้อม traceback ขณะนี้ตรวจช่วงก่อนเปิด workspace และก่อนส่ง cursor เข้า SQLite
+ทั้ง CLI และ Python API ช่วงที่รองรับยังเป็น −9,223,372,036,854,775,808 ถึง
+9,223,372,036,854,775,807 รวมขอบเขตทั้งสองด้านและค่าติดลบที่อยู่ในช่วงเดิม
+ค่าที่เกินช่วงถูกปฏิเสธด้วย JSON `ValueError`/exit code 2 โดย CLI ไม่สร้าง workspace
+สำหรับคำขอที่ถูกปฏิเสธ ชุด `tests.test_event_cursors` ตรวจขอบเขต ค่าบวก/ลบมหาศาล
+และ pagination ปกติ Python API ปฏิเสธ cursor ที่ไม่ใช่ integer ด้วย `ValueError`
+หลักฐานเก่าเก็บผล crash ตามที่เกิดจริงไว้; ต้องอ่านผลรันใหม่เพื่อยืนยันโค้ดปัจจุบัน
 
 ชุดทดสอบเดิมยังรันแยกได้ด้วย `tools/verify_current.py --output-dir <new-directory>`
 เพื่อทดสอบการกู้คืนจาก worker/controller crash และกรณีค้างที่มีอยู่แล้ว

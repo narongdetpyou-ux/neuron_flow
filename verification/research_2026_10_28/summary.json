@@ -1,0 +1,36 @@
+{
+  "source_commit": "9b0ffd8fd5abf43f751db6b7febda902d0e15ea8",
+  "source_fingerprint": "3fe84a7e945a5fcfa80b05e3ddbd5f5dce2ec91f8e7888b3d3a55eb0ac4b1bba",
+  "python": "3.12.14",
+  "platform": "Linux",
+  "checks": {
+    "baseline": 38,
+    "current": 117,
+    "release_guards": 10,
+    "edge_cases": 1608,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "quality_suite_tests": 155,
+    "quality_passed": true,
+    "line_coverage": 91.85969556585043,
+    "branch_coverage": 83.72881355932203,
+    "wheel_sdist_clean_install": true,
+    "fresh_candidate_extraction": true
+  },
+  "external": {
+    "github_api": "Forbidden; custom api.github.com host saved in network draft, not applied",
+    "github_actions_current_branch": "unverified",
+    "windows_macos_execution": "unverified",
+    "colab": "not_run",
+    "main_ruleset_enforcement": "not_applied_or_verified",
+    "release": "not_published_or_approved"
+  },
+  "commands": [
+    ".venv/bin/python -B tools/verify_current.py --output-dir /workspace/neuron-research-final-verification",
+    ".venv/bin/python -B tools/check_quality.py --output-dir /workspace/neuron-research-final-quality",
+    "/workspace/neuron-build-venv/bin/python -B tools/check_distribution.py --wheelhouse /workspace/neuron-distribution-evidence-20261028/wheelhouse --output-dir /workspace/neuron-research-final-distribution",
+    ".venv/bin/python -B tools/edge_cases.py --mutations 1500 --output-dir /workspace/neuron-research-final-edge",
+    ".venv/bin/python -B tools/build_delivery.py --candidate --verification-dir /workspace/neuron-research-final-verification --output-dir /workspace/neuron-research-final-candidate"
+  ]
+}

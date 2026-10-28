@@ -82,3 +82,19 @@ workflow artifact มีอายุ 14 วัน หากหมดอายุ
 การใช้ draft เดิม, อัปโหลดล้มแล้วทำต่อ และการตรวจ hash จากการดาวน์โหลดสำรอง
 ยังไม่มีการเรียก workflow หรือเผยแพร่รุ่นใหม่จากการตรวจเหล่านี้
 การยืนยัน native uploads และสิทธิ์ environment ต้องเก็บจาก run จริงเมื่อผู้ใช้สั่งเผยแพร่ในภายหลัง
+
+## Quality, packaging และ platform CI ที่เพิ่มจากรายงานวิจัย
+
+คง baseline job `test (3.10)`/`test (3.12)` และเพิ่ม `quality` ซึ่งติดตั้ง requirements-dev
+วัด branch coverage รวม CLI/worker, correctness lint และ strict typecheck เฉพาะ inspection boundary
+เพิ่ม `distribution (3.10)`/`distribution (3.12)` สร้าง wheel/sdist แล้วติดตั้งแต่ละ artifact
+ใน clean venv โดยใช้ hash-locked build tools; เก็บ SBOM/local unsigned provenance กับ workflow artifacts
+manual release build ตรวจ distributions ด้วย แต่ไม่เปลี่ยนการอนุมัติหรือ native release asset list เดิม
+
+`platform-smoke` รัน CSV/money/cursor/CLI recovery บน Windows/macOS ทั้ง Python3.10/3.12
+ยังไม่อ้างว่าผ่านจนมีหลักฐานจาก runner จริง ชุดนี้ไม่แทน Linux fault-injection suite ทั้งหมด
+Actions ทั้งสี่ตัว pin ด้วย commit SHA ที่อ่านจาก upstream Git tags จริงเมื่อ 28 ตุลาคม 2026
+Dependabot ยังตรวจอัปเดต references ได้ การ pin ไม่ใช่ signed provenance
+
+เสนอ required checks เพิ่มใน ruleset payload แต่ยังไม่ได้ apply หรือยืนยัน enforcement
+GitHub API ใน cloud นี้ตอบ Forbidden; การ push branch ได้ไม่ยืนยันสิทธิ์ API/admin
