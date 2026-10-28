@@ -83,7 +83,21 @@ jobs:
           if [[ "$PUBLICATION_REQUESTED" == true ]]; then
             build_options=()
           fi
-          python -B tools/build_delivery.py --output-dir "$PACKAGE_DIR" "${build_options[@]}"
+          build_log="$RUNNER_TEMP/neuron-package-build.log"
+          if python -B tools/build_delivery.py --output-dir "$PACKAGE_DIR" "${build_options[@]}" > "$build_log" 2>&1; then
+            cat "$build_log"
+          else
+            build_status=$?
+            cat "$build_log"
+            python - "$build_log" <<'PY'
+          from pathlib import Path
+          import sys
+          message = Path(sys.argv[1]).read_text(encoding='utf-8', errors='replace')[-48000:]
+          message = message.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+          print('::error title=Package build failed::' + message)
+          PY
+            exit "$build_status"
+          fi
       - name: Prepare exact assets and publication attestation
         shell: bash
         run: |
