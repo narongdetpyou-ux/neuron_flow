@@ -1,0 +1,28 @@
+name: Feature request / เสนอความสามารถ
+description: Explain a user problem and a way to assess a proposed change.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Who needs this and what task is difficult today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the outcome and a concrete example.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and compatibility
+      description: Note workarounds, data-contract changes, recovery or release implications.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How could a maintainer verify that this solves the problem?

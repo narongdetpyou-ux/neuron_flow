@@ -1,0 +1,41 @@
+name: Bug report / แจ้งข้อผิดพลาด
+description: Report incorrect behavior with a small synthetic reproduction.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security reports follow SECURITY.md. Do not include credentials, real invoices or sensitive workspace files. Reports in Thai or English are welcome.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Include Python version and operating system as well.
+      placeholder: "0.2.1 candidate; Python 3.12; Linux"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps and synthetic input
+      description: Give the exact command and a minimal anonymized CSV/JSON example.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include exit code and relevant sanitized error/status output.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Additional evidence
+      description: Relevant tests or reports; omit private paths and sensitive data.
