@@ -172,3 +172,11 @@ Actual fresh-runtime upload, execution, resume, manually confirmed receipt of th
 restore in a second runtime remain required for complete Colab acceptance. Release approval
 does not supply those facts. See [the 0.2.1 development scope](docs/DEVELOPMENT_0_2_1_TH.md).
 Windows/macOS have not been verified in this round.
+
+## Project policies
+
+See [contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md),
+[security reporting](SECURITY.md), [support](SUPPORT.md) and [governance](GOVERNANCE.md).
+Issues and pull requests may be written in English or Thai.
+[Repository policy notes](docs/REPOSITORY_POLICIES_TH.md) distinguish proposed
+protections from GitHub settings that could actually be applied.
