@@ -1,4 +1,58 @@
-# Neuron Flow 0.2.1 — beta
+# Neuron Flow 0.3.0 — beta
+
+ผู้ใช้อนุมัติให้เผยแพร่ด้วยคำสั่ง “เผยแพร่เป็น release” โดยเปิดเผยข้อจำกัดด้านล่าง
+รุ่นนี้เตรียมเผยแพร่ผ่าน manual release workflow; การมีไฟล์อนุมัติหรือ build สำเร็จไม่ใช่หลักฐานว่าเผยแพร่แล้ว
+
+## การเปลี่ยนแปลง
+
+- รองรับ 46 สกุลเงินสำหรับ purchase CSV และ invoice JSON รวม USD, EUR, GBP, CNY, JPY และ SGD
+- ใช้หน่วยย่อยทางบัญชี 0, 2 หรือ 3 ตำแหน่งตามสกุล คำนวณด้วย Decimal และตรวจซ้ำแยกด้วย integer minor units
+- ปฏิเสธความละเอียดเกินกติกาโดยไม่ปัดเศษ รวมถึงทศนิยมศูนย์ที่เกินจำนวนตำแหน่ง
+- รองรับเอกสารต่างสกุลใน batch เดียวกัน และรวม `certified_totals` แยกแต่ละรหัสเฉพาะเอกสาร VALID
+  ผล batch หลายสกุลมี `currency` และ `certified_total` เป็น null โดยไม่รวมยอดข้ามสกุลหรือแปลงอัตราแลกเปลี่ยน
+- เพิ่ม `currency` ในผลเอกสารและ summary CSV ภายใต้ `purchase-csv-multicurrency-v1`
+  พร้อมตรวจสกุล ยอดจาก source และ SHA-256 ก่อนส่งมอบ
+- คงสัญญาและรายงานเดิมของ THB-only intake รวมถึงผลที่บันทึกไว้ใน batch v1
+  การประมวลผล source เดิมด้วยกติกาหลายสกุลใหม่ใช้ batch ID ใหม่
+- เพิ่มตัวอย่าง `examples/purchases_international.csv`, คู่มือสกุลเงิน และ regression tests ของ precision,
+  report tampering, CLI, recovery และ legacy currency contracts
+
+## ความเข้ากันได้
+
+ทุกแถวในเอกสารเดียวต้องใช้สกุลเดียวกัน รายการรหัสและกติกาอยู่ใน `docs/CURRENCIES_TH.md`
+งาน CSV ที่บันทึกไว้ภายใต้ v1 ยังคงผลเดิม รวม USD ที่เดิมถูกปฏิเสธ ไม่เปลี่ยนคำตอบระหว่าง recovery
+fixture 100 เอกสารใน `acceptance/` และหลักฐานเก่ายังคงเดิม โดย replay สัญญา v1 อย่างชัดเจน
+
+invoice JSON ใช้ Agent รุ่น 2 สำหรับ extract/calculate/verify เพื่อผูกกติกาทศนิยมใหม่กับ identity
+งาน invoice JSON ที่บันทึกด้วย Agent รุ่น 1 ต้องใช้ runtime เดิม หรือเริ่ม job ใหม่ใน workspace ใหม่
+Python API ยังทดลอง ผู้ต่อยอดควร pin รุ่น/commit และตรวจ integration ของตนก่อนอัปเกรด
+
+## ผลตรวจและขอบเขต
+
+ก่อนเปลี่ยนหมายเลขรุ่น ชุด regression ของส่วนเพิ่มผ่าน 173 tests ไม่มี failure/error/skipped
+รวม 15 กรณีใหม่สำหรับสกุลเงิน พร้อม lint, scoped typing, branch coverage, wheel/sdist installation
+และ CLI จาก wheel ที่ติดตั้งจริง การตรวจรุ่น 0.3.0 และ package ที่แตกใหม่จะบันทึกผลอีกครั้ง
+ใน manual release workflow และไฟล์ verification ของ build นั้น ให้ใช้ผลที่ตรงกับ source/tag สุดท้าย
+
+ผล Windows/macOS ของ 0.2.1 เป็นหลักฐานประวัติ ไม่ใช้รับรองรุ่น 0.3.0
+การเตรียมรุ่นนี้ยังไม่มีผล CI Windows/macOS 0.3.0 ที่ยืนยันแล้ว
+Actual Google Colab upload/run/resume/download/restore acceptance ยัง `not_run`
+
+## ข้อจำกัดที่เปิดเผย
+
+- ไม่มีการแปลงอัตราแลกเปลี่ยนหรือปัดเศษสำหรับเงินสด และไม่รับสกุลนอกตารางที่ระบุ
+- แต่ละเอกสารใช้สกุลเดียว การใส่สกุลผสมในใบเดียวเป็น INVALID
+- ตรวจ full recovery/fault-injection บน Linux; smoke subset บนแพลตฟอร์มอื่นไม่แทนชุดเต็ม
+- เอกสารทำทีละใบ ใช้ worker ซ้ำ และ backup/restore ต้องใช้ absolute workspace path เดิม
+- CSV สูงสุด 16 MiB; engine message/job report สูงสุด 1 MiB; retry รวมสูงสุด 2 attempts
+- ไม่มี OCR/PDF, tax/discount engine หรือ SLA production
+
+ตรวจ SHA-256 ของ ZIP และไฟล์ภายในก่อนใช้ เก็บ backup ของ workspace
+การอนุมัติเผยแพร่ไม่เปลี่ยนผล Colab หรือทำให้ `not_run` กลายเป็น passed
+
+## ประวัติรุ่น 0.2.1
+
+### Neuron Flow 0.2.1 — beta
 
 อนุมัติให้เผยแพร่ตามคำสั่งเจ้าของงาน โดยเปิดเผยข้อจำกัดด้านล่าง
 เป็นรุ่นสำหรับ purchase CSV/CLI บนเครื่องเดียว ไม่ใช่การรับรอง production หรือ SLA

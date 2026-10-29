@@ -1,11 +1,54 @@
 # Python API สำหรับการต่อยอด
 
-API ที่ export จาก `neuron_flow` รุ่น 0.2.1 คือ `Runtime`, `AgentDefinition`,
+API ที่ export จาก `neuron_flow` รุ่น 0.3.0 คือ `Runtime`, `AgentDefinition`,
 `SpecError`, `PermanentAgentError` และ `TransientAgentError` ยังเป็น API ของ development
 candidate ไม่มีคำมั่นว่า Python signatures หรือ internal attributes จะคงเดิมข้ามรุ่น
 ผู้ต่อยอดควร pin รุ่น/commit และรัน integration tests ของตนก่อนอัปเกรด
 CLI/CSV contract และกติกาความเข้ากันได้ของ workspace อธิบายใน [README](../README.md)
 ไม่ควรอนุมานว่า workspace ทุกเวอร์ชันใช้แทนกันได้จากเลขรุ่น patch เพียงอย่างเดียว
+
+## CSV และสกุลเงินใน 0.3.0
+
+ส่วนเพิ่มหลายสกุลเงินเริ่มใน 0.3.0 และไม่มีในไฟล์ Release 0.2.1 เดิม
+ดู [รหัสทั้ง 46 สกุลและกติกาทศนิยม](CURRENCIES_TH.md)
+
+`BatchRuntime(workspace, *, max_workers=3, agents=None, timeout_s=5, legacy_thb=False)`
+ใน `neuron_flow.batch` เลือกสัญญา `purchase-csv-multicurrency-v1` อัตโนมัติสำหรับ source
+ที่มีสกุลอื่นนอกเหนือจาก THB ส่วน THB ล้วนยังใช้ `purchase-csv-v1` และรายงานเดิม
+ผลหลายสกุลมี `certified_totals` แยกรหัส โดย `currency` และ `certified_total` เป็น `None`
+เมื่อมีหลายสกุล ไม่ควรแปลง `None` เป็นศูนย์แล้วถือว่าเป็นยอดรวม
+
+```python
+from pathlib import Path
+from neuron_flow.batch import BatchRuntime
+
+
+def main():
+    with BatchRuntime("batch_workspace") as runtime:
+        submitted = runtime.submit(Path("examples/purchases_international.csv").read_bytes(), "international")
+        delivered = runtime.deliver(submitted["batch_id"])
+        assert delivered["certified_totals"] == {
+            "EUR": "25.50", "JPY": "1500", "KWD": "3.702", "USD": "21.50",
+        }
+
+
+if __name__ == "__main__":
+    main()
+```
+
+`validate_document(document, *, multicurrency=True)` ใน `neuron_flow.csv_agents`
+รับ grouped document จาก `read_csv_bytes` ผลมี `currency` เป็นรหัสสกุลหรือ `None`
+ส่วน `csv_workflow(document, job_id, timeout_s=5, *, multicurrency=True)` สร้าง workflow
+ที่ระบุโหมดนี้ใน validate step เอกสารเดียวใช้ได้เพียงสกุลเดียว ไม่แปลงเงิน
+
+การ replay คำตอบ fixture v1 ใช้ `validate_document(..., multicurrency=False)`,
+`csv_workflow(..., multicurrency=False)` หรือ `BatchRuntime(..., legacy_thb=True)`
+ตามระดับ API งาน v1 ที่บันทึกแล้วกู้คืนตาม contract เดิม ผลไม่ถูกตีความใหม่ด้วยสัญญาหลายสกุล
+
+default invoice Agents สำหรับ `Runtime.ingest` เปลี่ยน extract/calculate/verify เป็นรุ่น `2`
+เพื่อผูกกติกาใหม่กับ identity ของงาน ส่วน echo ยังรุ่น `1` งาน invoice JSON เดิมที่ใช้
+Agent รุ่น `1` ต้องเปิดต่อด้วย runtime เดิม หรือเริ่มงานใหม่ใน workspace ใหม่
+หากใช้รุ่นไม่ตรงกับงานที่บันทึก Runtime จะปฏิเสธก่อนประมวลผล
 
 ## Runtime และ AgentDefinition
 

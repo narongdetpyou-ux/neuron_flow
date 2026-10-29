@@ -15,6 +15,9 @@ import unittest
 import zipfile
 from unittest.mock import Mock, patch
 
+from neuron_flow import __version__
+
+
 PROJECT = Path(__file__).resolve().parents[1]
 
 
@@ -48,7 +51,7 @@ class NotebookRecoveryTests(unittest.TestCase):
             namespace = {'Path': Path, 'json': json, 'hashlib': __import__('hashlib'),
                          'files': Mock(upload=Mock(return_value={'test.csv': b'CSV test bytes'})),
                          'UPLOAD_DIRECTORY': root / 'uploads', 'WORKSPACE': root / 'workspace',
-                         'SESSION_PATH': session, 'version': '0.2.1',
+                         'SESSION_PATH': session, 'version': __version__,
                          'PACKAGE_MANIFEST_SHA': 'a' * 64, 'OBSERVATIONS': {}, 'run_cli': run_cli}
             with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(RuntimeError, 'Synthetic interruption'):
                 exec(compile(code_cell(4), '<notebook-upload>', 'exec'), namespace)
@@ -72,7 +75,7 @@ class NotebookRecoveryTests(unittest.TestCase):
                 self.assertEqual(arguments[:2], ('batch-resume', 'recovered'))
                 return {'status': 'DELIVERED', 'counts': {'VALID': 1}, 'receipt': {}}
             namespace = {'json': json, 'SESSION_PATH': session, 'WORKSPACE': workspace,
-                         'version': '0.2.1', 'PACKAGE_MANIFEST_SHA': 'a' * 64,
+                         'version': __version__, 'PACKAGE_MANIFEST_SHA': 'a' * 64,
                          'OBSERVATIONS': {}, 'run_cli': run_cli}
             with contextlib.redirect_stdout(io.StringIO()):
                 exec(compile(code_cell(8), '<notebook-resume>', 'exec'), namespace)
@@ -95,7 +98,7 @@ class NotebookRecoveryTests(unittest.TestCase):
             namespace = {'Path': Path, 'PurePosixPath': __import__('pathlib').PurePosixPath,
                          'json': json, 'hashlib': hashlib, 'zipfile': zipfile, 'io': io,
                          'stat': stat, 'shutil': shutil, 'WORKSPACE': workspace,
-                         'SESSION_PATH': root / 'session.json', 'version': '0.2.1',
+                         'SESSION_PATH': root / 'session.json', 'version': __version__,
                          'PACKAGE_MANIFEST_SHA': 'b' * 64, 'OBSERVATIONS': {},
                          'tempfile': types.SimpleNamespace(mkdtemp=lambda **kw: tempfile.mkdtemp(
                              prefix=kw['prefix'], dir=root))}
@@ -125,6 +128,6 @@ class NotebookRecoveryTests(unittest.TestCase):
                     self.assertEqual((workspace / name.removeprefix('workspace/')).read_bytes(), data)
             session = json.loads(namespace['SESSION_PATH'].read_text())
             self.assertEqual(session['restored_from_version'], '0.2.0')
-            self.assertEqual(session['project_version'], '0.2.1')
+            self.assertEqual(session['project_version'], __version__)
             with self.assertRaisesRegex(RuntimeError, 'workspace'):
                 exec(compile(code_cell(14), '<notebook-restore-again>', 'exec'), namespace)

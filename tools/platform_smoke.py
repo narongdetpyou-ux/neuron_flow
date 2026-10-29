@@ -8,7 +8,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 
 MODULES = ('tests.test_csv_input', 'tests.test_csv_agents', 'tests.test_event_cursors',
-           'tests.test_batch_cli', 'tests.test_fixture_checkout')
+           'tests.test_batch_cli', 'tests.test_fixture_checkout', 'tests.test_currencies')
 
 
 def annotation(test, traceback):

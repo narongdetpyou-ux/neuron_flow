@@ -1,0 +1,5 @@
+document_id,item_id,description,quantity,unit_price,declared_total,currency
+USD-001,A,Notebook,2,10.75,21.50,USD
+EUR-001,A,Pen set,3,8.50,25.50,EUR
+JPY-001,A,Paper pack,3,500,1500,JPY
+KWD-001,A,Folder,3,1.234,3.702,KWD

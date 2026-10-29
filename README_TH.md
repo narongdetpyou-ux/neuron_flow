@@ -1,10 +1,16 @@
-# Neuron Flow 0.2.1 — beta
+# Neuron Flow 0.3.0 — beta
 
 รับ CSV รายการซื้อหลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมรายงานย้อนถึงแถวต้นทาง
 เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
-ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ใช้ THB ไม่ต้องมี API key
+ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ไม่ต้องมี API key
 
-**สถานะ:** เผยแพร่ 0.2.1 แล้วเมื่อ 28 ตุลาคม 2026 เวลา 23:17:10 น. ประเทศไทย
+**รุ่น 0.3.0:** รองรับ 46 สกุลเงิน รวม USD, EUR, GBP, CNY,
+JPY และ SGD โดยใช้ทศนิยม 0, 2 หรือ 3 ตำแหน่งตามสกุล และแยกยอดรวมรายสกุล
+กำลังเตรียมเผยแพร่ 0.3.0; ยืนยันการเผยแพร่จาก GitHub Release และไฟล์ที่ตรวจแล้ว
+ไฟล์ Release 0.2.1 ที่กล่าวถึงด้านล่างยังไม่มีส่วนเพิ่มนี้
+ดู [รายการสกุลเงินและกติกา](docs/CURRENCIES_TH.md)
+
+**ประวัติ:** เผยแพร่ 0.2.1 แล้วเมื่อ 28 ตุลาคม 2026 เวลา 23:17:10 น. ประเทศไทย
 สำหรับ workflow CSV/CLI บนเครื่องเดียวที่ตรวจแล้ว ดูไฟล์และ checksum ที่
 [Release v0.2.1](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.2.1)
 ผลดาวน์โหลดครบ 6 assets และการตรวจ hash อยู่ใน [บันทึกหลังเผยแพร่](verification/publication_2026_10_29/README.md)
@@ -14,11 +20,13 @@ event cursor bounds และการรักษาไบต์ fixture บน
 
 Colab จริงยังเป็น `not_run` การอนุมัติและผล local ไม่แทนการตรวจ Colab จริง
 [การอนุมัติ 0.2.0 เดิม](verification/archive/RELEASE_APPROVAL_0_2_0.json) เก็บใน archive แล้ว
-Windows/macOS smoke ผ่าน Python 3.10/3.12 จริง แต่ full fault-injection suite ตรวจบน Linux
+Windows/macOS smoke ของ 0.2.1 ผ่าน Python 3.10/3.12 จริง แต่ยังไม่ยืนยันผล 0.3.0 ระหว่างเตรียมรุ่น
+full fault-injection suite ตรวจบน Linux
 
 ## เริ่มใช้ CSV
 
-ดาวน์โหลด `neuron_flow_v0.2.1.zip` จาก GitHub Releases ตรวจ checksum แล้วแตก ZIP แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
+เมื่อเผยแพร่ 0.3.0 แล้ว ดาวน์โหลด `neuron_flow_v0.3.0.zip` จาก GitHub Releases
+ตรวจ checksum แล้วแตก ZIP แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
 ที่มีไฟล์นี้ ไม่ต้องติดตั้ง dependency เพิ่ม:
 
 ```bash
@@ -37,6 +45,17 @@ python -m neuron_flow batch-resume demo --workspace batch_workspace
 | `summary.csv` | ผลรายใบ ยอดที่ระบุ/คำนวณ ผลต่าง จำนวนข้อผิดพลาด แถวต้นทาง และ engine_status |
 | `details.json` | ผลละเอียด เหตุผลรายจุด รุ่นระบบ/Agent ประวัติงาน และ source_records ต้นฉบับ |
 | `source.csv` | ไฟล์เข้าเดิมทุกไบต์ รวม BOM ถ้ามี |
+
+ตัวอย่างหลายสกุลเงิน:
+
+```bash
+python -m neuron_flow csv examples/purchases_international.csv --batch-id international --workspace batch_workspace
+```
+
+ได้ 4 VALID และ `certified_totals` แยกเป็น USD `21.50`, EUR `25.50`, JPY `1500`
+และ KWD `3.702` ส่วน `currency` กับ `certified_total` เป็น `null` เมื่อมีหลายสกุล
+รายงานแต่ละใบและ `summary.csv` ระบุสกุลเงิน ระบบไม่รวมเงินต่างสกุลเป็นยอดเดียว
+และไม่มีการแปลงหรือดึงอัตราแลกเปลี่ยน
 
 ลองข้อมูลผิดและแถวที่ไม่มีรหัสเอกสาร:
 
@@ -68,16 +87,16 @@ python -m neuron_flow batch-resume queued --workspace batch_workspace
 คำสั่งนี้อ่านอย่างเดียว ไม่เปิด worker ไม่ยึด controller lock และใช้ได้ขณะ controller ทำงาน
 ส่วน `batch-status` ยังคงเป็นคำสั่งผ่าน Runtime ที่ใช้ workspace lock
 
-## เปิด workspace 0.2.0 ด้วย 0.2.1
+## เปิด CSV workspace 0.2.0/0.2.1 ด้วย 0.3.0
 
 รองรับรูปแบบ workspace schema 1 รวมรูปแบบ 0.2.0 ที่ยังไม่มี marker ของ schema/execution
 เมื่อสัญญา CSV, Agent definitions/versions และค่าควบคุมงานตรงกับ policy ที่รองรับ
 ไม่เปลี่ยน identity รุ่นต้นทาง frozen payload หรือรายงานเดิม งานที่สร้างจาก 0.2.0
-ยังระบุ provenance เป็น 0.2.0; งานใหม่รุ่นนี้ระบุ 0.2.1 ตามจริง
+ยังระบุ provenance เป็น 0.2.0; งานใหม่รุ่นนี้ระบุ 0.3.0 ตามจริง
 ไม่รับรองทุกรุ่นจากหมายเลข patch อย่างเดียว และข้อมูล/สัญญาที่ขัดกันยังถูกปฏิเสธ
 การคืน backup ยังต้องใช้ absolute path เดิม ไม่รองรับย้าย workspace ไป path ใหม่ในรอบนี้
 
-## สัญญาข้อมูล purchase-csv-v1
+## สัญญาข้อมูล CSV
 
 CSV รองรับ UTF-8 และ UTF-8 BOM หนึ่ง record ต่อหนึ่งรายการซื้อ รวมใบด้วย `document_id`
 หัวตารางต้องมีชื่อครบตามนี้ สลับลำดับคอลัมน์ได้:
@@ -94,9 +113,19 @@ INV-001,B,ปากกา,3,19.90,310.70,THB
 | `item_id` | มีข้อความ ไม่ซ้ำในใบเดียวกันหลังตัดช่องว่างหัวท้าย |
 | `description` | มีข้อความ รองรับไทย comma/quote และข้อความหลายบรรทัดตาม CSV |
 | `quantity` | ตัวเลข ASCII จำนวนเต็ม 1–1,000,000 รูปแบบ 1–7 หลัก |
-| `unit_price` | ตัวเลขไม่ติดลบ สูงสุด 1,000,000,000,000 บาท ทศนิยมไม่เกิน 2 ตำแหน่ง |
-| `declared_total` | ตัวเลขไม่ติดลบ สูงสุด 10²² บาท ทศนิยมไม่เกิน 2 ตำแหน่ง ค่าเชิงตัวเลขต้องตรงกันทุกแถว |
-| `currency` | THB และเหมือนกันทุกแถว |
+| `unit_price` | ตัวเลขไม่ติดลบ สูงสุด 10¹² หน่วยของสกุลนั้น ทศนิยมตามสกุลเงิน |
+| `declared_total` | ตัวเลขไม่ติดลบ สูงสุด 10²² หน่วยของสกุลนั้น ทศนิยมตามสกุล ค่าเชิงตัวเลขต้องตรงกันทุกแถว |
+| `currency` | รหัสตัวพิมพ์ใหญ่ที่รองรับ เช่น THB, USD, EUR, JPY และเหมือนกันทุกแถวในใบเดียวกัน |
+
+JPY, KRW, VND, CLP และ ISK ใช้จำนวนเต็ม; BHD, KWD, OMR, JOD และ TND ใช้ทศนิยม
+ได้ไม่เกิน 3 ตำแหน่ง; สกุลอื่นใน [รายการที่รองรับ](docs/CURRENCIES_TH.md) ใช้ได้ไม่เกิน 2 ตำแหน่ง
+ค่าที่ละเอียดเกินกติกาถูกปฏิเสธโดยไม่ปัดเศษ แม้หลักที่เกินจะเป็นศูนย์
+
+ข้อมูล THB ล้วนยังใช้ `purchase-csv-v1` และรูปแบบรายงานเดิม ส่วนข้อมูลที่มีสกุลอื่น
+ใช้ `purchase-csv-multicurrency-v1` โดยอัตโนมัติ งาน v1 ที่บันทึกแล้วเปิดต่อด้วยกติกาเดิม
+รวมถึงผล INVALID ของสกุลเงินที่เดิมไม่รองรับ หากต้องการประมวลผล source เดิมด้วยกติกาใหม่
+ให้ใช้ batch ID ใหม่ ชุดอ้างอิง 100 เอกสารยังตรวจด้วยโหมด legacy เพื่อคงคำตอบเดิม
+80 VALID / 20 INVALID; เมื่อใช้กติกาใหม่ เอกสาร USD ในชุดนั้นสามารถผ่านได้
 
 ข้อความรหัสและคำอธิบายยาวไม่เกิน 500 ตัวอักษร หนึ่งใบมี 1–10,000 รายการตามฐานเดิม
 เก็บค่าดิบไว้เสมอ `source_rows` / `row_number` นับบรรทัดจริงเริ่มต้น CSV record
@@ -107,13 +136,15 @@ INV-001,B,ปากกา,3,19.90,310.70,THB
 
 | document_status | ความหมาย |
 | --- | --- |
-| VALID | ข้อมูลผ่าน Decimal คำนวณผ่านการตรวจซ้ำด้วย integer สตางค์ และตรง declared_total |
+| VALID | ข้อมูลผ่าน Decimal คำนวณผ่านการตรวจซ้ำด้วย integer หน่วยย่อยของสกุลเงิน และตรง declared_total |
 | INVALID | ข้อมูลผิดกติกาหรือยอดไม่ตรง มีเหตุผลตรวจกลับได้ |
 | ERROR | ระบบยังยืนยันผลไม่ได้ เช่น Agent ล้มและหมดจำนวนครั้งที่ลอง |
 
 `engine_status` แสดงผลประมวลผลแยกจากผลตรวจข้อมูล เช่น ใบ INVALID สามารถมี
 engine_status เป็น SUCCEEDED ได้ ส่วน ERROR ยังคงแสดงในรายงานแม้เขียนรายงานสำเร็จ
-ยอดรวมที่รับรอง (`certified_total`) นับเฉพาะ VALID ไม่มีการใช้ float คำนวณเงิน
+ยอดรวมที่รับรองนับเฉพาะ VALID ไม่มีการใช้ float คำนวณเงิน
+รายงานสัญญาหลายสกุลเงินมี `certified_totals` แยกตามรหัสสกุล หากมีสกุลเดียว
+`currency` และ `certified_total` แสดงรหัสกับยอดนั้นด้วย หากมีหลายสกุลทั้งสองช่องเป็น `null`
 `difference` = computed_total − declared_total; ใบข้อมูลผิดมี computed_total/difference เป็น null
 ยกเว้น TOTAL_MISMATCH ซึ่งยังคำนวณยอดและผลต่างได้
 
@@ -138,7 +169,7 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 
 รุ่นนี้จัดเอกสารทีละใบและใช้ worker เดิมซ้ำ `--workers` ตั้งเพดาน worker (1–32 ค่าเริ่มต้น 3)
 จึงไม่ใช่ตัวเลขรับรองว่าเอกสารหลายใบจะรันพร้อมกัน เปิด controller เดียวต่อ workspace
-ผูกงานกับสัญญาข้อมูล/schema/execution, Agent และ timeout รุ่น 0.2.0 → 0.2.1 ใช้ policy
+ผูกงานกับสัญญาข้อมูล/schema/execution, Agent และ timeout การเปิด CSV workspace 0.2.0/0.2.1 ด้วย 0.3.0 ใช้ policy
 ความเข้ากันได้ข้างต้น การเปลี่ยนสัญญาหรือรุ่นนอก policy ต้องคืน runtime ที่รองรับหรือใช้รหัสใหม่
 
 ## ขอบเขตการใช้งาน
@@ -148,7 +179,8 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 - 100 เอกสารแบบ 80 ถูก/20 ผิดเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่อัตราข้อมูลจริงหรือเพดานจำนวนเอกสาร
 - ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
 - worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
-- ทดสอบชุดเต็มบน Linux; Windows/macOS ผ่าน smoke subset ตามหลักฐานที่ลิงก์ไว้ด้านล่าง
+- ทดสอบชุดเต็มบน Linux; Windows/macOS ของ 0.2.1 ผ่าน smoke subset ตามหลักฐานประวัติ
+  แต่ผล 0.3.0 ยังไม่ยืนยันระหว่างเตรียมรุ่น
   ยังไม่มีผลตรวจ Google Colab จริง และ smoke ไม่แทน full fault-injection suite ทุกแพลตฟอร์ม
 
 ข้อผิดพลาด `MessageSizeError` ระบุ `phase`, `observed_bytes`, `limit_bytes` และ `retryable: false`
@@ -166,10 +198,10 @@ Agent ต้องเป็นฟังก์ชันในโมดูลท�
 ## ตรวจซ้ำและสร้างชุดส่งมอบ
 
 ```bash
-python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.2.1/baseline
+python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.3.0/baseline
 python tools/build_acceptance_fixture.py --check
-python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.2.1
-python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.2.1 --output-dir dist
+python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.3.0
+python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.3.0 --output-dir dist
 ```
 
 `verify.py` ตรวจ baseline เดิมแยกจาก `verify_current.py` ที่ค้น tests ของรุ่นปัจจุบัน
@@ -183,13 +215,13 @@ failures/errors/skipped และข้อมูล Python อ่านจาก
 คำตอบอ้างอิงและ SHA-256 ที่ล็อกอยู่ใน `acceptance/` ห้ามสร้างคำตอบจากผลของ validator รุ่นใหม่
 การเปลี่ยนเกณฑ์ต้องบันทึกเหตุผลและตรวจกรณีที่ได้รับผลกระทบใหม่
 
-`build_delivery.py --candidate` ตรวจแล้วสร้าง `dist/neuron_flow_v0.2.1.zip` พร้อมไฟล์ `.sha256`,
+`build_delivery.py --candidate` ตรวจแล้วสร้าง `dist/neuron_flow_v0.3.0.zip` พร้อมไฟล์ `.sha256`,
 Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json` ใน output directory
 มีการตรวจจากการแตก ZIP ใหม่ ไฟล์สถานะของ candidate ให้ดูใน output directory;
 ไฟล์สถานะ/ผลตรวจ 0.2.0 ที่เก็บไว้ไม่ใช่ผลปัจจุบัน การสร้าง ZIP ไม่เผยแพร่ภายนอก
 `BUILD_STATUS.json` และ `delivery_checks.json` บันทึกก่อนเผยแพร่ จึงคง `published:false`
 ใน release assets ที่ล็อกไว้ ใช้บันทึกหลังเผยแพร่ข้างต้นเพื่อตรวจสถานะ remote ปัจจุบัน
-หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.2.1; approval ของ 0.2.0 ใช้แทนไม่ได้
+หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.3.0; approval ของรุ่นก่อนใช้แทนไม่ได้
 
 มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
 รายงานวิจัยวันที่ 28 ตุลาคม 2026 บันทึกว่า main CI ของ commit
@@ -198,12 +230,12 @@ Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json`
 ดู [บันทึกการลงมือทำ](docs/RESEARCH_IMPLEMENTATION_TH.md) สำหรับประวัติช่วงนั้น
 ภายหลัง [Manual release run #3](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028)
 ผ่านทั้ง build และ publish และบันทึกหลังเผยแพร่ยืนยันดาวน์โหลด native assets พร้อม hash ตรงแล้ว
-HTTP 401 เป็นผลของการอัปโหลดในอดีต ไม่ใช่ผลของ release นี้ ส่วน Colab จริงยังเป็น `not_run`
+HTTP 401 เป็นผลของการอัปโหลดในอดีต ไม่ใช่ผลของ release 0.2.1 ส่วน Colab จริงยังเป็น `not_run`
 
 ## ใช้ Notebook บน Google Colab
 
 เปิด `START_COLAB.ipynb` ใน Colab runtime ใหม่ แล้วรันเซลล์ตามคำอธิบาย:
-อัปโหลด ZIP รุ่น 0.2.1 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รับงาน/รัน CLI
+อัปโหลด ZIP รุ่น 0.3.0 → ตรวจ SHA-256 ทุกไฟล์ → อัปโหลด CSV หนึ่งไฟล์ → รับงาน/รัน CLI
 → ดูรายงาน → เปิดต่อโดยไม่อัปโหลด CSV ซ้ำ → ตรวจทั้งชุด → ดาวน์โหลด backup
 ไม่มี Agent อยู่ในเซลล์ Notebook; เซลล์เรียก Python ผ่าน subprocess
 
@@ -239,7 +271,8 @@ Notebook มีเซลล์คืน backup สำหรับ runtime ให
 เหมาะสำหรับผู้พัฒนาและผู้ตรวจเอกสารซื้อ CSV บนเครื่องเดียวที่ควบคุมได้
 fixture ที่ล็อกตรวจ 100 เอกสาร; เพดาน parser ไม่ใช่ throughput หรือ SLA production
 Agent code ต้องเชื่อถือได้ งานหลายเอกสารยังเรียงลำดับ ผู้ใช้ควบคุมสิทธิ์ backup และอายุเก็บข้อมูลเอง
-Python API ใน 0.2.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
+Python API ใน 0.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
 [คู่มือผู้ดูแล](docs/MAINTAINER_RUNBOOK_TH.md), [quality gates](docs/QUALITY_TH.md),
 [packaging](docs/PACKAGING_TH.md) และ [runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md)
-CI smoke บน Windows/macOS ผ่านแล้วทั้ง Python 3.10/3.12; ผลนี้ไม่แทน full fault-injection suite ของทุกแพลตฟอร์ม
+CI smoke ของ 0.2.1 บน Windows/macOS ผ่าน Python 3.10/3.12; ผล 0.3.0 ต้องตรวจ CI แยก
+และ smoke ไม่แทน full fault-injection suite ของทุกแพลตฟอร์ม

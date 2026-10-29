@@ -59,6 +59,12 @@ make a check pass. A deliberate contract or reference change needs an explanatio
 and maintainer review. Local notebook tests do not establish actual Google Colab
 acceptance.
 
+The 0.3.0 multicurrency contract uses `purchase-csv-multicurrency-v1` for
+non-THB intake. The locked 100-document reference still tests the original v1
+rules through explicit legacy mode; its USD rejection remains a historical v1
+answer. Cover new currencies and mixed-currency totals separately instead of
+rewriting that fixture. See [currency rules](docs/CURRENCIES_TH.md).
+
 ## Additional development checks
 
 Optional tooling is separate from the standard-library runtime. Follow the pinned-tool
@@ -66,7 +72,7 @@ installation and measured scope in [quality gates](docs/QUALITY_TH.md) and
 [Python packaging](docs/PACKAGING_TH.md). Run `python -B tools/check_repository_docs.py`
 when changing repository status claims. New evidence belongs in a fresh directory.
 The [API guide](docs/PYTHON_API_TH.md) and [maintainer runbook](docs/MAINTAINER_RUNBOOK_TH.md)
-cover custom Agents, backups and recovery; they do not promise a stable 0.2.x Python API.
+cover custom Agents, backups and recovery; they do not promise a stable 0.x Python API.
 
 ## Pull requests
 

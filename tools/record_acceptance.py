@@ -50,7 +50,9 @@ def main(argv=None):
 
     source = (PROJECT / 'acceptance/input.csv').read_bytes()
     expected = json.loads((PROJECT / 'acceptance/expected_results.json').read_text(encoding='utf-8'))
-    with BatchRuntime(workspaces / 'golden') as runtime:
+    # Replay the immutable v1 reference under its original currency contract.
+    # New international-currency intake has separate regression coverage.
+    with BatchRuntime(workspaces / 'golden', legacy_thb=True) as runtime:
         runtime.submit(source, 'golden-100')
         receipt = runtime.deliver('golden-100')
         result = runtime.run('golden-100')

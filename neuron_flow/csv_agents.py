@@ -1,7 +1,7 @@
 """Versioned purchase-CSV document agents with independent money verification.
 
 Validation success is an internal ``document_status=None`` until the Decimal
-calculation passes its integer-satang check. INVALID data flows through all
+calculation passes its integer minor-unit check. INVALID data flows through all
 steps as data; agent exceptions remain engine failures for the batch layer.
 """
 
@@ -9,11 +9,14 @@ from copy import deepcopy
 import re
 
 from .agents import calculate_invoice
+from .currencies import (CURRENCY_MINOR_UNITS, SUPPORTED_CURRENCIES, document_currency,
+                         format_minor, minor_digits, parse_minor)
 from .engine import AgentDefinition
 from .model import PermanentAgentError, encode
 
 
 CONTRACT_VERSION = "purchase-csv-v1"
+MULTICURRENCY_CONTRACT_VERSION = "purchase-csv-multicurrency-v1"
 AGENT_VERSION = "0.2.0"
 FINAL_FIELDS = ("document_id", "document_status", "source_rows", "computed_total",
                 "declared_total", "difference", "errors")
@@ -23,22 +26,26 @@ DECLARED_FORMAT = "unsigned-decimal:1..23-digits;scale<=2"
 MAX_TOTAL_CENTS = 10 ** 24
 
 
-def _money(value):
-    sign = "-" if value < 0 else ""
-    value = abs(value)
-    return f"{sign}{value // 100}.{value % 100:02d}"
+def _money(value, currency="THB"):
+    return format_minor(value, currency)
 
 
-def _cents(value):
-    whole, _, fraction = value.partition(".")
-    return int(whole) * 100 + int(fraction.ljust(2, "0") or "0")
+def _cents(value, currency="THB"):
+    return parse_minor(value, currency)
+
+
+def _money_pattern(integer_digits, currency):
+    digits = minor_digits(currency)
+    fraction = rf"(\.[0-9]{{1,{digits}}})?" if digits else ""
+    return rf"[0-9]{{1,{integer_digits}}}" + fraction
 
 
 def _projection(envelope):
-    return deepcopy({key: envelope[key] for key in FINAL_FIELDS})
+    fields = FINAL_FIELDS + (("currency",) if "currency" in envelope else ())
+    return deepcopy({key: envelope[key] for key in fields})
 
 
-def validate_document(document):
+def validate_document(document, *, multicurrency=True):
     """Validate a grouped ``csv_input`` document without mutating source data.
 
     Shape errors in the parser envelope indicate a programming/agent contract
@@ -86,14 +93,23 @@ def validate_document(document):
               "document_status": None, "source_rows": source_rows,
               "computed_total": None, "declared_total": None, "difference": None,
               "errors": errors, "invoice": None, "declared_total_raw": None}
+    currency = document_currency(document) if multicurrency else "THB"
+    if multicurrency:
+        result["currency"] = currency
+    # Invalid mixed/unknown-currency documents still receive field errors, but
+    # cannot attach a single monetary unit to their totals.
+    first_code = rows[0]["fields"].get("currency") if rows else None
+    fallback_currency = first_code if (multicurrency and isinstance(first_code, str)
+                                       and first_code in CURRENCY_MINOR_UNITS) else "THB"
     if not 1 <= len(rows) <= 10000:
         error(first_row, "items", "ITEM_COUNT", "count:1..10000", len(rows))
         if rows:
             declared = rows[0]["fields"].get("declared_total", "")
             if (isinstance(declared, str)
-                    and re.fullmatch(r"[0-9]{1,23}(\.[0-9]{1,2})?", declared)
-                    and _cents(declared) <= MAX_TOTAL_CENTS):
-                result["declared_total"] = _money(_cents(declared))
+                    and re.fullmatch(_money_pattern(23, fallback_currency), declared)
+                    and _cents(declared, fallback_currency) <= 10 ** (22 + minor_digits(fallback_currency))
+                    and (not multicurrency or currency is not None)):
+                result["declared_total"] = _money(_cents(declared, fallback_currency), fallback_currency)
                 result["declared_total_raw"] = declared
         result["document_status"] = "INVALID"
         return result
@@ -127,62 +143,70 @@ def validate_document(document):
             else:
                 quantity = int(raw_quantity)
 
+        raw_currency = fields.get("currency", "")
+        row_currency = (raw_currency if multicurrency and isinstance(raw_currency, str)
+                        and raw_currency in CURRENCY_MINOR_UNITS else "THB")
+        scale = minor_digits(row_currency)
         raw_price = fields.get("unit_price", "")
         price = None
         if required(raw_price, row_number, "unit_price"):
-            if not re.fullmatch(r"[0-9]{1,13}(\.[0-9]{1,2})?", raw_price):
-                error(row_number, "unit_price", "PRICE_FORMAT", PRICE_FORMAT, raw_price)
-            elif _cents(raw_price) > 100_000_000_000_000:
+            if not re.fullmatch(_money_pattern(13, row_currency), raw_price):
+                error(row_number, "unit_price", "PRICE_FORMAT",
+                      f"unsigned-decimal:1..13-digits;scale<={scale}", raw_price)
+            elif _cents(raw_price, row_currency) > 10 ** (12 + scale):
                 error(row_number, "unit_price", "PRICE_RANGE", "decimal:0..1000000000000", raw_price)
             else:
-                price = _money(_cents(raw_price))
+                price = _money(_cents(raw_price, row_currency), row_currency)
 
         raw_declared = fields.get("declared_total", "")
         declared = None
         if required(raw_declared, row_number, "declared_total"):
-            if not re.fullmatch(r"[0-9]{1,23}(\.[0-9]{1,2})?", raw_declared):
-                error(row_number, "declared_total", "DECLARED_TOTAL_FORMAT", DECLARED_FORMAT, raw_declared)
-            elif _cents(raw_declared) > MAX_TOTAL_CENTS:
+            if not re.fullmatch(_money_pattern(23, row_currency), raw_declared):
+                error(row_number, "declared_total", "DECLARED_TOTAL_FORMAT",
+                      f"unsigned-decimal:1..23-digits;scale<={scale}", raw_declared)
+            elif _cents(raw_declared, row_currency) > 10 ** (22 + scale):
                 error(row_number, "declared_total", "DECLARED_TOTAL_RANGE",
                       "decimal:0..10000000000000000000000", raw_declared)
             else:
-                declared = _cents(raw_declared)
+                declared = _cents(raw_declared, row_currency)
         if index == 0:
             first_declared = declared
-            result["declared_total"] = _money(declared) if declared is not None else None
+            result["declared_total"] = (_money(declared, row_currency) if declared is not None else None)
             result["declared_total_raw"] = raw_declared if isinstance(raw_declared, str) else None
-        elif declared is not None and first_declared is not None and declared != first_declared:
-            error(row_number, "declared_total", "DECLARED_TOTAL_CONFLICT", _money(first_declared), raw_declared)
+        elif (declared is not None and first_declared is not None and declared != first_declared
+              and (not multicurrency or currency is not None)):
+            error(row_number, "declared_total", "DECLARED_TOTAL_CONFLICT", _money(first_declared, row_currency), raw_declared)
             declared_conflict = True
 
-        raw_currency = fields.get("currency", "")
         if required(raw_currency, row_number, "currency"):
-            if raw_currency != "THB":
-                error(row_number, "currency", "CURRENCY_UNSUPPORTED", "THB", raw_currency)
+            if raw_currency not in (SUPPORTED_CURRENCIES if multicurrency else ("THB",)):
+                error(row_number, "currency", "CURRENCY_UNSUPPORTED",
+                      ",".join(SUPPORTED_CURRENCIES) if multicurrency else "THB", raw_currency)
             if index == 0:
                 first_currency = raw_currency
             elif first_currency is not None and raw_currency != first_currency:
                 error(row_number, "currency", "CURRENCY_CONFLICT", first_currency, raw_currency)
         items.append({"item_id": item_id, "description": description,
                       "quantity": quantity, "unit_price": price})
-    if declared_conflict:
+    if declared_conflict or multicurrency and currency is None:
         result["declared_total"] = None
     if errors:
         result["document_status"] = "INVALID"
     else:
-        result["invoice"] = {"document_id": normalized_id, "currency": "THB", "items": items}
+        result["invoice"] = {"document_id": normalized_id, "currency": currency, "items": items}
     return result
 
 
 def _integer_calculation(validated):
-    """An independent satang oracle, never calling the Decimal calculator."""
+    """An independent minor-unit oracle, never calling the Decimal calculator."""
     invoice = validated["invoice"]
+    currency = invoice["currency"]
     lines, total = [], 0
     for item in invoice["items"]:
-        value = _cents(item["unit_price"]) * item["quantity"]
-        lines.append({"item_id": item["item_id"], "amount": _money(value)})
+        value = _cents(item["unit_price"], currency) * item["quantity"]
+        lines.append({"item_id": item["item_id"], "amount": _money(value, currency)})
         total += value
-    return {"currency": invoice["currency"], "lines": lines, "total": _money(total)}
+    return {"currency": currency, "lines": lines, "total": _money(total, currency)}
 
 
 def compute_document(validated):
@@ -206,11 +230,12 @@ def verify_document(validated, calculated):
         raise PermanentAgentError("Verification requires validated input")
     reference = _integer_calculation(validated)
     if encode(calculated) != encode(reference):
-        raise PermanentAgentError("Decimal calculation differs from independent integer satang")
+        raise PermanentAgentError("Decimal calculation differs from independent integer minor units")
     result = _projection(validated)
-    difference = _cents(reference["total"]) - _cents(validated["declared_total"])
+    currency = reference["currency"]
+    difference = _cents(reference["total"], currency) - _cents(validated["declared_total"], currency)
     result["computed_total"] = reference["total"]
-    result["difference"] = _money(difference)
+    result["difference"] = _money(difference, currency)
     result["document_status"] = "INVALID" if difference else "VALID"
     if difference:
         result["errors"].append({
@@ -230,7 +255,8 @@ def _dependency(message, key):
 
 
 def validate_csv(message):
-    return validate_document(message["input"])
+    return validate_document(message["input"],
+                             multicurrency=message.get("params", {}).get("multicurrency", False))
 
 
 def calculate_csv(message):
@@ -242,7 +268,7 @@ def verify_csv(message):
 
 
 def validate_csv_output(message, output):
-    if encode(output) != encode(validate_document(message["input"])):
+    if encode(output) != encode(validate_csv(message)):
         raise ValueError("CSV validation output differs from source fields")
 
 
@@ -250,7 +276,7 @@ def calculate_csv_output(message, output):
     source = _dependency(message, "source")
     expected = _projection(source) if source["document_status"] == "INVALID" else _integer_calculation(source)
     if encode(output) != encode(expected):
-        raise ValueError("CSV Decimal output differs from independent integer satang")
+        raise ValueError("CSV Decimal output differs from independent integer minor units")
 
 
 def verify_csv_output(message, output):
@@ -267,9 +293,10 @@ def csv_agent_definitions():
     ]
 
 
-def csv_workflow(document, job_id, timeout_s=5):
+def csv_workflow(document, job_id, timeout_s=5, *, multicurrency=True):
     return {"job_id": job_id, "input": document, "steps": [
-        {"id": "validate", "agent": "csv_validate", "timeout_s": timeout_s, "max_attempts": 2},
+        {"id": "validate", "agent": "csv_validate", "timeout_s": timeout_s, "max_attempts": 2,
+         **({"params": {"multicurrency": True}} if multicurrency else {})},
         {"id": "calculate", "agent": "csv_calculate", "depends_on": ["validate"],
          "params": {"source": "validate"}, "timeout_s": timeout_s, "max_attempts": 2},
         {"id": "verify", "agent": "csv_verify", "depends_on": ["validate", "calculate"],
