@@ -1,6 +1,7 @@
 """Currency precision, independent verification and multi-currency delivery."""
 
 import copy
+from contextlib import closing
 import csv
 from dataclasses import replace
 import io
@@ -193,7 +194,9 @@ class MultiCurrencyBatchTests(unittest.TestCase):
                 with BatchRuntime(workspace, legacy_thb=True) as legacy:
                     legacy.submit(source, "legacy")
                     old_receipt = legacy.deliver("legacy") if completed else None
-                with sqlite3.connect(workspace / "state.sqlite3") as database:
+                # SQLite's connection context manages transactions, not handle
+                # lifetime; close explicitly before Windows removes the workspace.
+                with closing(sqlite3.connect(workspace / "state.sqlite3")) as database:
                     before = database.execute("SELECT identity,source,manifest FROM csv_batches WHERE id='legacy'").fetchone()
                 reports_before = {path: (path.read_bytes(), path.stat().st_mtime_ns)
                                   for folder in ("reports", "batch_reports")
@@ -213,7 +216,7 @@ class MultiCurrencyBatchTests(unittest.TestCase):
                     self.assertEqual(new_payload["documents"][0]["document_status"], "VALID")
                     self.assertEqual(new_payload["currency"], "USD")
                     self.assertEqual(new_payload["certified_total"], "2.00")
-                with sqlite3.connect(workspace / "state.sqlite3") as database:
+                with closing(sqlite3.connect(workspace / "state.sqlite3")) as database:
                     after = database.execute("SELECT identity,source,manifest FROM csv_batches WHERE id='legacy'").fetchone()
                 self.assertEqual(before, after)
                 if completed:
