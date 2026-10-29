@@ -1,11 +1,17 @@
-# Neuron Flow 0.2.1 — beta
+# Neuron Flow 0.3.0 — beta
 
 Validate multiple purchase documents from UTF-8 CSV, verify money with Decimal and an
-independent integer-satang calculation, and deliver reports traceable to original CSV records.
-Python 3.10+ and the standard library; THB, one machine, no API keys.
+independent integer minor-unit calculation, and deliver reports traceable to original CSV records.
+Python 3.10+ and the standard library; one machine, no API keys.
 See [the Thai guide](README_TH.md) for the complete data contract and operating instructions.
 
-Version 0.2.1 adds submit-only intake, live batch discovery, supported 0.2.0 workspace reuse,
+Version 0.3.0 adds **46 currencies**, including USD, EUR, GBP, CNY, JPY and SGD,
+with currency-specific 0, 2 or 3 decimal places and separate certified totals per currency.
+Release 0.3.0 is being prepared; publication is confirmed only by the GitHub release and verified assets.
+The older 0.2.1 assets do not contain this addition. See the
+[currency contract](docs/CURRENCIES_TH.md) for all codes, precision and compatibility rules.
+
+The previously published 0.2.1 added submit-only intake, live batch discovery, supported 0.2.0 workspace reuse,
 structured size-limit failures, bounded event cursors and byte-stable Windows fixture checkouts.
 Version 0.2.1 was published on 28 October 2026 at 16:17:10 UTC; obtain downloads and their
 checksums from [release v0.2.1](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.2.1).
@@ -22,18 +28,19 @@ publication approval substitute for actual Colab acceptance.
 For developers and reviewers checking purchase CSVs on one trusted local machine.
 The locked acceptance workload contains 100 documents; parser limits are not a throughput
 or production SLA. Agents are trusted code, documents run sequentially, and users control
-workspace access, backups and retention. Python library APIs are experimental during 0.2.x;
+workspace access, backups and retention. Python library APIs are experimental during 0.x;
 see [API examples](docs/PYTHON_API_TH.md) and the [maintainer runbook](docs/MAINTAINER_RUNBOOK_TH.md).
 
 Development checks: [branch coverage and static gates](docs/QUALITY_TH.md),
 [wheel/sdist installation](docs/PACKAGING_TH.md), and
-[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Windows/macOS smoke checks passed on Python 3.10/3.12 in
+[full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Historical 0.2.1 Windows/macOS smoke checks passed on Python 3.10/3.12 in
 [the Windows-fix CI run](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187).
+The 0.3.0 Windows/macOS matrix is not yet verified during release preparation.
 Full fault-injection validation remains scoped to Linux.
 
 ## Quick start
 
-Download `neuron_flow_v0.2.1.zip` from GitHub Releases, verify its `.sha256`, extract it and run from its `neuron_flow` directory:
+For 0.3.0, use `neuron_flow_v0.3.0.zip` once the release is published, verify its `.sha256`, extract it and run from its `neuron_flow` directory:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
@@ -50,6 +57,17 @@ Reports are written to `batch_workspace/batch_reports/<batch_id>/`:
 - `summary.csv`: document status, declared/computed totals, difference, error count, source rows, engine status.
 - `details.json`: the frozen full report, errors, versions, original source records and job history.
 - `source.csv`: the exact original bytes, including a UTF-8 BOM when present.
+
+Try a batch containing USD, EUR, JPY and KWD documents:
+
+```bash
+python -m neuron_flow csv examples/purchases_international.csv --batch-id international --workspace batch_workspace
+```
+
+The result has `certified_totals` of EUR `25.50`, JPY `1500`, KWD `3.702` and USD
+`21.50`. Mixed-currency batches have `currency: null` and `certified_total: null`;
+they do not combine unlike units or convert exchange rates. Their document results
+and `summary.csv` include `currency`.
 
 `receipt.artifacts` contains absolute paths, byte sizes and verified SHA-256 values.
 Using the same source and ID reuses completed steps and artifacts without rewriting them.
@@ -74,12 +92,12 @@ still uses the Runtime workspace lock.
 
 ## Supported 0.2.0 workspace compatibility
 
-Version 0.2.1 can reuse supported schema-1 workspaces, including the markerless 0.2.0 format,
+Version 0.3.0 can reuse supported 0.2.0/0.2.1 schema-1 CSV workspaces, including the markerless 0.2.0 format,
 when the CSV contract, Agent definitions/versions and workflow settings match the compatibility
 policy. Existing identity, creation-version provenance, frozen payloads and reports stay unchanged.
-Old results still identify 0.2.0; new work identifies 0.2.1. Compatibility does not
+Old results retain their creation version; new work identifies 0.3.0. Compatibility does not
 implicitly accept every patch version or changed contract. Backup restoration still requires
-the original absolute workspace path; relocation support is outside this patch.
+the original absolute workspace path; relocation support is outside this release.
 
 ## CSV contract and statuses
 
@@ -92,9 +110,21 @@ INV-001,B,ปากกา,3,19.90,310.70,THB
 All seven headers are required exactly once; column order may differ. UTF-8/BOM, quoted commas
 and multiline records are supported. IDs group documents after trimming. Item IDs must be unique
 within a document. IDs/descriptions require text of at most 500 characters; quantity is an ASCII
-integer from 1 to 1,000,000; price is nonnegative with at most two decimals and at most 10¹² THB.
-Declared totals are nonnegative, at most 10²² THB and numerically consistent across each document.
-Currency is THB. Each document supports the original 1–10,000 item bounds, subject to engine message limits.
+integer from 1 to 1,000,000; price is nonnegative and at most 10¹² in its currency.
+Declared totals are nonnegative, at most 10²² in that currency and numerically consistent across each document.
+Use an exact uppercase supported currency code, identical on every row of a document.
+JPY, KRW, VND, CLP and ISK allow no fraction; BHD, KWD, OMR, JOD and TND allow up
+to three decimals; the other supported codes allow up to two. Extra precision is
+rejected without rounding, including trailing zeroes. Each document supports the
+original 1–10,000 item bounds, subject to engine message limits.
+
+THB-only intake retains `purchase-csv-v1` and its original report format. Intake
+with any non-THB currency selects `purchase-csv-multicurrency-v1`. Existing v1 batches
+resume under their saved rules; a currency rejected in a saved v1 batch stays INVALID.
+Use a new batch ID to process that source under the new contract. The locked
+100-document fixture is replayed explicitly under legacy rules, preserving its
+80 VALID / 20 INVALID historical answers; under the new contract its USD document
+can be accepted. See [currency compatibility](docs/CURRENCIES_TH.md).
 
 Blank/missing-ID records remain visible in `ungrouped_rows`. Malformed record widths remain
 attached to their document or ungrouped entry with errors. Invalid headers, encoding and CSV
@@ -140,10 +170,10 @@ neither certifies that documents are VALID. Inspect processing counts and receip
 ## Verification and packaging
 
 ```bash
-python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.2.1/baseline
+python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.3.0/baseline
 python tools/build_acceptance_fixture.py --check
-python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.2.1
-python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.2.1 --output-dir dist
+python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.3.0
+python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.3.0 --output-dir dist
 ```
 
 `verify.py` runs the legacy baseline separately; `verify_current.py` discovers current-version
@@ -156,14 +186,14 @@ now summarize the exact published release and link to the corresponding reports.
 `verify_v020.py` is retained for historical 0.2.0 use, rather than current-version verification.
 Reference answers and their lock remain in `acceptance/`.
 
-The package builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
+The package builder verifies a fresh extraction and writes `neuron_flow_v0.3.0.zip`, its
 `.sha256`, the Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` and `delivery_checks.json` to
 the chosen output directory. Inspect these current output files instead of historical 0.2.0
 build-status files. `BUILD_STATUS.json` and `delivery_checks.json` describe the build before
 publication, so their `published:false` values are preserved in the immutable release assets.
 Use the post-publication check for the observed remote release state. Building does not publish.
 Without `--candidate`, matching approval for
-0.2.1 is required; the 0.2.0 approval cannot satisfy that requirement.
+0.3.0 is required; older approvals cannot satisfy that requirement.
 The legacy JSON demo remains available through `python -m neuron_flow demo`.
 
 CI is configured for Python 3.10/3.12. The manual release workflow defaults to `publish=false`.
@@ -173,7 +203,7 @@ This historical observation does not establish the outcome of later runs. Subseq
 [Manual release run #3](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028)
 completed both build and publication. The post-publication check confirms the native assets
 are downloadable with matching hashes. The earlier HTTP 401 describes the historical upload
-attempt, not the outcome of this release. Actual Colab acceptance remains `not_run`.
+attempt, not the outcome of release 0.2.1. Actual Colab acceptance remains `not_run`.
 
 ## Local performance benchmark
 
@@ -198,7 +228,7 @@ expected invalid data remains distinct. See [coverage and known findings](docs/E
 
 ## Colab notebook and backups
 
-Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.2.1 ZIP, verify every packaged
+Open `START_COLAB.ipynb` in a fresh Colab runtime. Upload the 0.3.0 ZIP, verify every packaged
 file against `SHA256SUMS.txt`, upload exactly one CSV, submit/run the CLI, inspect reports, resume,
 run the full verifier and download the backup. Notebook code invokes importable project modules
 through subprocesses; no agents are defined in notebook cells.
@@ -219,7 +249,7 @@ exit unsuccessfully; omitted evidence remains `not_run`.
 Actual fresh-runtime upload, execution, resume, manually confirmed receipt of the download and
 restore in a second runtime remain required for complete Colab acceptance. Release approval
 does not supply those facts. See [the 0.2.1 development scope](docs/DEVELOPMENT_0_2_1_TH.md).
-Windows/macOS smoke checks have passed; this does not certify the full fault-injection suite on those platforms.
+The 0.2.1 Windows/macOS smoke checks are historical; 0.3.0 requires its own CI outcome and no smoke subset certifies the full fault-injection suite.
 
 ## Project policies
 

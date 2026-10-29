@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "version": "0.2.1",
+  "release_approved": true,
+  "approved_at_utc": "2026-10-28T15:48:02.162129+00:00",
+  "approval_source": "User instruction in this conversation",
+  "user_instruction": "เริ่ม merge และ เผยแพร่ ส่วนที่เหมาะสมที่จะเผยแพร่ได้ และตรวจสอบ ไฟล์ซ้ำไฟล์ขยะจัดระเบียบ",
+  "publication_target": "https://github.com/narongdetpyou-ux/neuron_flow/releases",
+  "decision": "release_with_disclosed_known_limitation",
+  "scope": "Beta release of the validated local single-machine CSV/CLI workflow; source/tag exact commit independently checked by manual release workflow.",
+  "colab_acceptance_complete": false,
+  "known_limitations": [
+    "Actual fresh Google Colab upload/run/resume/download/restore acceptance remains not_run.",
+    "Windows/macOS smoke checks passed on Python 3.10 and 3.12; the full fault-injection suite is validated on Linux, not every platform.",
+    "Experimental Python API; sequential document processing; original absolute workspace path required for backup restoration; no production SLA."
+  ],
+  "historical_approval": "verification/archive/RELEASE_APPROVAL_0_2_0.json"
+}

@@ -30,8 +30,8 @@ def grouped(rows=None):
     return read_csv_bytes(stream.getvalue().encode("utf-8"))["documents"][0]
 
 
-def complete(document):
-    validated = validate_document(document)
+def complete(document, *, multicurrency=True):
+    validated = validate_document(document, multicurrency=multicurrency)
     return verify_document(validated, compute_document(validated))
 
 
@@ -67,7 +67,9 @@ class CsvAgentTests(unittest.TestCase):
         lock = json.loads((PROJECT / "acceptance/fixture_lock.json").read_text())
         for document, reference in zip(documents, expected["documents"]):
             with self.subTest(document_id=document["document_id"]):
-                self.assertEqual(complete(document), reference)
+                # The immutable fixture describes the original THB-only v1
+                # contract (including USD as unsupported), not new intake.
+                self.assertEqual(complete(document, multicurrency=False), reference)
         self.assertEqual(documents, original)
         for name, metadata in lock["files"].items():
             self.assertEqual(hashlib.sha256((PROJECT / "acceptance" / name).read_bytes()).hexdigest(),
@@ -254,7 +256,7 @@ class CsvAgentTests(unittest.TestCase):
                 for document, reference in zip(documents, expected):
                     identifier = document["document_id"]
                     with self.subTest(document_id=identifier):
-                        runtime.submit(csv_workflow(document, identifier))
+                        runtime.submit(csv_workflow(document, identifier, multicurrency=False))
                         result = runtime.run(identifier)
                         self.assertEqual(result["status"], "SUCCEEDED")
                         output = result["steps"]["verify"]["output"]

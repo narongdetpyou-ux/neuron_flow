@@ -16,12 +16,13 @@ import re
 import tempfile
 
 from .csv_input import CsvInputError, read_csv_bytes
+from .currencies import document_currency, format_minor, minor_digits, parse_minor
+from .csv_agents import CONTRACT_VERSION, MULTICURRENCY_CONTRACT_VERSION
 
 
 SUMMARY_FIELDS = ("document_id", "document_status", "declared_total", "computed_total",
                   "difference", "error_count", "source_rows", "engine_status")
-MONEY = re.compile(r"(?:0|[1-9][0-9]*)\.[0-9]{2}")
-SIGNED_MONEY = re.compile(r"-?(?:0|[1-9][0-9]*)\.[0-9]{2}")
+MULTICURRENCY_SUMMARY_FIELDS = ("document_id", "document_status", "currency", *SUMMARY_FIELDS[2:])
 
 
 class ReportConflict(ValueError):
@@ -37,36 +38,38 @@ def _same(actual, expected):
     return _json(actual) == _json(expected)
 
 
-def _money(cents):
-    sign = "-" if cents < 0 else ""
-    value = abs(cents)
-    return f"{sign}{value // 100}.{value % 100:02d}"
+def _money(cents, currency="THB"):
+    return format_minor(cents, currency)
 
 
-def _cents(value, *, signed=False):
-    pattern = SIGNED_MONEY if signed else MONEY
-    if (not isinstance(value, str) or not pattern.fullmatch(value)
-            or value == "-0.00"):
+def _cents(value, *, signed=False, currency="THB"):
+    if not isinstance(value, str):
         raise ReportConflict("Report money must be canonical decimal strings, never floats")
     negative = value.startswith("-")
-    whole, fraction = value.lstrip("-").split(".")
-    result = int(whole) * 100 + int(fraction)
-    return -result if negative else result
+    if negative and not signed:
+        raise ReportConflict("Report money must be nonnegative")
+    result = parse_minor(value[1:] if negative else value, currency)
+    result = -result if negative else result
+    if value != format_minor(result, currency):
+        raise ReportConflict("Report money must use its currency's canonical decimal scale")
+    return result
 
 
-def _raw_cents(value, digits):
-    if not isinstance(value, str) or not re.fullmatch(rf"[0-9]{{1,{digits}}}(\.[0-9]{{1,2}})?", value):
+def _raw_cents(value, digits, currency="THB"):
+    if not isinstance(value, str) or not re.fullmatch(rf"[0-9]{{1,{digits}}}(\.[0-9]+)?", value):
         raise ReportConflict("Certified money does not match valid source fields")
-    whole, _, fraction = value.partition(".")
-    return int(whole) * 100 + int(fraction.ljust(2, "0") or "0")
+    return parse_minor(value, currency)
 
 
-def _source_amounts(rows):
+def _source_amounts(rows, currency="THB"):
     total, declared = 0, None
     seen = set()
+    if not 1 <= len(rows) <= 10000:
+        raise ReportConflict("Certified document has an invalid item count")
+    factor = 10 ** minor_digits(currency)
     for row in rows:
         fields = row["fields"]
-        if row["errors"] or fields["currency"] != "THB":
+        if row["errors"] or fields["currency"] != currency:
             raise ReportConflict("Certified document contains source row errors or unsupported currency")
         item = fields["item_id"]
         description = fields["description"]
@@ -77,11 +80,11 @@ def _source_amounts(rows):
         quantity = fields["quantity"]
         if not re.fullmatch(r"[0-9]{1,7}", quantity) or not 1 <= int(quantity) <= 1_000_000:
             raise ReportConflict("Certified document contains invalid source quantity")
-        price = _raw_cents(fields["unit_price"], 13)
-        if price > 10 ** 14:
+        price = _raw_cents(fields["unit_price"], 13, currency)
+        if price > 10 ** 12 * factor:
             raise ReportConflict("Certified document contains source price outside its bound")
-        amount = _raw_cents(fields["declared_total"], 23)
-        if amount > 10 ** 24 or declared is not None and amount != declared:
+        amount = _raw_cents(fields["declared_total"], 23, currency)
+        if amount > 10 ** 22 * factor or declared is not None and amount != declared:
             raise ReportConflict("Certified document contains conflicting or out-of-range declared totals")
         declared = amount
         total += int(quantity) * price
@@ -93,6 +96,10 @@ def _validate_payload(payload, source):
         raise ReportConflict("Delivery requires a frozen payload and original source bytes")
     try:
         _json(payload)
+        contract = payload.get("contract_version")
+        if contract not in {CONTRACT_VERSION, MULTICURRENCY_CONTRACT_VERSION}:
+            raise ReportConflict("Unsupported report data contract")
+        multicurrency = contract == MULTICURRENCY_CONTRACT_VERSION
         if payload["status"] != "PROCESSED":
             raise ReportConflict("Only a frozen PROCESSED payload can be delivered")
         parsed = read_csv_bytes(source)
@@ -107,13 +114,23 @@ def _validate_payload(payload, source):
             raise ReportConflict("Document results must be a list")
         if [doc["document_id"] for doc in documents] != [doc["document_id"] for doc in parsed["documents"]]:
             raise ReportConflict("Document order or identifiers differ from the source")
-        if payload["currency"] != "THB":
+        if not multicurrency and payload["currency"] != "THB":
             raise ReportConflict("Batch currency must be THB")
         counts = {"documents": len(documents), "VALID": 0, "INVALID": 0, "ERROR": 0}
         certified = 0
+        certified_by_currency = {}
         partition = [row["source_row"] for row in parsed["ungrouped_rows"]]
         for document, original in zip(documents, parsed["documents"]):
             rows = original["rows"]
+            currency = document_currency(original) if multicurrency else "THB"
+            if multicurrency:
+                if document["currency"] != currency:
+                    raise ReportConflict("Document currency differs from its source rows")
+                if currency is not None:
+                    certified_by_currency.setdefault(currency, 0)
+                elif any(document[field] is not None
+                         for field in ("declared_total", "computed_total", "difference")):
+                    raise ReportConflict("Amounts require one supported document currency")
             if not _same(document["source_records"], rows):
                 raise ReportConflict("Document source records differ from original CSV values")
             source_rows = [row["source_row"] for row in rows]
@@ -134,30 +151,33 @@ def _validate_payload(payload, source):
                         or "expected" not in error or "actual" not in error):
                     raise ReportConflict("Document error cannot be traced to a source record")
             if document["declared_total"] is not None:
-                _cents(document["declared_total"])
+                _cents(document["declared_total"], currency=currency)
             if document["computed_total"] is not None:
-                _cents(document["computed_total"])
+                _cents(document["computed_total"], currency=currency)
             if document["difference"] is not None:
-                _cents(document["difference"], signed=True)
+                _cents(document["difference"], signed=True, currency=currency)
             if status == "VALID":
                 if errors or document["engine_status"] != "SUCCEEDED":
                     raise ReportConflict("A certified document must have succeeded with no errors")
-                total, declared = _source_amounts(rows)
-                if (document["computed_total"] != _money(total)
-                        or document["declared_total"] != _money(declared)
-                        or total != declared or document["difference"] != "0.00"):
+                total, declared = _source_amounts(rows, currency)
+                if (document["computed_total"] != _money(total, currency)
+                        or document["declared_total"] != _money(declared, currency)
+                        or total != declared or document["difference"] != _money(0, currency)):
                     raise ReportConflict("Certified document totals differ from source arithmetic")
-                certified += total
+                if multicurrency:
+                    certified_by_currency[currency] += total
+                else:
+                    certified += total
             elif status == "ERROR":
                 if document["computed_total"] is not None or document["difference"] is not None:
                     raise ReportConflict("An engine error cannot certify a computed amount")
             elif document["computed_total"] is not None:
                 if not any(error["reason_code"] == "TOTAL_MISMATCH" for error in errors):
                     raise ReportConflict("Invalid source data cannot certify computed amounts")
-                total, declared = _source_amounts(rows)
-                if (total == declared or document["computed_total"] != _money(total)
-                        or document["declared_total"] != _money(declared)
-                        or document["difference"] != _money(total - declared)):
+                total, declared = _source_amounts(rows, currency)
+                if (total == declared or document["computed_total"] != _money(total, currency)
+                        or document["declared_total"] != _money(declared, currency)
+                        or document["difference"] != _money(total - declared, currency)):
                     raise ReportConflict("Mismatch evidence differs from source arithmetic")
             elif document["difference"] is not None:
                 raise ReportConflict("Uncomputed invalid document has a difference")
@@ -167,7 +187,14 @@ def _validate_payload(payload, source):
             raise ReportConflict("Input records are lost or assigned more than once")
         if not _same(payload["counts"], counts):
             raise ReportConflict("Batch document counts do not equal VALID + INVALID + ERROR")
-        if payload["certified_total"] != _money(certified):
+        if multicurrency:
+            totals = {code: _money(amount, code) for code, amount in sorted(certified_by_currency.items())}
+            if not _same(payload["certified_totals"], totals):
+                raise ReportConflict("Certified totals must count only VALID documents in each currency")
+            currency = next(iter(totals)) if len(totals) == 1 else None
+            if payload["currency"] != currency or payload["certified_total"] != totals.get(currency):
+                raise ReportConflict("A scalar certified total requires exactly one source currency")
+        elif payload["certified_total"] != _money(certified):
             raise ReportConflict("Certified total must count only VALID document totals")
     except ReportConflict:
         raise
@@ -176,7 +203,7 @@ def _validate_payload(payload, source):
 
 
 def _summary_rows(payload):
-    return [{"document_id": document["document_id"],
+    rows = [{"document_id": document["document_id"],
              "document_status": document["document_status"],
              "declared_total": document["declared_total"] or "",
              "computed_total": document["computed_total"] or "",
@@ -185,6 +212,15 @@ def _summary_rows(payload):
              "source_rows": json.dumps(document["source_rows"], separators=(",", ":")),
              "engine_status": document["engine_status"]}
             for document in payload["documents"]]
+    if payload["contract_version"] == MULTICURRENCY_CONTRACT_VERSION:
+        for row, document in zip(rows, payload["documents"]):
+            row["currency"] = document["currency"] or ""
+    return rows
+
+
+def _summary_fields(payload):
+    return (MULTICURRENCY_SUMMARY_FIELDS
+            if payload["contract_version"] == MULTICURRENCY_CONTRACT_VERSION else SUMMARY_FIELDS)
 
 
 class BatchTerminal:
@@ -221,7 +257,7 @@ class BatchTerminal:
             if name == "summary.csv":
                 reader = csv.DictReader(io.StringIO(data.decode("utf-8"), newline=""))
                 values = list(reader)
-                if reader.fieldnames != list(SUMMARY_FIELDS) or not _same(values, summary):
+                if reader.fieldnames != list(_summary_fields(payload)) or not _same(values, summary):
                     raise ReportConflict("Summary CSV read-back differs from document results")
             elif name == "details.json":
                 if not _same(json.loads(data), payload):
@@ -237,7 +273,7 @@ class BatchTerminal:
         _validate_payload(payload, source)
         summary = _summary_rows(payload)
         stream = io.StringIO(newline="")
-        writer = csv.DictWriter(stream, fieldnames=SUMMARY_FIELDS, lineterminator="\n")
+        writer = csv.DictWriter(stream, fieldnames=_summary_fields(payload), lineterminator="\n")
         writer.writeheader()
         writer.writerows(summary)
         artifacts = {

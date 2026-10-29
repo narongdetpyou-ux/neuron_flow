@@ -3,6 +3,7 @@
 from decimal import Decimal, InvalidOperation, localcontext
 import re
 
+from .currencies import format_minor, minor_digits, parse_minor
 from .model import PermanentAgentError, encode
 
 
@@ -17,8 +18,10 @@ def normalize_invoice(document):
         raise PermanentAgentError("Invoice must be a JSON object")
     document_id = _text(document.get("document_id"), "document_id")
     currency = document.get("currency", "THB")
-    if not isinstance(currency, str) or not re.fullmatch(r"[A-Z]{3}", currency):
-        raise PermanentAgentError("currency must be three uppercase letters")
+    try:
+        digits = minor_digits(currency)
+    except ValueError as exc:
+        raise PermanentAgentError("currency must be a supported uppercase ISO 4217 code") from exc
     items = document.get("items")
     if not isinstance(items, list) or not 1 <= len(items) <= 10000:
         raise PermanentAgentError("items must contain 1-10000 rows")
@@ -42,13 +45,14 @@ def normalize_invoice(document):
         price = item.get("unit_price")
         if type(price) is int:
             price = str(price)
-        if not isinstance(price, str) or not re.fullmatch(r"[0-9]{1,13}(\.[0-9]{1,2})?", price):
-            raise PermanentAgentError(f"Row {index}: unit_price must be a non-negative decimal string with at most 2 decimal places")
+        fraction = rf"(\.[0-9]{{1,{digits}}})?" if digits else ""
+        if not isinstance(price, str) or not re.fullmatch(r"[0-9]{1,13}" + fraction, price):
+            raise PermanentAgentError(f"Row {index}: unit_price must be a non-negative decimal string with at most {digits} decimal places")
         try:
             value = Decimal(price)
             if value > Decimal("1000000000000"):
                 raise PermanentAgentError(f"Row {index}: unit_price is out of range")
-            price = format(value, ".2f")
+            price = format(value, f".{digits}f")
         except InvalidOperation as exc:
             raise PermanentAgentError(f"Row {index}: invalid price") from exc
         normalized.append({"item_id": item_id, "description": description,
@@ -69,25 +73,26 @@ def _dependency(message, key):
 
 def calculate_invoice(message):
     document = _dependency(message, "source")
+    digits = minor_digits(document["currency"])
     with localcontext() as context:
         context.prec = 50
         rows = [{"item_id": row["item_id"],
-                 "amount": format(Decimal(row["unit_price"]) * row["quantity"], ".2f")}
+                 "amount": format(Decimal(row["unit_price"]) * row["quantity"], f".{digits}f")}
                 for row in document["items"]]
         total = sum((Decimal(row["amount"]) for row in rows), Decimal(0))
-    return {"currency": document["currency"], "lines": rows, "total": format(total, ".2f")}
+    return {"currency": document["currency"], "lines": rows, "total": format(total, f".{digits}f")}
 
 
 def expected_totals(document):
-    """Independent integer-cents arithmetic for checking Decimal calculations."""
-    rows, total_cents = [], 0
+    """Independent integer minor-unit arithmetic for Decimal verification."""
+    rows, total_minor = [], 0
+    currency = document["currency"]
     for row in document["items"]:
-        whole, fraction = row["unit_price"].split(".")
-        amount = (int(whole) * 100 + int(fraction)) * row["quantity"]
-        rows.append({"item_id": row["item_id"], "amount": f"{amount // 100}.{amount % 100:02d}"})
-        total_cents += amount
-    return {"currency": document["currency"], "lines": rows,
-            "total": f"{total_cents // 100}.{total_cents % 100:02d}"}
+        amount = parse_minor(row["unit_price"], currency) * row["quantity"]
+        rows.append({"item_id": row["item_id"], "amount": format_minor(amount, currency)})
+        total_minor += amount
+    return {"currency": currency, "lines": rows,
+            "total": format_minor(total_minor, currency)}
 
 
 def verify_invoice(message):
@@ -127,9 +132,9 @@ def validate_echo(message, result):
 def default_agents():
     from .engine import AgentDefinition
     return [
-        AgentDefinition("extract_invoice", "neuron_flow.agents:extract_invoice", validate_extract),
-        AgentDefinition("calculate_invoice", "neuron_flow.agents:calculate_invoice", validate_calculation),
-        AgentDefinition("verify_invoice", "neuron_flow.agents:verify_invoice", validate_verification),
+        AgentDefinition("extract_invoice", "neuron_flow.agents:extract_invoice", validate_extract, "2"),
+        AgentDefinition("calculate_invoice", "neuron_flow.agents:calculate_invoice", validate_calculation, "2"),
+        AgentDefinition("verify_invoice", "neuron_flow.agents:verify_invoice", validate_verification, "2"),
         AgentDefinition("echo", "neuron_flow.agents:echo", validate_echo),
     ]
 

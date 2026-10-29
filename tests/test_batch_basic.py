@@ -20,7 +20,7 @@ class BatchBasicTests(unittest.TestCase):
     def test_locked_100_documents_and_duplicate_reuse_are_exact(self):
         source = (PROJECT / 'acceptance/input.csv').read_bytes()
         expected = json.loads((PROJECT / 'acceptance/expected_results.json').read_text())
-        with BatchRuntime(self.workspace) as runtime:
+        with BatchRuntime(self.workspace, legacy_thb=True) as runtime:
             submitted = runtime.submit(source, 'golden')
             self.assertTrue(submitted['created'])
             first = runtime.run('golden')

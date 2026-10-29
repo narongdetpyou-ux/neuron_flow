@@ -12,15 +12,17 @@ import math
 from pathlib import Path
 
 from . import __version__
-from .csv_agents import CONTRACT_VERSION, FINAL_FIELDS, csv_agent_definitions, csv_workflow
+from .csv_agents import (CONTRACT_VERSION, MULTICURRENCY_CONTRACT_VERSION, FINAL_FIELDS,
+                         csv_agent_definitions, csv_workflow)
 from .csv_input import read_csv_bytes
+from .currencies import document_currency, format_minor, parse_minor
 from .engine import Runtime
 from .model import NAME, MessageSizeError, SpecError, encode
 
 
 WORKSPACE_SCHEMA_VERSION = 1
 EXECUTION_CONTRACT_VERSION = 'purchase-batch-v1'
-SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1'})
+SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1', '0.3.0'})
 
 
 def _json(value):
@@ -47,7 +49,7 @@ class BatchConflict(ValueError):
 class BatchRuntime:
     """Use as a context manager; the existing Runtime owns the workspace lock."""
 
-    def __init__(self, workspace, *, max_workers=3, agents=None, timeout_s=5):
+    def __init__(self, workspace, *, max_workers=3, agents=None, timeout_s=5, legacy_thb=False):
         if (isinstance(timeout_s, bool) or not isinstance(timeout_s, (int, float))
                 or not math.isfinite(timeout_s) or not 0.05 <= timeout_s <= 3600):
             raise ValueError('timeout_s must be a finite number between 0.05 and 3600')
@@ -55,6 +57,12 @@ class BatchRuntime:
         if {agent.name for agent in definitions} != {'csv_validate', 'csv_calculate', 'csv_verify'}:
             raise ValueError('Batch agents must define csv_validate, csv_calculate and csv_verify')
         self.timeout_s = float(timeout_s)
+        # Explicit replay of the locked v1 fixture must retain its original
+        # unsupported-currency answers. Normal intake selects the new contract
+        # whenever a source row is not THB.
+        if type(legacy_thb) is not bool:
+            raise ValueError('legacy_thb must be a boolean')
+        self.legacy_thb = legacy_thb
         self.agent_versions = {agent.name: {'entrypoint': agent.entrypoint, 'version': agent.version,
                                'validator': f'{agent.validator.__module__}:{agent.validator.__qualname__}'}
                                for agent in definitions}
@@ -138,7 +146,7 @@ class BatchRuntime:
                 row[name] = json.loads(row[name])
         manifest = row['manifest']
         binding = self._execution_binding(manifest)
-        if (manifest['contract_version'] != CONTRACT_VERSION
+        if (manifest['contract_version'] not in {CONTRACT_VERSION, MULTICURRENCY_CONTRACT_VERSION}
                 or manifest['agent_versions'] != self.agent_versions):
             raise BatchConflict('Batch data contract or Agent version changed; restore it or use a new batch_id')
         if self._legacy_manifest(manifest):
@@ -161,7 +169,11 @@ class BatchRuntime:
         """Reject malformed files before submission; bind IDs to exact source bytes."""
         self.__enter__()
         parsed = read_csv_bytes(source)
-        binding = {'source_sha256': parsed['source_sha256'], 'contract_version': CONTRACT_VERSION,
+        foreign = any(row['fields']['currency'] != 'THB'
+                      for document in parsed['documents'] for row in document['rows'])
+        foreign = foreign or any(row['fields']['currency'] != 'THB' for row in parsed['ungrouped_rows'])
+        contract = MULTICURRENCY_CONTRACT_VERSION if foreign and not self.legacy_thb else CONTRACT_VERSION
+        binding = {'source_sha256': parsed['source_sha256'], 'contract_version': contract,
                    'workspace_schema_version': WORKSPACE_SCHEMA_VERSION,
                    'execution_contract_version': EXECUTION_CONTRACT_VERSION,
                    'agent_versions': self.agent_versions,
@@ -282,6 +294,7 @@ class BatchRuntime:
             self._verify_completed_jobs(batch_id)
             return batch['payload']
         db = self.runtime.store.db
+        multicurrency = batch['manifest']['contract_version'] == MULTICURRENCY_CONTRACT_VERSION
         with db:
             db.execute("UPDATE csv_batches SET status='RUNNING' WHERE id=?", (batch_id,))
         # Submit every independent document first. A controller killed anywhere
@@ -291,7 +304,8 @@ class BatchRuntime:
                 continue
             try:
                 self.runtime.submit(csv_workflow(json.loads(record['document']), record['job_id'],
-                                                  batch['manifest']['timeout_s']))
+                                                  batch['manifest']['timeout_s'],
+                                                  multicurrency=multicurrency))
             except SpecError as exc:
                 error = {'type': type(exc).__name__, 'message': str(exc)}
                 if isinstance(exc, MessageSizeError):
@@ -302,8 +316,17 @@ class BatchRuntime:
         documents = [self._document_result(record) for record in self._documents(batch_id)]
         counts = {'documents': len(documents), 'VALID': 0, 'INVALID': 0, 'ERROR': 0}
         certified_cents = 0
+        totals = {}
         for document in documents:
             counts[document['document_status']] += 1
+            if multicurrency:
+                code = document_currency({'rows': document['source_records']})
+                document['currency'] = code
+                if code is not None:
+                    totals.setdefault(code, 0)
+                    if document['document_status'] == 'VALID':
+                        totals[code] += parse_minor(document['computed_total'], code)
+                continue
             if document['document_status'] == 'VALID':
                 whole, fraction = document['computed_total'].split('.')
                 certified_cents += int(whole) * 100 + int(fraction)
@@ -320,6 +343,11 @@ class BatchRuntime:
                    'agent_versions': manifest['agent_versions'], 'input_rows': manifest['input_rows'],
                    'counts': counts, 'certified_total': _money(certified_cents), 'currency': 'THB',
                    'ungrouped_rows': manifest['ungrouped_rows'], 'documents': documents}
+        if multicurrency:
+            certified_totals = {code: format_minor(value, code) for code, value in sorted(totals.items())}
+            code = next(iter(totals)) if len(totals) == 1 else None
+            payload.update(certified_totals=certified_totals, currency=code,
+                           certified_total=certified_totals[code] if code is not None else None)
         with db:
             # A failed document terminal is still pending delivery. Preserve its
             # successful steps, but do not freeze an ERROR payload that would
@@ -395,6 +423,9 @@ class BatchRuntime:
                 db.execute("UPDATE csv_batches SET status='DELIVERY_FAILED',delivery_error=? WHERE id=?",
                            (str(exc)[:1000], batch_id))
             raise
-        return {'batch_id': batch_id, 'status': 'DELIVERED', 'counts': payload['counts'],
-                'certified_total': payload['certified_total'], 'currency': 'THB',
-                'ungrouped_rows': len(payload['ungrouped_rows']), 'receipt': receipt}
+        result = {'batch_id': batch_id, 'status': 'DELIVERED', 'counts': payload['counts'],
+                  'certified_total': payload['certified_total'], 'currency': payload['currency'],
+                  'ungrouped_rows': len(payload['ungrouped_rows']), 'receipt': receipt}
+        if 'certified_totals' in payload:
+            result['certified_totals'] = payload['certified_totals']
+        return result
