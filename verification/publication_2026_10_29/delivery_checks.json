@@ -1,0 +1,22 @@
+{
+  "version": "0.2.1",
+  "release_status": "approved_unpublished",
+  "release_approved": true,
+  "published": false,
+  "local_verification": "passed",
+  "colab_acceptance_complete": false,
+  "all_acceptance_complete": false,
+  "actual_colab_acceptance": "not_run",
+  "source_fingerprint": "8e7307256d74ed630ef6ef7e9dd8353c94468c0db0ddbbdaf9ef175439384fb5",
+  "created_at_utc": "2026-10-28T16:16:07.145378+00:00",
+  "notebook_code_cells_compile": 7,
+  "remaining_acceptance": [
+    "Actual fresh Colab upload/run/resume/download/restore evidence"
+  ],
+  "archive": "/home/runner/work/_temp/release-package/neuron_flow_v0.2.1.zip",
+  "sha256": "25ae7877f77582e2ea92120d2fbab6c4750a2ed9ba8f7c71060401153ddde34c",
+  "bytes": 1118742,
+  "manifest_files_verified": 306,
+  "fresh_local_unpack_passed": true,
+  "fresh_suite_passed": true
+}

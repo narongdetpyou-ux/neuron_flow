@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "record_kind": "post_publication_observation",
+  "recorded_at_utc": "2026-10-29T08:56:32.484102+00:00",
+  "repository": "narongdetpyou-ux/neuron_flow",
+  "release": {
+    "id": 426897457,
+    "tag_name": "v0.2.1",
+    "name": "Neuron Flow 0.2.1",
+    "html_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.2.1",
+    "draft": false,
+    "prerelease": false,
+    "immutable": true,
+    "created_at": "2026-10-28T16:00:03Z",
+    "updated_at": "2026-10-28T16:17:10Z",
+    "published_at": "2026-10-28T16:17:10Z"
+  },
+  "assets": [
+    {
+      "id": 685575632,
+      "name": "delivery_checks.json",
+      "state": "uploaded",
+      "size": 833,
+      "digest": "sha256:b4c1ce8c5f806f0911016f47a8b21437457b57eb80ea01e0e2d56134d3019ae0",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/delivery_checks.json",
+      "download_http_status": 200,
+      "downloaded_bytes": 833,
+      "computed_sha256": "b4c1ce8c5f806f0911016f47a8b21437457b57eb80ea01e0e2d56134d3019ae0",
+      "size_matches": true,
+      "github_digest_matches": true
+    },
+    {
+      "id": 685575303,
+      "name": "neuron_flow_v0.2.1.zip",
+      "state": "uploaded",
+      "size": 1118742,
+      "digest": "sha256:25ae7877f77582e2ea92120d2fbab6c4750a2ed9ba8f7c71060401153ddde34c",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/neuron_flow_v0.2.1.zip",
+      "download_http_status": 200,
+      "downloaded_bytes": 1118742,
+      "computed_sha256": "25ae7877f77582e2ea92120d2fbab6c4750a2ed9ba8f7c71060401153ddde34c",
+      "size_matches": true,
+      "github_digest_matches": true
+    },
+    {
+      "id": 685575388,
+      "name": "neuron_flow_v0.2.1.zip.sha256",
+      "state": "uploaded",
+      "size": 89,
+      "digest": "sha256:e1395ff2b73124880c0ad69ac6bdc6f61808ebea2e8ce5728d84cb4422c10a99",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/neuron_flow_v0.2.1.zip.sha256",
+      "download_http_status": 200,
+      "downloaded_bytes": 89,
+      "computed_sha256": "e1395ff2b73124880c0ad69ac6bdc6f61808ebea2e8ce5728d84cb4422c10a99",
+      "size_matches": true,
+      "github_digest_matches": true
+    },
+    {
+      "id": 685575680,
+      "name": "publication_attestation.json",
+      "state": "uploaded",
+      "size": 1288,
+      "digest": "sha256:7f4817bf2d0b85df2e41dad6cc0b5fd644c87350b29a838c32321a158a3a8968",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/publication_attestation.json",
+      "download_http_status": 200,
+      "downloaded_bytes": 1288,
+      "computed_sha256": "7f4817bf2d0b85df2e41dad6cc0b5fd644c87350b29a838c32321a158a3a8968",
+      "size_matches": true,
+      "github_digest_matches": true
+    },
+    {
+      "id": 685575479,
+      "name": "SHA256SUMS.txt",
+      "state": "uploaded",
+      "size": 34412,
+      "digest": "sha256:a828c9b9304ddfcc655b2ac4311ec5544f3b72badcb69fd14d1a24e51b983dcd",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/SHA256SUMS.txt",
+      "download_http_status": 200,
+      "downloaded_bytes": 34412,
+      "computed_sha256": "a828c9b9304ddfcc655b2ac4311ec5544f3b72badcb69fd14d1a24e51b983dcd",
+      "size_matches": true,
+      "github_digest_matches": true
+    },
+    {
+      "id": 685575559,
+      "name": "START_COLAB.ipynb",
+      "state": "uploaded",
+      "size": 27689,
+      "digest": "sha256:2bae8c150fd7426014fd367e4e4b4bfaf2a05d5c988b5797ab66ffb53753ada1",
+      "browser_download_url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/download/v0.2.1/START_COLAB.ipynb",
+      "download_http_status": 200,
+      "downloaded_bytes": 27689,
+      "computed_sha256": "2bae8c150fd7426014fd367e4e4b4bfaf2a05d5c988b5797ab66ffb53753ada1",
+      "size_matches": true,
+      "github_digest_matches": true
+    }
+  ],
+  "workflow": {
+    "id": 40723991028,
+    "run_number": 3,
+    "run_attempt": 1,
+    "name": "Manual release",
+    "path": ".github/workflows/release.yml",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "3e39933f4b1a2030d1a8a500a1ba8349e0096332",
+    "html_url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028",
+    "created_at": "2026-10-28T16:14:25Z",
+    "updated_at": "2026-10-28T16:17:15Z"
+  },
+  "tag": {
+    "ref": "refs/tags/v0.2.1",
+    "tag_object_sha": "8d6519b5f8024dae5cc1012661cc7d36732a5545",
+    "source_commit": "bb9b9b4374e3b25ee0c1a429bd6bc881b638c478",
+    "verification": {
+      "verified": false,
+      "reason": "unsigned"
+    }
+  },
+  "checks": {
+    "zip_sidecar_matches": true,
+    "zip_crc_passed": true,
+    "manifest_matches_packaged_copy": true,
+    "manifest_files_verified": 306,
+    "manifest_missing_files": [],
+    "manifest_hash_mismatches": [],
+    "unlisted_zip_files": [
+      "neuron_flow/SHA256SUMS.txt"
+    ],
+    "notebook_matches_packaged_copy": true,
+    "attested_artifact_count": 5,
+    "attested_artifact_sizes_and_hashes_match": true,
+    "attestation_source_matches_tag": true,
+    "attestation_workflow_matches_run": true,
+    "notebook_code_cells": 7,
+    "notebook_has_recorded_execution_outputs": false
+  },
+  "extracted_evidence": [
+    {
+      "path": "test_results.json",
+      "zip_member": "neuron_flow/verification/v0_2_1/test_results.json",
+      "bytes": 24271,
+      "sha256": "3a036141e590ffd2f2e9dd9c3f27a324d53f96ad9eed76c0fcd6e4cf3798a357",
+      "copied_byte_for_byte": true
+    },
+    {
+      "path": "baseline_test_results.json",
+      "zip_member": "neuron_flow/verification/v0_2_1/baseline/test_results.json",
+      "bytes": 609,
+      "sha256": "cf8731465ddae31ea3cd6b829ded0a574a959a84f5fca545d01b32d639ae4c1a",
+      "copied_byte_for_byte": true
+    },
+    {
+      "path": "release_workflow_tests.log",
+      "zip_member": "neuron_flow/verification/v0_2_1/release_workflow_tests.log",
+      "bytes": 109,
+      "sha256": "6ebfdfd4b3c00fc8d529c9d9843a65a06a2c956847a10a8789c0a9c804012d92",
+      "copied_byte_for_byte": true
+    }
+  ],
+  "actual_colab_acceptance": "not_run",
+  "colab_acceptance_complete": false,
+  "all_acceptance_complete": false,
+  "scope_notes": [
+    "HTTP 200 observations and downloaded bytes were collected in the read-only audit in this session; bytes, GitHub digests and publication metadata were rechecked when recording this file.",
+    "Copied JSON/log files are original observations from the released ZIP or release assets, not new application test runs.",
+    "delivery_checks.json and the packaged BUILD_STATUS.json describe the build before publication; their published:false values are preserved.",
+    "publication_attestation.json is workflow-generated JSON created before publication; it is not a signed attestation and does not alone prove final publication.",
+    "The release metadata and successful downloads establish publication independently of workflow success.",
+    "This record describes the immutable v0.2.1 assets, not later changes to main or actual Colab execution."
+  ],
+  "source_api_urls": {
+    "release": "https://api.github.com/repos/narongdetpyou-ux/neuron_flow/releases/tags/v0.2.1",
+    "workflow_run": "https://api.github.com/repos/narongdetpyou-ux/neuron_flow/actions/runs/40723991028",
+    "tag_ref": "https://api.github.com/repos/narongdetpyou-ux/neuron_flow/git/ref/tags/v0.2.1",
+    "tag_object": "https://api.github.com/repos/narongdetpyou-ux/neuron_flow/git/tags/8d6519b5f8024dae5cc1012661cc7d36732a5545"
+  }
+}

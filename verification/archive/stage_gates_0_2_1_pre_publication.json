@@ -1,0 +1,36 @@
+{
+  "version": "0.2.1",
+  "release_approved": false,
+  "published": false,
+  "checks": {
+    "baseline_runtime": {
+      "passed": true,
+      "cases": 38
+    },
+    "current_regressions": {
+      "passed": true,
+      "cases": 102
+    },
+    "release_workflow_guards": {
+      "passed": true,
+      "cases": 10
+    },
+    "locked_100_documents": {
+      "passed": true
+    },
+    "legacy_020_actual_controller_resume": {
+      "passed": true
+    },
+    "notebook_offline_only": {
+      "passed": true
+    },
+    "actual_colab": {
+      "status": "not_run"
+    },
+    "github_actions": {
+      "status": "not_run"
+    }
+  },
+  "historical_evidence_preserved": "verification/v0_2_0",
+  "report": "test_results.json"
+}

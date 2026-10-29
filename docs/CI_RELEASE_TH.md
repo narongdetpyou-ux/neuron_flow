@@ -3,6 +3,12 @@
 ชุดนี้เพิ่ม workflow สำหรับตรวจโค้ดและเตรียมเผยแพร่รุ่นถัดไป การเพิ่มไฟล์ workflow ไม่ได้เผยแพร่เวอร์ชันใดในตัวเอง
 ผลตรวจในเครื่องไม่ใช่หลักฐานว่ารันบน GitHub Actions หรือ Google Colab จริงแล้ว
 
+**สถานะที่ตรวจพบภายหลัง:** [Manual release run #3](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028)
+ผ่านทั้ง build และ publish และ v0.2.1 เผยแพร่แล้วเมื่อ 28 ตุลาคม 2026 เวลา 16:17:10 UTC
+ดู [บันทึกหลังเผยแพร่](../verification/publication_2026_10_29/README.md) สำหรับ HTTP 200 ครบ 6 assets,
+hash และ tag/source/workflow commits การตรวจ Colab จริงยังเป็น `not_run`
+ไฟล์ `delivery_checks.json` และ `BUILD_STATUS.json` ในชุดเดิมเป็นสถานะก่อน publish จึงไม่แก้ย้อนหลัง
+
 ## ตรวจโค้ดอัตโนมัติ
 
 `.github/workflows/ci.yml` ทำงานเมื่อ push หรือเปิด/อัปเดต pull request โดยให้สิทธิ์ `contents: read` เท่านั้น
@@ -63,6 +69,8 @@ workflow นี้ไม่ย้าย tag: หาก tag ชี้ commit ท�
 - เปลี่ยน draft เป็น Release ที่เผยแพร่แล้วเมื่อไฟล์ครบและผ่านการตรวจทั้งหมดเท่านั้น
 
 `publication_attestation.json` บันทึกผู้สั่งงาน run ID, commit, เวอร์ชัน และ hash ของไฟล์จาก build นั้น
+ไฟล์นี้สร้างก่อน publish และเป็น JSON ของ workflow ไม่มี digital signature ในตัวไฟล์
+จึงใช้ตรวจตัว bundle ร่วมกับ API/download observations ไม่ใช้แทนหลักฐานสถานะ remote หลังเผยแพร่
 การอนุมัติเผยแพร่ไม่เปลี่ยนสถานะ Colab ให้ผ่าน ค่า Colab ในหลักฐานยังต้องตรงกับสิ่งที่ตรวจจริง
 หาก Release เผยแพร่ไปแล้ว หรือ draft มี notes/ไฟล์ต่างเนื้อหา ระบบจะหยุดโดยไม่แทนที่หรือลบข้อมูลเดิม
 
@@ -75,13 +83,13 @@ workflow นี้ไม่ย้าย tag: หาก tag ชี้ commit ท�
 ไม่ควรสั่ง build ใหม่แล้วคาดว่าจะเขียนทับไฟล์ชื่อเดิมได้ เพราะรายงานและเวลาใน ZIP ชุดใหม่อาจต่างจากชุดเดิม
 workflow artifact มีอายุ 14 วัน หากหมดอายุและต้องสร้างชุดใหม่ ให้ตัดสินใจเรื่อง draft/เลขรุ่นอย่างชัดเจนก่อน
 
-## ขอบเขตการยืนยันในรอบพัฒนานี้
+## ขอบเขตหลักฐาน offline ในรอบพัฒนาเดิม
 
 ตรวจ workflow เป็น YAML, ตรวจ syntax ของ run scripts และทดสอบ logic ของ release helper แบบ offline
 ครอบคลุม commit/เวอร์ชันผิด, การอนุมัติไม่ตรง, Release ที่เผยแพร่แล้ว, ไฟล์ conflict,
 การใช้ draft เดิม, อัปโหลดล้มแล้วทำต่อ และการตรวจ hash จากการดาวน์โหลดสำรอง
-ยังไม่มีการเรียก workflow หรือเผยแพร่รุ่นใหม่จากการตรวจเหล่านี้
-การยืนยัน native uploads และสิทธิ์ environment ต้องเก็บจาก run จริงเมื่อผู้ใช้สั่งเผยแพร่ในภายหลัง
+การตรวจ offline เหล่านี้เองไม่ยืนยันว่า workflow รันหรือเผยแพร่สำเร็จ
+หลักฐานจาก run จริงและการดาวน์โหลดภายหลังอยู่ในบันทึกหลังเผยแพร่ที่ลิงก์ไว้ด้านบน
 
 ## Quality, packaging และ platform CI ที่เพิ่มจากรายงานวิจัย
 

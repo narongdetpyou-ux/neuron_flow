@@ -7,8 +7,10 @@ See [the Thai guide](README_TH.md) for the complete data contract and operating 
 
 Version 0.2.1 adds submit-only intake, live batch discovery, supported 0.2.0 workspace reuse,
 structured size-limit failures, bounded event cursors and byte-stable Windows fixture checkouts.
-Publication is authorized in `RELEASE_APPROVAL.json`; obtain published downloads and their
-checksums from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases).
+Version 0.2.1 was published on 28 October 2026 at 16:17:10 UTC; obtain downloads and their
+checksums from [release v0.2.1](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.2.1).
+The [post-publication check](verification/publication_2026_10_29/README.md) records successful
+downloads of all six assets, their hashes and the distinction between source and workflow commits.
 Read the [evidence index](verification/README.md) for dated test results and their scope.
 
 Actual Colab acceptance remains `not_run`. The historical 0.2.0 approval is preserved in
@@ -72,7 +74,7 @@ still uses the Runtime workspace lock.
 
 ## Supported 0.2.0 workspace compatibility
 
-Candidate 0.2.1 can reuse supported schema-1 workspaces, including the markerless 0.2.0 format,
+Version 0.2.1 can reuse supported schema-1 workspaces, including the markerless 0.2.0 format,
 when the CSV contract, Agent definitions/versions and workflow settings match the compatibility
 policy. Existing identity, creation-version provenance, frozen payloads and reports stay unchanged.
 Old results still identify 0.2.0; new work identifies 0.2.1. Compatibility does not
@@ -138,32 +140,40 @@ neither certifies that documents are VALID. Inspect processing counts and receip
 ## Verification and packaging
 
 ```bash
-python tools/verify.py --output-dir verification/v0_2_1/baseline
+python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.2.1/baseline
 python tools/build_acceptance_fixture.py --check
-python tools/verify_current.py --output-dir verification/v0_2_1
-python tools/build_delivery.py --candidate --output-dir dist
+python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.2.1
+python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.2.1 --output-dir dist
 ```
 
 `verify.py` runs the legacy baseline separately; `verify_current.py` discovers current-version
-tests and compares the locked 100-document reference. Actual baseline/new counts, failures,
-errors, skipped cases and environment are recorded under `verification/v0_2_1/`.
-The output-directory options keep current results separate from immutable 0.2.0 evidence.
+tests and compares the locked 100-document reference. These POSIX examples use a new temporary
+output directory; choose another unused path when needed and keep new results separate from
+historical evidence. The [published-run reports](verification/publication_2026_10_29/README.md)
+contain 38 baseline and 120 current cases, plus 10 release guards. Older sibling reports in
+`verification/v0_2_1/` describe earlier runs; its [stage gates](verification/v0_2_1/stage_gates.json)
+now summarize the exact published release and link to the corresponding reports.
 `verify_v020.py` is retained for historical 0.2.0 use, rather than current-version verification.
 Reference answers and their lock remain in `acceptance/`.
 
 The package builder verifies a fresh extraction and writes `neuron_flow_v0.2.1.zip`, its
 `.sha256`, the Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` and `delivery_checks.json` to
 the chosen output directory. Inspect these current output files instead of historical 0.2.0
-build-status files. Building does not publish. Without `--candidate`, matching approval for
+build-status files. `BUILD_STATUS.json` and `delivery_checks.json` describe the build before
+publication, so their `published:false` values are preserved in the immutable release assets.
+Use the post-publication check for the observed remote release state. Building does not publish.
+Without `--candidate`, matching approval for
 0.2.1 is required; the 0.2.0 approval cannot satisfy that requirement.
 The legacy JSON demo remains available through `python -m neuron_flow demo`.
 
 CI is configured for Python 3.10/3.12. The manual release workflow defaults to `publish=false`.
 The 28 October 2026 research snapshot reports a successful main CI run for
 `d5a72ab64a7439c999faf7ba47f77239d1238a11`; see the [implementation record](docs/RESEARCH_IMPLEMENTATION_TH.md).
-This historical observation does not establish the outcome of later runs. The earlier native-release-asset
-HTTP 401 still requires real authorization/upload/download verification; adding a workflow does
-not establish that runtime credentials have been fixed.
+This historical observation does not establish the outcome of later runs. Subsequently,
+[Manual release run #3](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028)
+completed both build and publication. The post-publication check confirms the native assets
+are downloadable with matching hashes. The earlier HTTP 401 describes the historical upload
+attempt, not the outcome of this release. Actual Colab acceptance remains `not_run`.
 
 ## Local performance benchmark
 

@@ -1,19 +1,24 @@
 {
   "version": "0.2.1",
-  "release_approved": false,
-  "published": false,
+  "release_approved": true,
+  "published": true,
   "checks": {
     "baseline_runtime": {
       "passed": true,
-      "cases": 38
+      "cases": 38,
+      "report": "../publication_2026_10_29/baseline_test_results.json"
     },
     "current_regressions": {
       "passed": true,
-      "cases": 102
+      "cases": 120,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
     },
     "release_workflow_guards": {
       "passed": true,
-      "cases": 10
+      "cases": 10,
+      "report": "../publication_2026_10_29/release_workflow_tests.log"
     },
     "locked_100_documents": {
       "passed": true
@@ -28,9 +33,23 @@
       "status": "not_run"
     },
     "github_actions": {
-      "status": "not_run"
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 40723991028,
+      "run_number": 3,
+      "run_attempt": 1,
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028"
     }
   },
   "historical_evidence_preserved": "verification/v0_2_0",
-  "report": "test_results.json"
+  "report": "../publication_2026_10_29/test_results.json",
+  "snapshot_kind": "post_publication_summary",
+  "scope": "Immutable published v0.2.1 assets; not the changing main checkout.",
+  "recorded_at_utc": "2026-10-29T08:56:32.484102+00:00",
+  "source_commit": "bb9b9b4374e3b25ee0c1a429bd6bc881b638c478",
+  "workflow_sha": "3e39933f4b1a2030d1a8a500a1ba8349e0096332",
+  "publication_evidence": "../publication_2026_10_29/release_check.json",
+  "previous_summary": "../archive/stage_gates_0_2_1_pre_publication.json",
+  "colab_acceptance_complete": false,
+  "all_acceptance_complete": false
 }
