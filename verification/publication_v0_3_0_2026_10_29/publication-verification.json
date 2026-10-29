@@ -1,0 +1,48 @@
+{
+  "checked_at_utc": "2026-10-29T09:49:55.250188+00:00",
+  "url": "https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0",
+  "published_at": "2026-10-29T09:49:18Z",
+  "version": "0.3.0",
+  "source_commit": "a4ff09853491ba65acf60aa29daff10de01103f2",
+  "draft": false,
+  "assets": [
+    {
+      "name": "delivery_checks.json",
+      "bytes": 833,
+      "sha256": "73d34a5d92a4675403e6b149b83c61db9fbb2c87ecd5a3546a5050f5d64e1ce1",
+      "verified": true
+    },
+    {
+      "name": "neuron_flow_v0.3.0.zip",
+      "bytes": 1285103,
+      "sha256": "1c4b609e7c96ca80ba349abc9fefefe6d5df7c9f6da901e7f6558c1c51eec09f",
+      "verified": true
+    },
+    {
+      "name": "neuron_flow_v0.3.0.zip.sha256",
+      "bytes": 89,
+      "sha256": "13706b7123c369e2eaa8e18289de0e72f21ed03de6f67116baccf87c6262dc39",
+      "verified": true
+    },
+    {
+      "name": "publication_attestation.json",
+      "bytes": 1288,
+      "sha256": "cf43ab981aaf5b478243a26bdc40cbddb5a3aa12b5ad9e0e4ec2de2173ff9551",
+      "verified": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 41541,
+      "sha256": "b0c6f5b8641ffc28cc089c44797df8e3e479e0cf6ea11db134af6dc3a46d8fc7",
+      "verified": true
+    },
+    {
+      "name": "START_COLAB.ipynb",
+      "bytes": 29276,
+      "sha256": "f662b6061410f8194d2891c6cd90f9a52f58e8b9a252402c46ed61785542e158",
+      "verified": true
+    }
+  ],
+  "manifest_files_verified": 367,
+  "passed": true
+}
