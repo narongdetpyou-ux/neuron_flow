@@ -6,7 +6,9 @@
 
 **รุ่น 0.3.0:** รองรับ 46 สกุลเงิน รวม USD, EUR, GBP, CNY,
 JPY และ SGD โดยใช้ทศนิยม 0, 2 หรือ 3 ตำแหน่งตามสกุล และแยกยอดรวมรายสกุล
-กำลังเตรียมเผยแพร่ 0.3.0; ยืนยันการเผยแพร่จาก GitHub Release และไฟล์ที่ตรวจแล้ว
+**เผยแพร่ 0.3.0 แล้ว** เมื่อ 29 ตุลาคม 2026 เวลา 16:49:18 น. ประเทศไทย
+ดาวน์โหลดจาก [Release v0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0)
+ตรวจครบ 6 assets และ 367 ZIP manifest entries ใน [บันทึกหลังเผยแพร่ 0.3.0](verification/publication_v0_3_0_2026_10_29/README.md)
 ไฟล์ Release 0.2.1 ที่กล่าวถึงด้านล่างยังไม่มีส่วนเพิ่มนี้
 ดู [รายการสกุลเงินและกติกา](docs/CURRENCIES_TH.md)
 
@@ -20,12 +22,13 @@ event cursor bounds และการรักษาไบต์ fixture บน
 
 Colab จริงยังเป็น `not_run` การอนุมัติและผล local ไม่แทนการตรวจ Colab จริง
 [การอนุมัติ 0.2.0 เดิม](verification/archive/RELEASE_APPROVAL_0_2_0.json) เก็บใน archive แล้ว
-Windows/macOS smoke ของ 0.2.1 ผ่าน Python 3.10/3.12 จริง แต่ยังไม่ยืนยันผล 0.3.0 ระหว่างเตรียมรุ่น
+[CI ของ 0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574) ผ่านครบ 9 jobs
+รวม Windows/macOS smoke บน Python 3.10/3.12
 full fault-injection suite ตรวจบน Linux
 
 ## เริ่มใช้ CSV
 
-เมื่อเผยแพร่ 0.3.0 แล้ว ดาวน์โหลด `neuron_flow_v0.3.0.zip` จาก GitHub Releases
+ดาวน์โหลด `neuron_flow_v0.3.0.zip` จาก [Release v0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0)
 ตรวจ checksum แล้วแตก ZIP แล้วเปิด terminal ในโฟลเดอร์ `neuron_flow`
 ที่มีไฟล์นี้ ไม่ต้องติดตั้ง dependency เพิ่ม:
 
@@ -179,8 +182,7 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 - 100 เอกสารแบบ 80 ถูก/20 ผิดเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่อัตราข้อมูลจริงหรือเพดานจำนวนเอกสาร
 - ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
 - worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
-- ทดสอบชุดเต็มบน Linux; Windows/macOS ของ 0.2.1 ผ่าน smoke subset ตามหลักฐานประวัติ
-  แต่ผล 0.3.0 ยังไม่ยืนยันระหว่างเตรียมรุ่น
+- ทดสอบชุดเต็มบน Linux; Windows/macOS ของ 0.3.0 ผ่าน smoke subset ใน CI ของ source ที่เผยแพร่
   ยังไม่มีผลตรวจ Google Colab จริง และ smoke ไม่แทน full fault-injection suite ทุกแพลตฟอร์ม
 
 ข้อผิดพลาด `MessageSizeError` ระบุ `phase`, `observed_bytes`, `limit_bytes` และ `retryable: false`
@@ -208,7 +210,8 @@ python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-v
 พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 จำนวน baseline/new tests,
 failures/errors/skipped และข้อมูล Python อ่านจาก output directory ของรอบนั้น
 ตัวอย่าง POSIX ด้านบนใช้โฟลเดอร์ชั่วคราวใหม่ เลือก path อื่นที่ยังไม่ใช้ได้ และไม่เขียนทับหลักฐานเก่า
-[รายงานจาก ZIP ที่เผยแพร่จริง](verification/publication_2026_10_29/README.md) บันทึก
+[บันทึกหลังเผยแพร่ 0.3.0](verification/publication_v0_3_0_2026_10_29/README.md) ระบุ source, CI/release runs และ hash ของไฟล์ที่ดาวน์โหลด
+ส่วน[รายงานจาก ZIP ของ 0.2.1](verification/publication_2026_10_29/README.md) บันทึก
 38 baseline + 120 current + 10 release guards ผ่าน ส่วนรายงานเดิมข้างเคียงใน `verification/v0_2_1/`
 เป็นรอบก่อนหน้า [stage gates](verification/v0_2_1/stage_gates.json) สรุปรุ่นเผยแพร่พร้อมลิงก์รายงานที่ตรงกันแล้ว
 `verify_v020.py` เก็บไว้เป็นเครื่องมือประวัติของ 0.2.0 ไม่ใช้ตรวจรุ่นปัจจุบัน
@@ -220,7 +223,7 @@ Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json`
 มีการตรวจจากการแตก ZIP ใหม่ ไฟล์สถานะของ candidate ให้ดูใน output directory;
 ไฟล์สถานะ/ผลตรวจ 0.2.0 ที่เก็บไว้ไม่ใช่ผลปัจจุบัน การสร้าง ZIP ไม่เผยแพร่ภายนอก
 `BUILD_STATUS.json` และ `delivery_checks.json` บันทึกก่อนเผยแพร่ จึงคง `published:false`
-ใน release assets ที่ล็อกไว้ ใช้บันทึกหลังเผยแพร่ข้างต้นเพื่อตรวจสถานะ remote ปัจจุบัน
+ใน release assets ที่ล็อกไว้ ใช้[บันทึกหลังเผยแพร่ 0.3.0](verification/publication_v0_3_0_2026_10_29/README.md) เพื่อตรวจสถานะ remote ที่สังเกตได้
 หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.3.0; approval ของรุ่นก่อนใช้แทนไม่ได้
 
 มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
@@ -274,5 +277,5 @@ Agent code ต้องเชื่อถือได้ งานหลาย�
 Python API ใน 0.x ยังทดลอง ดู [ตัวอย่าง API](docs/PYTHON_API_TH.md),
 [คู่มือผู้ดูแล](docs/MAINTAINER_RUNBOOK_TH.md), [quality gates](docs/QUALITY_TH.md),
 [packaging](docs/PACKAGING_TH.md) และ [runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md)
-CI smoke ของ 0.2.1 บน Windows/macOS ผ่าน Python 3.10/3.12; ผล 0.3.0 ต้องตรวจ CI แยก
+CI smoke ของ 0.3.0 บน Windows/macOS ผ่าน Python 3.10/3.12 แล้ว
 และ smoke ไม่แทน full fault-injection suite ของทุกแพลตฟอร์ม

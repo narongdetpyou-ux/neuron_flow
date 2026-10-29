@@ -1,0 +1,93 @@
+{
+  "source_commit": "a4ff09853491ba65acf60aa29daff10de01103f2",
+  "main_ci": {
+    "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574",
+    "headSha": "a4ff09853491ba65acf60aa29daff10de01103f2",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "main_ci_jobs": [
+    {
+      "name": "distribution (3.10)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:27Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373770482"
+    },
+    {
+      "name": "test (3.10)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:46:25Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373770859"
+    },
+    {
+      "name": "platform-smoke (windows-latest, 3.10)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:07Z",
+      "completedAt": "2026-10-29T09:46:28Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373770921"
+    },
+    {
+      "name": "test (3.12)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:41Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373770961"
+    },
+    {
+      "name": "platform-smoke (macos-latest, 3.10)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:41Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373771044"
+    },
+    {
+      "name": "platform-smoke (windows-latest, 3.12)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:37Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373771052"
+    },
+    {
+      "name": "platform-smoke (macos-latest, 3.12)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:08Z",
+      "completedAt": "2026-10-29T09:45:43Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373771113"
+    },
+    {
+      "name": "distribution (3.12)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:28Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373771178"
+    },
+    {
+      "name": "quality",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-29T09:45:06Z",
+      "completedAt": "2026-10-29T09:45:58Z",
+      "url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574/job/123373771304"
+    }
+  ],
+  "manual_release": {
+    "conclusion": "success",
+    "created_at": "2026-10-29T09:45:27Z",
+    "head_sha": "a4ff09853491ba65acf60aa29daff10de01103f2",
+    "html_url": "https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852128698",
+    "id": 40852128698,
+    "run_attempt": 2,
+    "status": "completed",
+    "updated_at": "2026-10-29T09:49:23Z"
+  }
+}

@@ -10,13 +10,15 @@ Never overwrite old evidence to make a new run appear successful.
 | Root JSON/log/report files | Historical baseline and delivery evidence; not current release status |
 | `v0_2_0/` | Immutable 0.2.0 acceptance, fault and delivery evidence |
 | `v0_2_1/` | Historical candidate reports; `stage_gates.json` is now a published-release summary with explicit report links |
+| `publication_v0_3_0_2026_10_29/` | Observed v0.3.0 publication, six downloaded asset hashes, 367 ZIP manifest entries and successful exact-source CI/release runs |
 | `publication_2026_10_29/` | Observed v0.2.1 publication/download/hash check and unchanged reports copied from its exact released ZIP |
 | `research_2026_10_28/` | Research implementation, intermediate and final results before Windows fix |
 | `maintenance_2026_10_28/` | Cleanup inventory and release preparation validation |
 | `archive/` | Preserved superseded root status, historical release approval and the original pre-publication 0.2.1 stage gates |
 
 Current published files belong on [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases).
-The [post-publication record](publication_2026_10_29/README.md) confirms v0.2.1 is published;
+The [latest post-publication record](publication_v0_3_0_2026_10_29/README.md) confirms v0.3.0 was published on 29 October 2026 at 16:49:18 Bangkok time, with all six downloaded assets verified.
+The historical [0.2.1 post-publication record](publication_2026_10_29/README.md) confirms its earlier publication;
 the [current summary](v0_2_1/stage_gates.json) points to the released run's 38 baseline,
 120 current and 10 release-guard results, rather than the earlier 102-current-case snapshot.
 The original stage gates remain byte-for-byte in

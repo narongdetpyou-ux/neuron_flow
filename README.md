@@ -7,7 +7,8 @@ See [the Thai guide](README_TH.md) for the complete data contract and operating 
 
 Version 0.3.0 adds **46 currencies**, including USD, EUR, GBP, CNY, JPY and SGD,
 with currency-specific 0, 2 or 3 decimal places and separate certified totals per currency.
-Release 0.3.0 is being prepared; publication is confirmed only by the GitHub release and verified assets.
+Release [v0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0) was published on 29 October 2026 at 16:49:18 Bangkok time (09:49:18 UTC).
+The [post-publication check](verification/publication_v0_3_0_2026_10_29/README.md) verifies all six assets and 367 ZIP manifest entries.
 The older 0.2.1 assets do not contain this addition. See the
 [currency contract](docs/CURRENCIES_TH.md) for all codes, precision and compatibility rules.
 
@@ -35,12 +36,12 @@ Development checks: [branch coverage and static gates](docs/QUALITY_TH.md),
 [wheel/sdist installation](docs/PACKAGING_TH.md), and
 [full-runtime benchmark](docs/BENCHMARK_RUNTIME_TH.md). Historical 0.2.1 Windows/macOS smoke checks passed on Python 3.10/3.12 in
 [the Windows-fix CI run](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187).
-The 0.3.0 Windows/macOS matrix is not yet verified during release preparation.
+The [0.3.0 main CI](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40852073574) passed all nine jobs, including Windows/macOS smoke on Python 3.10/3.12.
 Full fault-injection validation remains scoped to Linux.
 
 ## Quick start
 
-For 0.3.0, use `neuron_flow_v0.3.0.zip` once the release is published, verify its `.sha256`, extract it and run from its `neuron_flow` directory:
+Download `neuron_flow_v0.3.0.zip` from [release v0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0), verify its `.sha256`, extract it and run from its `neuron_flow` directory:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
@@ -179,7 +180,8 @@ python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-v
 `verify.py` runs the legacy baseline separately; `verify_current.py` discovers current-version
 tests and compares the locked 100-document reference. These POSIX examples use a new temporary
 output directory; choose another unused path when needed and keep new results separate from
-historical evidence. The [published-run reports](verification/publication_2026_10_29/README.md)
+historical evidence. The [0.3.0 publication record](verification/publication_v0_3_0_2026_10_29/README.md) links the exact source, successful CI/release runs and downloaded hashes.
+The historical [0.2.1 published-run reports](verification/publication_2026_10_29/README.md)
 contain 38 baseline and 120 current cases, plus 10 release guards. Older sibling reports in
 `verification/v0_2_1/` describe earlier runs; its [stage gates](verification/v0_2_1/stage_gates.json)
 now summarize the exact published release and link to the corresponding reports.
@@ -191,7 +193,7 @@ The package builder verifies a fresh extraction and writes `neuron_flow_v0.3.0.z
 the chosen output directory. Inspect these current output files instead of historical 0.2.0
 build-status files. `BUILD_STATUS.json` and `delivery_checks.json` describe the build before
 publication, so their `published:false` values are preserved in the immutable release assets.
-Use the post-publication check for the observed remote release state. Building does not publish.
+Use the [0.3.0 post-publication check](verification/publication_v0_3_0_2026_10_29/README.md) for the observed remote release state. Building does not publish.
 Without `--candidate`, matching approval for
 0.3.0 is required; older approvals cannot satisfy that requirement.
 The legacy JSON demo remains available through `python -m neuron_flow demo`.
@@ -249,7 +251,7 @@ exit unsuccessfully; omitted evidence remains `not_run`.
 Actual fresh-runtime upload, execution, resume, manually confirmed receipt of the download and
 restore in a second runtime remain required for complete Colab acceptance. Release approval
 does not supply those facts. See [the 0.2.1 development scope](docs/DEVELOPMENT_0_2_1_TH.md).
-The 0.2.1 Windows/macOS smoke checks are historical; 0.3.0 requires its own CI outcome and no smoke subset certifies the full fault-injection suite.
+The 0.3.0 Windows/macOS smoke matrix passed in its own CI run; no smoke subset certifies the full fault-injection suite.
 
 ## Project policies
 
