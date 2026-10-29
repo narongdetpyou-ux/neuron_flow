@@ -1,0 +1,41 @@
+{
+  "actor": "narongdetpyou-ux",
+  "approval_decision": "release_with_disclosed_known_limitation",
+  "artifacts": [
+    {
+      "bytes": 1118742,
+      "name": "neuron_flow_v0.2.1.zip",
+      "sha256": "25ae7877f77582e2ea92120d2fbab6c4750a2ed9ba8f7c71060401153ddde34c"
+    },
+    {
+      "bytes": 89,
+      "name": "neuron_flow_v0.2.1.zip.sha256",
+      "sha256": "e1395ff2b73124880c0ad69ac6bdc6f61808ebea2e8ce5728d84cb4422c10a99"
+    },
+    {
+      "bytes": 34412,
+      "name": "SHA256SUMS.txt",
+      "sha256": "a828c9b9304ddfcc655b2ac4311ec5544f3b72badcb69fd14d1a24e51b983dcd"
+    },
+    {
+      "bytes": 27689,
+      "name": "START_COLAB.ipynb",
+      "sha256": "2bae8c150fd7426014fd367e4e4b4bfaf2a05d5c988b5797ab66ffb53753ada1"
+    },
+    {
+      "bytes": 833,
+      "name": "delivery_checks.json",
+      "sha256": "b4c1ce8c5f806f0911016f47a8b21437457b57eb80ea01e0e2d56134d3019ae0"
+    }
+  ],
+  "colab_acceptance_complete": false,
+  "created_at_utc": "2026-10-28T16:16:43.826182+00:00",
+  "publication_requested": true,
+  "release_approved": true,
+  "source_commit": "bb9b9b4374e3b25ee0c1a429bd6bc881b638c478",
+  "tag": "v0.2.1",
+  "version": "0.2.1",
+  "workflow_run_attempt": "1",
+  "workflow_run_id": "40723991028",
+  "workflow_sha": "3e39933f4b1a2030d1a8a500a1ba8349e0096332"
+}

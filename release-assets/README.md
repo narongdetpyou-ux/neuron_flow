@@ -2,6 +2,10 @@
 
 Use [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases) for current published downloads.
 Normal publication verifies native assets and preserves old releases without overwriting them.
+Version 0.2.1 is published; see the [post-publication check](../verification/publication_2026_10_29/README.md).
+Its native `delivery_checks.json` and packaged `BUILD_STATUS.json` describe the build before
+upload, so their `published:false` fields are preserved. Use the dated publication record
+and GitHub release metadata for remote status; actual Colab acceptance remains `not_run`.
 
 - Files directly in this directory are the immutable **0.2.0 fallback** assets described below.
 - `v0.2.1-research-candidate/` is the earlier research snapshot before the Windows fixture fix.

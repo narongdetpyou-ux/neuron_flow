@@ -4,8 +4,10 @@
 เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
 ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ใช้ THB ไม่ต้องมี API key
 
-**สถานะ:** อนุมัติให้เผยแพร่ 0.2.1 สำหรับ workflow CSV/CLI บนเครื่องเดียวที่ตรวจแล้ว
-ดูไฟล์เผยแพร่และ checksum ที่ [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases)
+**สถานะ:** เผยแพร่ 0.2.1 แล้วเมื่อ 28 ตุลาคม 2026 เวลา 23:17:10 น. ประเทศไทย
+สำหรับ workflow CSV/CLI บนเครื่องเดียวที่ตรวจแล้ว ดูไฟล์และ checksum ที่
+[Release v0.2.1](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.2.1)
+ผลดาวน์โหลดครบ 6 assets และการตรวจ hash อยู่ใน [บันทึกหลังเผยแพร่](verification/publication_2026_10_29/README.md)
 เพิ่ม submit-only, batch discovery, workspace 0.2.0 compatibility, structured size-limit errors,
 event cursor bounds และการรักษาไบต์ fixture บน Windows
 ดู [ดัชนีหลักฐาน](verification/README.md) เพื่อแยกรอบและขอบเขตการตรวจ
@@ -146,7 +148,8 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 - 100 เอกสารแบบ 80 ถูก/20 ผิดเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่อัตราข้อมูลจริงหรือเพดานจำนวนเอกสาร
 - ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
 - worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
-- ทดสอบใน Linux ตามรุ่น Python ที่บันทึกในรายงาน ยังไม่ได้ยืนยัน Windows/macOS หรือ Google Colab จริง
+- ทดสอบชุดเต็มบน Linux; Windows/macOS ผ่าน smoke subset ตามหลักฐานที่ลิงก์ไว้ด้านล่าง
+  ยังไม่มีผลตรวจ Google Colab จริง และ smoke ไม่แทน full fault-injection suite ทุกแพลตฟอร์ม
 
 ข้อผิดพลาด `MessageSizeError` ระบุ `phase`, `observed_bytes`, `limit_bytes` และ `retryable: false`
 เพื่อบอกว่าขนาดเกินในช่วงใดและลองข้อมูลเดิมซ้ำไม่ช่วย ถ้า job report เกินขนาดแบบถาวร
@@ -163,16 +166,19 @@ Agent ต้องเป็นฟังก์ชันในโมดูลท�
 ## ตรวจซ้ำและสร้างชุดส่งมอบ
 
 ```bash
-python tools/verify.py --output-dir verification/v0_2_1/baseline
+python tools/verify.py --output-dir /tmp/neuron-flow-verification-0.2.1/baseline
 python tools/build_acceptance_fixture.py --check
-python tools/verify_current.py --output-dir verification/v0_2_1
-python tools/build_delivery.py --candidate --output-dir dist
+python tools/verify_current.py --output-dir /tmp/neuron-flow-verification-0.2.1
+python tools/build_delivery.py --candidate --verification-dir /tmp/neuron-flow-verification-0.2.1 --output-dir dist
 ```
 
 `verify.py` ตรวจ baseline เดิมแยกจาก `verify_current.py` ที่ค้น tests ของรุ่นปัจจุบัน
 พร้อมเทียบ 100 เอกสารกับคำตอบที่ล็อกและเก็บหลักฐาน A01–A12 จำนวน baseline/new tests,
-failures/errors/skipped และข้อมูล Python อ่านจาก `verification/v0_2_1/test_results.json`
-กับรายงานย่อยจริง `--output-dir` แยกผลปัจจุบันจากหลักฐาน 0.2.0 ที่ไม่ควรเขียนทับ
+failures/errors/skipped และข้อมูล Python อ่านจาก output directory ของรอบนั้น
+ตัวอย่าง POSIX ด้านบนใช้โฟลเดอร์ชั่วคราวใหม่ เลือก path อื่นที่ยังไม่ใช้ได้ และไม่เขียนทับหลักฐานเก่า
+[รายงานจาก ZIP ที่เผยแพร่จริง](verification/publication_2026_10_29/README.md) บันทึก
+38 baseline + 120 current + 10 release guards ผ่าน ส่วนรายงานเดิมข้างเคียงใน `verification/v0_2_1/`
+เป็นรอบก่อนหน้า [stage gates](verification/v0_2_1/stage_gates.json) สรุปรุ่นเผยแพร่พร้อมลิงก์รายงานที่ตรงกันแล้ว
 `verify_v020.py` เก็บไว้เป็นเครื่องมือประวัติของ 0.2.0 ไม่ใช้ตรวจรุ่นปัจจุบัน
 คำตอบอ้างอิงและ SHA-256 ที่ล็อกอยู่ใน `acceptance/` ห้ามสร้างคำตอบจากผลของ validator รุ่นใหม่
 การเปลี่ยนเกณฑ์ต้องบันทึกเหตุผลและตรวจกรณีที่ได้รับผลกระทบใหม่
@@ -181,14 +187,18 @@ failures/errors/skipped และข้อมูล Python อ่านจาก
 Notebook, `SHA256SUMS.txt`, `BUILD_STATUS.json` และ `delivery_checks.json` ใน output directory
 มีการตรวจจากการแตก ZIP ใหม่ ไฟล์สถานะของ candidate ให้ดูใน output directory;
 ไฟล์สถานะ/ผลตรวจ 0.2.0 ที่เก็บไว้ไม่ใช่ผลปัจจุบัน การสร้าง ZIP ไม่เผยแพร่ภายนอก
+`BUILD_STATUS.json` และ `delivery_checks.json` บันทึกก่อนเผยแพร่ จึงคง `published:false`
+ใน release assets ที่ล็อกไว้ ใช้บันทึกหลังเผยแพร่ข้างต้นเพื่อตรวจสถานะ remote ปัจจุบัน
 หากไม่ระบุ `--candidate` ต้องมีการอนุมัติที่ตรงรุ่น 0.2.1; approval ของ 0.2.0 ใช้แทนไม่ได้
 
 มี CI สำหรับ Python 3.10/3.12 และ workflow เผยแพร่แบบ manual ซึ่งตั้ง `publish=false` เป็นค่าเริ่มต้น
 รายงานวิจัยวันที่ 28 ตุลาคม 2026 บันทึกว่า main CI ของ commit
 `d5a72ab64a7439c999faf7ba47f77239d1238a11` ผ่านแล้ว
 ผลดังกล่าวเป็น snapshot ไม่ใช่ผล CI ของ commit ที่แก้ภายหลัง
-ดู [บันทึกการลงมือทำ](docs/RESEARCH_IMPLEMENTATION_TH.md) ช่องทาง native release assets ที่เคยพบ HTTP 401
-ต้องตรวจสิทธิ์และการอัปโหลด/ดาวน์โหลดจริงภายหลัง การเพิ่ม workflow ไม่ได้ยืนยันว่าแก้สิทธิ์สำเร็จแล้ว
+ดู [บันทึกการลงมือทำ](docs/RESEARCH_IMPLEMENTATION_TH.md) สำหรับประวัติช่วงนั้น
+ภายหลัง [Manual release run #3](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40723991028)
+ผ่านทั้ง build และ publish และบันทึกหลังเผยแพร่ยืนยันดาวน์โหลด native assets พร้อม hash ตรงแล้ว
+HTTP 401 เป็นผลของการอัปโหลดในอดีต ไม่ใช่ผลของ release นี้ ส่วน Colab จริงยังเป็น `not_run`
 
 ## ใช้ Notebook บน Google Colab
 
