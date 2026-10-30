@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "neuron-flow-prototype"
-version = "0.4.0.dev0"
+version = "0.4.0"
 description = "Supervised purchase document intake and validation with persistent recovery"
 readme = "README.md"
 license = "GPL-3.0-only"

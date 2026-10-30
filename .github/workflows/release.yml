@@ -1,6 +1,18 @@
 name: Manual release
 
 on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      expected_commit:
+        required: true
+        type: string
+      publish:
+        required: true
+        default: false
+        type: boolean
   workflow_dispatch:
     inputs:
       tag:
@@ -60,6 +72,11 @@ jobs:
           fi
           python -B .github/workflows/release_support.py validate \
             --tag "$REQUESTED_TAG" --expected-commit "$EXPECTED_COMMIT" "${publish_options[@]}"
+      - name: Install optional adapters and OCR for zero-skip release verification
+        run: |
+          python -m pip install '.[documents]'
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-tha
       - name: Verify locked answers and all regressions
         run: |
           python -B tools/build_acceptance_fixture.py --check

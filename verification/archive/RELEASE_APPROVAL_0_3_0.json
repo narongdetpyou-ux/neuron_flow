@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "version": "0.3.0",
+  "release_approved": true,
+  "approved_at_utc": "2026-10-29T09:38:50.365078+00:00",
+  "approval_source": "User instruction in this conversation",
+  "user_instruction": "เผยแพร่เป็น release",
+  "publication_target": "https://github.com/narongdetpyou-ux/neuron_flow/releases",
+  "decision": "release_with_disclosed_known_limitation",
+  "scope": "Beta release of the single-machine CSV/CLI and invoice JSON workflow with 46 currencies, exact currency-specific minor units, per-currency certified totals and preserved legacy CSV replay. Exact source/tag commit is checked separately by the manual release workflow.",
+  "colab_acceptance_complete": false,
+  "known_limitations": [
+    "Actual fresh Google Colab upload/run/resume/download/restore acceptance remains not_run.",
+    "The 0.3.0 Windows/macOS smoke matrix is not yet verified at release preparation; prior 0.2.1 platform evidence is historical, and the full fault-injection suite remains scoped to Linux.",
+    "No exchange-rate conversion or cash rounding; each document must use one supported currency, and excess decimal precision is rejected.",
+    "Experimental Python API; persisted invoice JSON jobs using Agent version 1 require their prior runtime or a new job/workspace. Legacy CSV batches preserve their original currency contract.",
+    "Sequential document processing; original absolute workspace path required for backup restoration; no production SLA."
+  ],
+  "historical_approval": "verification/archive/RELEASE_APPROVAL_0_2_1.json"
+}

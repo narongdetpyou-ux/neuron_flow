@@ -1,34 +1,42 @@
-# Release notes
+# Neuron Flow 0.4.0 release notes
 
-## 0.4.0.dev0 — unreleased development
+## 0.4.0 — approved release source
 
-This source adds supervised document intake and optional connectors. These
-features and the English documentation migration are not in the published
-0.3.0 ZIP. Development source has no matching publication approval.
+- Add supervised CSV/TSV/JSON/Excel intake, PDF and local OCR receipt drafts,
+  explicit human review, immutable review revisions and selected Google Drive,
+  Sheets, Dropbox and S3 connectors. Receipts require reviewed CSV before exact
+  financial verification; connector writes remain explicit.
+- Use English in maintained product documentation, notebook instructions,
+  examples and issue forms; preserve historical evidence and locked bytes.
+- Add report-backed explanations and exact comparison of saved outcomes.
+- Add an optional durable SQLite queue, strict loopback HTTP admission with
+  separate read/write tokens, bounded ownership/recovery, cancellation and whole
+  job deadlines. Bound trusted extraction and controller-validator execution.
+- Record immutable extraction attempts, explicit native/PDF text/PDF OCR
+  configurations, phase timings and bounded pure extraction cache results.
+- Add actual isolated shadow execution, identified paired candidate gates,
+  training/validation/holdout separation and evidence-bound frozen policy files.
+- Add review-bound structural case retrieval and retain matches/mismatches;
+  retrieval remains advisory and does not certify documents or activate policies.
+- Share streaming integrity diagnostics and consistent SQLite backup checks
+  between CLI and notebook recovery. Preserve non-destructive restore and the
+  original absolute workspace path requirement.
+- Add a seeded synthetic purchase replay tool using the actual queue/runtime
+  and independent integer fixture labels; observed timings are workload-specific.
+- Preserve exact currency minor-unit verification, 46 currencies, legacy CSV
+  contracts and supported 0.2.0/0.2.1/0.3.0/0.4.0.dev0 workspaces.
+- Record explicit 0.4.0 publication approval. A committed request waits for all
+  nine exact-source CI jobs, pins an immutable tag and invokes the existing
+  guarded release workflow with `publish=true`. Manual publication defaults
+  remain unchanged.
 
-- Accept CSV, TSV, JSON row arrays and values-only Excel workbooks, preserving
-  original bytes, SHA-256 and source-record mappings.
-- Extract text PDFs and optionally OCR scanned PDFs/PNG/JPEG/TIFF with local
-  Tesseract. Receipts require reviewed CSV before financial validation.
-- Import selected files/ranges from Google Drive, Google Sheets, Dropbox and S3.
-- Export literal CSV values to an exactly sized Google Sheets range by an
-  explicit command, separately from batch processing.
-- Retain immutable intake/review revisions and use the existing BatchRuntime.
-- Preserve the 46-currency monetary contracts and supported CSV workspace reuse.
-- Add synthetic format examples, optional-adapter regression coverage and CI.
-- Use English in maintained documentation, notebook instructions, examples,
-  issue forms and generated verification reports. Rename maintained guides to
-  language-neutral paths; preserve frozen source/evidence bytes and hashes.
-- Explain suitable datasets, preparation/review requirements, target user groups
-  and business boundaries in [data and market fit](docs/DATA_AND_MARKET_FIT.md).
-
-The initial adapter implementation record reports 203 regression cases with no
-failures/errors/skips and a full verifier with 38 baseline plus 165 current cases.
-Those are dated results, not a rerun of later documentation revisions. See the
-[evidence index](verification/README.md) for exact run/source scope.
-Live cloud-account authorization and actual Colab acceptance remain unestablished.
-Tax/discount/FX interpretation, arbitrary receipt-layout understanding, production
-SLAs and multi-user approval are outside this implementation.
+Actual fresh-runtime Colab acceptance and live cloud-account authorization remain
+separate from local/synthetic verification. Full fault-injection and process-group
+cancellation validation are scoped to Linux; Windows/macOS run their documented
+smoke subset. This is a single-machine beta without a production SLA, FX/tax
+interpretation, arbitrary-layout understanding or authenticated multi-user review.
+Refer to dated verification records and the exact tag's workflow for measured
+results; publication is observed separately from build-time approval.
 
 ## 0.3.0 — published 29 October 2026
 

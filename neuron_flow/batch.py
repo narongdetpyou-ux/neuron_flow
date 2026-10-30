@@ -9,6 +9,7 @@ from copy import deepcopy
 import hashlib
 import json
 import math
+from contextlib import nullcontext
 from pathlib import Path
 
 from . import __version__
@@ -22,7 +23,7 @@ from .model import NAME, MessageSizeError, SpecError, encode
 
 WORKSPACE_SCHEMA_VERSION = 1
 EXECUTION_CONTRACT_VERSION = 'purchase-batch-v1'
-SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1', '0.3.0', __version__})
+SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1', '0.3.0', '0.4.0.dev0', __version__})
 
 
 def _json(value):
@@ -49,7 +50,7 @@ class BatchConflict(ValueError):
 class BatchRuntime:
     """Use as a context manager; the existing Runtime owns the workspace lock."""
 
-    def __init__(self, workspace, *, max_workers=3, agents=None, timeout_s=5, legacy_thb=False):
+    def __init__(self, workspace, *, max_workers=3, agents=None, timeout_s=5, legacy_thb=False, validation_timeout_s=None, telemetry=None):
         if (isinstance(timeout_s, bool) or not isinstance(timeout_s, (int, float))
                 or not math.isfinite(timeout_s) or not 0.05 <= timeout_s <= 3600):
             raise ValueError('timeout_s must be a finite number between 0.05 and 3600')
@@ -66,7 +67,11 @@ class BatchRuntime:
         self.agent_versions = {agent.name: {'entrypoint': agent.entrypoint, 'version': agent.version,
                                'validator': f'{agent.validator.__module__}:{agent.validator.__qualname__}'}
                                for agent in definitions}
-        self.runtime = Runtime(workspace, max_workers=max_workers, agents=definitions)
+        if validation_timeout_s is not None:
+            for binding in self.agent_versions.values():
+                binding['validation_timeout_s'] = validation_timeout_s
+        self.runtime = Runtime(workspace, max_workers=max_workers, agents=definitions,
+                               validation_timeout_s=validation_timeout_s, telemetry=telemetry)
         self.workspace = self.runtime.workspace
         try:
             self.runtime.store.db.executescript('''
@@ -168,7 +173,9 @@ class BatchRuntime:
     def submit(self, source, batch_id=None):
         """Reject malformed files before submission; bind IDs to exact source bytes."""
         self.__enter__()
-        parsed = read_csv_bytes(source)
+        telemetry = self.runtime.soma.telemetry
+        with telemetry.measure('parsing') if telemetry is not None else nullcontext():
+            parsed = read_csv_bytes(source)
         foreign = any(row['fields']['currency'] != 'THB'
                       for document in parsed['documents'] for row in document['rows'])
         foreign = foreign or any(row['fields']['currency'] != 'THB' for row in parsed['ungrouped_rows'])

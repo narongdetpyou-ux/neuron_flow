@@ -136,11 +136,25 @@ def check_install(artifact, *, wheelhouse, temporary, env, log):
     imported = json.loads(run([cli, 'intake-run', staged['intake_id'], '--workspace', workspace],
                               cwd=root, env=env, log=log))
     receipt_snapshot(imported['batch'])
+    operations_workspace = root / 'operations'
+    admitted = json.loads(run([cli, 'ops', 'submit', source, '--key', 'installed-operations',
+                              '--workspace', operations_workspace], cwd=root, env=env, log=log))
+    completed = json.loads(run([cli, 'ops', 'work', '--once', '--workspace', operations_workspace],
+                              cwd=root, env=env, log=log))
+    if admitted['status'] != 'QUEUED' or completed['job_id'] != admitted['job_id'] or completed['status'] != 'COMPLETED':
+        raise RuntimeError('Installed supervised operations did not complete the admitted job')
+    receipt_snapshot(completed['result']['batch'])
+    backup = root / 'operations-backup'
+    backup_result = json.loads(run([cli, 'ops', 'backup', operations_workspace, backup], cwd=root, env=env, log=log))
+    integrity = json.loads(run([cli, 'ops', 'integrity', backup], cwd=root, env=env, log=log))
+    if backup_result['ok'] is not True or integrity['ok'] is not True:
+        raise RuntimeError('Installed operations backup integrity failed')
     return {'kind': label, 'import_probe': probe, 'counts': first['counts'],
             'certified_total': first['certified_total'], 'artifact_checks': before,
             'document_intake': {'status': staged['status'], 'formats': adapters['formats'],
                                 'sources': adapters['sources'], 'json_batch_passed': True},
             'read_only_report_explanation_and_comparison': True,
+            'supervised_operations_and_backup': True,
             'recovery_preserved_receipts_and_files': True, 'passed': True}
 
 

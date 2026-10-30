@@ -13,9 +13,13 @@ class QualityGateTests(unittest.TestCase):
         tree = ast.parse((PROJECT / 'neuron_flow/engine.py').read_text(encoding='utf-8'))
         worker = next(node for node in tree.body
                       if isinstance(node, ast.FunctionDef) and node.name == '_worker_main')
-        return {'totals': dict(summary), 'files': {
+        data = {'totals': dict(summary), 'files': {
             name: {'summary': dict(summary), 'executed_lines': [worker.body[0].lineno]}
             for name in COVERAGE_FLOORS if name != 'total'}}
+        http_tree = ast.parse((PROJECT / 'neuron_flow/service.py').read_text(encoding='utf-8'))
+        handler = next(node for node in ast.walk(http_tree) if isinstance(node, ast.FunctionDef) and node.name == 'do_POST')
+        data['files']['neuron_flow/service.py'] = {'executed_lines': [handler.body[0].lineno]}
+        return data
 
     def test_financial_branch_regression_fails_despite_full_line_coverage(self):
         data = self.evidence()
@@ -28,6 +32,8 @@ class QualityGateTests(unittest.TestCase):
         data = self.evidence()
         data['files']['neuron_flow/engine.py']['executed_lines'] = []
         self.assertFalse(coverage_gates(data)['spawn_worker_measured'])
+        data['files']['neuron_flow/service.py']['executed_lines'] = []
+        self.assertFalse(coverage_gates(data)['http_handler_measured'])
         del data['files']['neuron_flow/reporting.py']
         checks = coverage_gates(data)
         self.assertFalse(checks['neuron_flow/reporting.py:lines'])

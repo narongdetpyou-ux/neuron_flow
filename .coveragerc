@@ -2,7 +2,7 @@
 branch = True
 source = neuron_flow
 parallel = True
-concurrency = multiprocessing
+concurrency = multiprocessing, thread
 patch = subprocess, _exit
 sigterm = True
 relative_files = True

@@ -27,6 +27,9 @@ _DELIVERY_ERROR_PREFIX = "neuron-flow-structured-error:"
 
 def _error_record(exc, error_type=None):
     error = {"type": error_type or type(exc).__name__, "message": str(exc)[:1000]}
+    from .supervision import OperationFailure
+    if isinstance(exc, OperationFailure):
+        error.update(exc.details)
     if isinstance(exc, MessageSizeError):
         error.update(exc.details())
         if error_type is not None:
@@ -122,8 +125,12 @@ class Worker:
 class Synapse:
     """Contracts and targeted, durable event routing."""
 
-    def __init__(self, store, definitions):
+    def __init__(self, store, definitions, validation_timeout_s=None):
         self.store = store
+        self.validation_timeout_s = validation_timeout_s
+        if validation_timeout_s is not None:
+            from .supervision import number
+            number(validation_timeout_s, .05, 3600, "validation_timeout_s")
         self.agents = {}
         for definition in definitions:
             if (definition.name in self.agents or not callable(definition.validator)
@@ -135,11 +142,25 @@ class Synapse:
     def validate(self, agent_name, message, output):
         # Reject NaN, huge outputs, and non-JSON objects before persistence.
         before = encode(output, phase="agent_output_validation")
-        result = self.agents[agent_name].validator(message, output)
+        validator = self.agents[agent_name].validator
+        if self.validation_timeout_s is None:
+            result = validator(message, output)
+        else:
+            from .supervision import isolated
+            result = isolated("neuron_flow.supervision:validate_agent", {
+                "validator": f"{validator.__module__}:{validator.__qualname__}",
+                "message": message, "output": output}, self.validation_timeout_s, phase="validation")
         if result is not None and result is not True:
             raise ValueError("Validator rejected the result; return None/True or raise an error")
         if before != encode(output, phase="agent_output_validation"):
             raise ValueError("Validator must check results without modifying them")
+
+    def identity(self, name):
+        definition = self.agents[name]
+        result = {"entrypoint": definition.entrypoint, "version": definition.version}
+        if self.validation_timeout_s is not None:
+            result["validation_timeout_s"] = self.validation_timeout_s
+        return result
 
     def audience(self, step_id, spec):
         return [f"step:{step['id']}" for step in spec["steps"] if step_id in step["depends_on"]]
@@ -157,8 +178,7 @@ class Dendrite:
     def submit(self, spec):
         normalized = normalize_spec(spec, self.synapse.agents)
         normalized["agent_versions"] = {
-            step["agent"]: {"entrypoint": self.synapse.agents[step["agent"]].entrypoint,
-                            "version": self.synapse.agents[step["agent"]].version}
+            step["agent"]: self.synapse.identity(step["agent"])
             for step in normalized["steps"]
         }
         # Normalization and Agent metadata can make the stored workflow larger
@@ -238,11 +258,12 @@ class AxonTerminal:
 class Soma:
     """Bounded scheduling, supervision, recovery and independent validation."""
 
-    def __init__(self, store, synapse, axon, terminal, max_workers):
+    def __init__(self, store, synapse, axon, terminal, max_workers, telemetry=None):
         self.store, self.synapse, self.axon, self.terminal = store, synapse, axon, terminal
         self.max_workers = max_workers
         self.workers = []
         self.peak_workers = 0
+        self.telemetry = telemetry
 
     def _failure(self, spec, step, attempt, error, retryable):
         retry = retryable and attempt < step["max_attempts"]
@@ -280,18 +301,28 @@ class Soma:
                     raise ChildProcessError("Worker reply does not match its assigned work")
                 if response.get("finished", float("inf")) - busy["started"] >= step["timeout_s"]:
                     raise TimeoutError(f"Agent exceeded {step['timeout_s']} seconds")
+                if self.telemetry is not None:
+                    phase = {"csv_validate": "validation", "csv_calculate": "calculation", "csv_verify": "verification"}.get(step['agent'], 'agent')
+                    self.telemetry.record(phase, max(0, (response.get('finished', time.monotonic()) - busy['started']) * 1000),
+                                          'ERROR' if response.get('kind') == 'error' else 'OK')
                 if response.get("kind") == "error":
                     self._failure(spec, step, message["attempt"], response["error"], response["retryable"])
                 elif response.get("kind") == "result":
+                    validation_started = time.monotonic()
+                    validation_outcome = 'ERROR'
                     try:
                         self.synapse.validate(step["agent"], message, response["output"])
                     except Exception as exc:
                         self._failure(spec, step, message["attempt"],
                                       _error_record(exc, "OutputValidationError"), False)
                     else:
+                        validation_outcome = 'OK'
                         self.store.transition(spec["job_id"], step["id"], "SUCCEEDED", message["attempt"],
                                               output=response["output"],
                                               audience=self.synapse.audience(step["id"], spec))
+                    finally:
+                        if self.telemetry is not None:
+                            self.telemetry.record('contract_validation', (time.monotonic() - validation_started) * 1000, validation_outcome)
                 else:
                     raise ChildProcessError("Unknown worker response")
                 worker.busy = None
@@ -307,8 +338,7 @@ class Soma:
         for step in spec["steps"]:
             if step["agent"] not in self.synapse.agents:
                 raise SpecError(f"Agent no longer registered: {step['agent']}")
-            definition = self.synapse.agents[step["agent"]]
-            if spec["agent_versions"][step["agent"]] != {"entrypoint": definition.entrypoint, "version": definition.version}:
+            if spec["agent_versions"][step["agent"]] != self.synapse.identity(step["agent"]):
                 raise SpecError(f"Agent version changed: {step['agent']}; use a new job id or restore its original definition")
         self.recover(spec)
         self.store.job_status(job_id, "RUNNING")
@@ -357,6 +387,8 @@ class Soma:
             key: {field: value[field] for field in ("status", "attempts", "output", "error")}
             for key, value in state.items()
         }}
+        delivery_started = time.monotonic()
+        delivery_outcome = 'ERROR'
         try:
             receipt = self.terminal.deliver(report)
         except Exception as exc:
@@ -367,7 +399,11 @@ class Soma:
                 error = _DELIVERY_ERROR_PREFIX + json.dumps(_error_record(exc), sort_keys=True)
             self.store.job_status(job_id, "DELIVERY_FAILED", error=error)
         else:
+            delivery_outcome = 'OK'
             self.store.job_status(job_id, status, receipt=receipt)
+        finally:
+            if self.telemetry is not None:
+                self.telemetry.record('delivery', (time.monotonic() - delivery_started) * 1000, delivery_outcome)
         return self.snapshot(job_id)
 
     def snapshot(self, job_id):
@@ -396,7 +432,7 @@ class Soma:
 class Runtime:
     """Own exactly one workspace. Use as a context manager."""
 
-    def __init__(self, workspace, *, max_workers=3, agents=None):
+    def __init__(self, workspace, *, max_workers=3, agents=None, validation_timeout_s=None, telemetry=None):
         if type(max_workers) is not int or not 1 <= max_workers <= 32:
             raise ValueError("max_workers must be between 1 and 32")
         self.workspace = Path(workspace).resolve()
@@ -410,11 +446,11 @@ class Runtime:
                 from .agents import default_agents
                 agents = default_agents()
             self.store = Store(self.workspace / "state.sqlite3")
-            self.synapse = Synapse(self.store, agents)
+            self.synapse = Synapse(self.store, agents, validation_timeout_s)
             self.dendrite = Dendrite(self.store, self.synapse)
             self.axon = Axon(self.synapse)
             self.terminal = AxonTerminal(self.workspace / "reports")
-            self.soma = Soma(self.store, self.synapse, self.axon, self.terminal, max_workers)
+            self.soma = Soma(self.store, self.synapse, self.axon, self.terminal, max_workers, telemetry)
         except BaseException:
             self.close()
             raise

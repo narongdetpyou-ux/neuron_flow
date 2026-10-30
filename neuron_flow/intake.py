@@ -50,6 +50,10 @@ def _load(workspace, intake_id):
         raise DocumentInputError("INTAKE_CONFLICT: identity does not match")
     if manifest["binding"]["source_sha256"] != manifest["source_sha256"]:
         raise DocumentInputError("INTAKE_CONFLICT: source identity does not match")
+    if manifest.get('format') != manifest['binding'].get('format'):
+        raise DocumentInputError('INTAKE_CONFLICT: format differs from the immutable binding')
+    if 'extraction_policy' in manifest['binding'] and _json(manifest.get('extraction_policy')) != _json(manifest['binding']['extraction_policy']):
+        raise DocumentInputError('INTAKE_CONFLICT: extraction policy differs from the immutable binding')
     normalized = None
     if manifest["normalized_sha256"] is not None:
         normalized = read_source(folder / "normalized.csv")
@@ -58,12 +62,14 @@ def _load(workspace, intake_id):
     return folder, manifest, manifest_bytes, normalized
 
 
-def stage_document(workspace, data, filename, *, sheet=None, ocr=False, language="eng", origin=None):
+def stage_document(workspace, data, filename, *, sheet=None, ocr=False, language="eng", origin=None, extraction_engine=None):
     """Persist an immutable source/normalization bundle before any processing."""
     bounded_bytes(data)
     binding = {"adapter_version": ADAPTER_VERSION, "source_sha256": _sha(data),
                "format": Path(filename).suffix.lower().lstrip("."), "sheet": sheet,
                "ocr": ocr, "language": language, "origin": origin or {"provider": "local"}}
+    if extraction_engine is not None:
+        binding["extraction_policy"] = extraction_engine.binding()
     intake_id = _sha(_json(binding))[:40]
     folder = _folder(workspace, intake_id)
     if folder.exists():
@@ -71,7 +77,8 @@ def stage_document(workspace, data, filename, *, sheet=None, ocr=False, language
         # Resubmission does not rerun OCR/parsers, and can reuse a complete
         # bundle even after optional dependencies have been removed.
         return intake_status(workspace, intake_id)
-    prepared = prepare_document(data, filename, sheet=sheet, ocr=ocr, language=language)
+    prepare = prepare_document if extraction_engine is None else extraction_engine.prepare
+    prepared = prepare(data, filename, sheet=sheet, ocr=ocr, language=language)
     normalized = prepared.pop("csv")
     manifest = {**prepared, "binding": binding, "adapter_version": ADAPTER_VERSION,
                 "intake_id": intake_id, "filename": Path(filename).name,
@@ -179,14 +186,14 @@ def review_document(workspace, intake_id, reviewed_csv, reviewer):
     return intake_status(workspace, intake_id)
 
 
-def run_document(workspace, intake_id, *, workers=3, submit_only=False):
+def run_document(workspace, intake_id, *, workers=3, submit_only=False, validation_timeout_s=None, telemetry=None):
     folder, manifest, manifest_bytes, normalized = _load(workspace, intake_id)
     if normalized is None:
         if not (folder / "approval.json").exists():
             raise DocumentInputError("REVIEW_REQUIRED: review the receipt and submit reviewed CSV first")
         _, normalized = _approved(folder, manifest_bytes)
     batch_id = "intake_" + intake_id
-    with BatchRuntime(workspace, max_workers=workers) as batch:
+    with BatchRuntime(workspace, max_workers=workers, validation_timeout_s=validation_timeout_s, telemetry=telemetry) as batch:
         submitted = batch.submit(normalized, batch_id)
         result = batch.status(batch_id) if submit_only else batch.deliver(batch_id)
     return {"intake": intake_status(workspace, intake_id), "batch_id": submitted["batch_id"], "batch": result}

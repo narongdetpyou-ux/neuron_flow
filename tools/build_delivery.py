@@ -18,7 +18,7 @@ from neuron_flow import __version__
 from tools.verify_current import project_fingerprint
 from tools.verify_v020 import release_approval
 
-TOP_LEVEL = {'.gitignore', '.gitattributes', 'LICENSE', 'README.md', 'RELEASE_APPROVAL.json',
+TOP_LEVEL = {'.gitignore', '.gitattributes', 'LICENSE', 'README.md', 'RELEASE_APPROVAL.json', 'RELEASE_REQUEST.json',
              'RELEASE_NOTES.md', 'START_COLAB.ipynb', 'pyproject.toml',
              'requirements-build.txt', 'requirements-dev.txt', '.coveragerc',
              'CONTRIBUTING.md', 'GOVERNANCE.md', 'SECURITY.md', 'SUPPORT.md', 'CODE_OF_CONDUCT.md'}

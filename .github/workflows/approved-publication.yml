@@ -1,0 +1,50 @@
+name: Approved publication request
+
+on:
+  push:
+    branches: [main]
+    paths: [RELEASE_REQUEST.json]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: approved-publication-request
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'narongdetpyou-ux/neuron_flow' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      tag: ${{ steps.prepare.outputs.tag }}
+      expected_commit: ${{ steps.prepare.outputs.expected_commit }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Require explicit approval and all nine exact-source CI jobs, then pin tag
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EXACT_COMMIT: ${{ github.sha }}
+        run: python -B tools/prepare_publication.py --repository "$GH_REPO" --commit "$EXACT_COMMIT"
+
+  release:
+    needs: prepare
+    permissions:
+      contents: write
+    uses: ./.github/workflows/release.yml
+    with:
+      tag: ${{ needs.prepare.outputs.tag }}
+      expected_commit: ${{ needs.prepare.outputs.expected_commit }}
+      publish: true

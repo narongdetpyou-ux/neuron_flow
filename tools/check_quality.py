@@ -40,6 +40,10 @@ def coverage_gates(data):
                   if isinstance(node, ast.FunctionDef) and node.name == '_worker_main')
     executed = files.get('neuron_flow/engine.py', {}).get('executed_lines', [])
     checks['spawn_worker_measured'] = worker.body[0].lineno in executed
+    http_tree = ast.parse((PROJECT / 'neuron_flow/service.py').read_text(encoding='utf-8'))
+    handler = next(node for node in ast.walk(http_tree)
+                   if isinstance(node, ast.FunctionDef) and node.name == 'do_POST')
+    checks['http_handler_measured'] = handler.body[0].lineno in files.get('neuron_flow/service.py', {}).get('executed_lines', [])
     return checks
 
 
@@ -88,7 +92,7 @@ def main(argv=None):
         'python': sys.version,
         'lint_scope': 'E9,F across neuron_flow/',
         'typing_scope': 'strict neuron_flow/inspection.py; imported modules are not gated',
-        'coverage_scope': 'neuron_flow/ including CLI subprocesses and multiprocessing spawn workers',
+        'coverage_scope': 'neuron_flow/ including CLI subprocesses, multiprocessing spawn workers and HTTP threads',
         'test_count': test_count,
         'checks': {'lint': lint.returncode == 0, 'typing': typing.returncode == 0,
                    'tests': tests.returncode == 0 and test_count > 0,
