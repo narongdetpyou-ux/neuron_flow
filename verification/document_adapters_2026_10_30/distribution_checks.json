@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-30T06:39:48.060530+00:00",
+  "created_at_utc": "2026-10-30T06:44:17.815677+00:00",
   "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
   "passed": true,
   "build_tools": {
@@ -9,23 +9,23 @@
     "packaging": "26.3",
     "pyproject-hooks": "1.3.3"
   },
-  "source_tree_sha256": "ccbc66ebcf59d78647db802799b512e58c03d316a9f89b2470a0d049edfec165",
+  "source_tree_sha256": "267110e47941736b99def8410cb4020cc3328d061214b7037b0010de4e32f885",
   "artifacts": {
     "neuron_flow_prototype-0.4.0.dev0-py3-none-any.whl": {
-      "sha256": "f52e0568e3e667fc8f0ba7306a6ae5b91a14a6256e0bddcf4c01b6477ca3dd0e",
-      "bytes": 68618
+      "sha256": "803c8f86e52964c423c48844a9ffe5cb795187ec7e9a45500aa335f81119a3d2",
+      "bytes": 68718
     },
     "neuron_flow_prototype-0.4.0.dev0.tar.gz": {
-      "sha256": "68dc485161106e838c7c4fa44b8e2e3c8321c10c41b73293eb690a9963eae1e9",
-      "bytes": 68437
+      "sha256": "74e4a30f9207b81ac10745b2af4224929f6d4caf7043531a071123b7fcca610f",
+      "bytes": 68516
     }
   },
   "installs": [
     {
       "kind": "wheel",
       "import_probe": {
-        "path": "/tmp/neuron-distribution-tksw52vj/wheel/venv/lib/python3.12/site-packages/neuron_flow/__init__.py",
-        "prefix": "/tmp/neuron-distribution-tksw52vj/wheel/venv",
+        "path": "/tmp/neuron-distribution-jz_8x2d3/wheel/venv/lib/python3.12/site-packages/neuron_flow/__init__.py",
+        "prefix": "/tmp/neuron-distribution-jz_8x2d3/wheel/venv",
         "version": "0.4.0.dev0"
       },
       "counts": {
@@ -39,17 +39,17 @@
         "summary.csv": {
           "sha256": "26d5140538bc171aa5bff35498cb5834a2423b27b4f5264c8d55afad8a4799c5",
           "bytes": 209,
-          "mtime_ns": 1793342391798623771
+          "mtime_ns": 1793342661913440357
         },
         "details.json": {
-          "sha256": "3dbf1ece478dfcc1e709138c303e524b17864cd9d06b18abf1a2509ab99d571c",
-          "bytes": 17258,
-          "mtime_ns": 1793342391798657421
+          "sha256": "c3c0aee4930abd99b47210f36597e4b64b6948d838f130ec3e5d221cbbcafc90",
+          "bytes": 17260,
+          "mtime_ns": 1793342661913476372
         },
         "source.csv": {
           "sha256": "238dcc545c6bbf14d54ccd0a272384d47e3ca0fdbdb61f996e4ed174922709d2",
           "bytes": 206,
-          "mtime_ns": 1793342391798687897
+          "mtime_ns": 1793342661913503963
         }
       },
       "document_intake": {
@@ -82,8 +82,8 @@
     {
       "kind": "sdist",
       "import_probe": {
-        "path": "/tmp/neuron-distribution-tksw52vj/sdist/venv/lib/python3.12/site-packages/neuron_flow/__init__.py",
-        "prefix": "/tmp/neuron-distribution-tksw52vj/sdist/venv",
+        "path": "/tmp/neuron-distribution-jz_8x2d3/sdist/venv/lib/python3.12/site-packages/neuron_flow/__init__.py",
+        "prefix": "/tmp/neuron-distribution-jz_8x2d3/sdist/venv",
         "version": "0.4.0.dev0"
       },
       "counts": {
@@ -97,17 +97,17 @@
         "summary.csv": {
           "sha256": "26d5140538bc171aa5bff35498cb5834a2423b27b4f5264c8d55afad8a4799c5",
           "bytes": 209,
-          "mtime_ns": 1793342395946610674
+          "mtime_ns": 1793342666008082878
         },
         "details.json": {
-          "sha256": "93f1600ac6b9c7fb1858e087cacb9474a586dae37b9cf562645b9065629cbc47",
-          "bytes": 17261,
-          "mtime_ns": 1793342395946647459
+          "sha256": "f92e695eaecc3b76f163530e5ac638f600259decb20b6fcd6824a53b629b4bb3",
+          "bytes": 17257,
+          "mtime_ns": 1793342666008117961
         },
         "source.csv": {
           "sha256": "238dcc545c6bbf14d54ccd0a272384d47e3ca0fdbdb61f996e4ed174922709d2",
           "bytes": 206,
-          "mtime_ns": 1793342395946686418
+          "mtime_ns": 1793342666008181086
         }
       },
       "document_intake": {

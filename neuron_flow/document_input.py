@@ -66,9 +66,13 @@ def _cell(value):
     if isinstance(value, (float, Decimal)):
         if not (value.is_finite() if isinstance(value, Decimal) else math.isfinite(value)):
             raise DocumentInputError("CELL_TYPE: non-finite number")
+        number = Decimal(str(value))
+        parts = number.as_tuple()
+        if len(parts.digits) + abs(parts.exponent) + 2 > MAX_SOURCE_BYTES:
+            raise DocumentInputError("CELL_LIMIT: expanded decimal exceeds the source limit")
         # Never do arithmetic or round imported amounts. Explicit decimal
         # strings are preferable when the upstream format uses binary floats.
-        return format(Decimal(str(value)), "f")
+        return format(number, "f")
     return str(value)
 
 
@@ -103,6 +107,8 @@ def json_to_csv(data):
         rows = json.loads(_text(data), parse_float=Decimal, object_pairs_hook=_unique_object)
     except json.JSONDecodeError as exc:
         raise DocumentInputError(f"JSON_SYNTAX: line {exc.lineno}") from exc
+    except ArithmeticError as exc:
+        raise DocumentInputError("JSON_NUMBER: decimal exponent is outside the supported range") from exc
     if not isinstance(rows, list) or not rows:
         raise DocumentInputError("JSON_SHAPE: expected a non-empty list of purchase row objects")
     for row in rows:

@@ -1,6 +1,6 @@
 {
   "version": "0.4.0.dev0",
-  "source_fingerprint": "aee8eedf40eb2b698197e6efc7ded7e5473ff71d14add284d4ed7dc073b88fc6",
+  "source_fingerprint": "17653a217af4ce854ab031e522ccc8a657b2b1efb8ae4ed4ae23d08e8f3eb6fb",
   "regression_tests": 203,
   "optional_format_tests_skipped": 0,
   "platform": "Linux / Python 3.12.14",
@@ -19,11 +19,12 @@
   "publication_approval": false,
   "published": false,
   "commands": [
-    "python -B tools/check_quality.py --output-dir /tmp/neuron-external-quality-final",
-    "python -B tools/check_distribution.py --output-dir /tmp/neuron-external-distribution-adapters",
-    "python -B tools/verify_current.py --output-dir /tmp/neuron-external-verify-final",
+    "python -B tools/check_quality.py --output-dir /tmp/neuron-external-quality-bounded-decimal",
+    "python -B tools/check_distribution.py --output-dir /tmp/neuron-external-distribution-bounded-decimal",
+    "python -B tools/verify_current.py --output-dir /tmp/neuron-external-verify-bounded-decimal",
     "python -B tools/build_acceptance_fixture.py --check",
     "python -B tools/check_repository_docs.py",
     "python -B .github/workflows/test_release_support.py -q"
-  ]
+  ],
+  "large_decimal_exponents": "positive/negative expansions and out-of-range exponents rejected before large string allocation"
 }

@@ -143,6 +143,7 @@ worksheet row หรือ ordinal ของ CSV/TSV data record และสำ
 PDF/ภาพไม่เกิน 50 หน้า/frames, ภาพ/render ไม่เกิน 25 ล้าน pixels,
 ข้อความรวม 2 ล้านตัวอักษร, workbook ที่ขยายแล้วไม่เกิน 64 MiB/2,000 ZIP members,
 OCR timeout 30 วินาทีต่อหน้า, HTTP timeout 30 วินาที
+ตัวเลข JSON ที่ exponent ทำให้ decimal string ขยายเกิน source limit ถูกปฏิเสธก่อนสร้าง string
 HTTP redirect ถูกปฏิเสธและไม่ส่ง token ข้าม host; error แสดง status/retryable โดยไม่แสดง provider body
 ไม่ retry network อัตโนมัติ ให้ตรวจผลปลายทางก่อนเรียกส่งออกซ้ำหลัง timeout
 SDK S3 ตั้ง timeout และปิด retries ที่ซ่อนอยู่ใน client ที่ระบบสร้างเอง

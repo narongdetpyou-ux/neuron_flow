@@ -65,6 +65,11 @@ class StructuredInputTests(unittest.TestCase):
         for value in (float("inf"), Decimal("NaN")):
             with self.assertRaisesRegex(ValueError, "CELL_TYPE"):
                 document._cell(value)
+        for value, code in (("1e1000000000", "CELL_LIMIT"), ("1e-1000000000", "CELL_LIMIT"),
+                            ("1e9999999999999999999999999", "JSON_NUMBER")):
+            data = json.dumps([{**PURCHASE, "unit_price": "EXPONENT_PLACEHOLDER"}]).replace('"EXPONENT_PLACEHOLDER"', value).encode()
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, code):
+                document.prepare_document(data, "data.json")
 
     def test_limits_unknown_format_encoding_empty_table_and_tsv_syntax(self):
         for data, filename, code in (
