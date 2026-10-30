@@ -65,8 +65,8 @@ class BatchDeliveryTests(unittest.TestCase):
         self.assertEqual(Path(artifacts["source.csv"]["path"]).read_bytes(), source)
 
     def test_reports_have_verified_receipts_and_trace_every_grouped_or_ungrouped_row(self):
-        source = b"\xef\xbb\xbf" + purchase_source([("GOOD", "หลายบรรทัด\nมี comma, อยู่ด้วย"),
-                                                    ("", "รหัสเอกสารหาย")])
+        source = b"\xef\xbb\xbf" + purchase_source([("GOOD", "Multiple lines\nwith a comma, included"),
+                                                    ("", "Missing document identifier")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "traceability")
             result = runtime.deliver("traceability")
@@ -78,7 +78,7 @@ class BatchDeliveryTests(unittest.TestCase):
         self.assertEqual(details["counts"], {"documents": 1, "VALID": 1, "INVALID": 0, "ERROR": 0})
         self.assertEqual(details["documents"][0]["source_rows"], [2])
         self.assertEqual(details["documents"][0]["source_records"][0]["fields"]["description"],
-                         "หลายบรรทัด\nมี comma, อยู่ด้วย")
+                         "Multiple lines\nwith a comma, included")
         self.assertEqual(details["ungrouped_rows"][0]["source_row"], 4)
         self.assertEqual(result["ungrouped_rows"], 1)
         self.assertEqual(summary[0]["document_id"], "GOOD")
@@ -91,7 +91,7 @@ class BatchDeliveryTests(unittest.TestCase):
                  source_bytes_base64=base64.b64encode(source).decode("ascii"))
 
     def test_repeated_delivery_preserves_files_steps_events_and_receipt(self):
-        source = purchase_source([("GOOD", "ส่งซ้ำได้")])
+        source = purchase_source([("GOOD", "Repeatable delivery")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "repeat-delivery")
             first = runtime.deliver("repeat-delivery")
@@ -107,7 +107,7 @@ class BatchDeliveryTests(unittest.TestCase):
                  second, artifacts=durable_artifact_evidence(before_files))
 
     def test_preexisting_identical_source_artifact_is_reused_after_partial_delivery(self):
-        source = purchase_source([("GOOD", "ไฟล์เดียวถูกบันทึกก่อนหยุด")])
+        source = purchase_source([("GOOD", "One file published before interruption")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "partial")
             runtime.run("partial")
@@ -127,7 +127,7 @@ class BatchDeliveryTests(unittest.TestCase):
                  result)
 
     def test_conflicting_existing_report_is_preserved_and_delivery_is_rejected(self):
-        source = purchase_source([("GOOD", "รักษาไฟล์ขัดแย้ง")])
+        source = purchase_source([("GOOD", "Preserve conflicting file")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "preexisting-conflict")
             runtime.run("preexisting-conflict")
@@ -141,7 +141,7 @@ class BatchDeliveryTests(unittest.TestCase):
         self.assertEqual((path.read_bytes(), path.stat().st_mtime_ns), before)
 
     def test_corrupt_cached_report_is_detected_and_preserved(self):
-        source = purchase_source([("GOOD", "ตรวจไฟล์เมื่อใช้ receipt ซ้ำ")])
+        source = purchase_source([("GOOD", "Check files when reusing receipt")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "corrupt-cached")
             runtime.deliver("corrupt-cached")
@@ -157,7 +157,7 @@ class BatchDeliveryTests(unittest.TestCase):
 
     def test_error_document_remains_visible_when_batch_report_delivery_succeeds(self):
         source = purchase_source([("CRASH", str(self.workspace / "crash-report")),
-                                  ("GOOD", "ยอดที่รับรองได้")])
+                                  ("GOOD", "Certified amount")])
         with BatchRuntime(self.workspace, agents=fault_definitions(), timeout_s=0.15) as runtime:
             runtime.submit(source, "error-visible")
             result = runtime.deliver("error-visible")
@@ -175,7 +175,7 @@ class BatchDeliveryTests(unittest.TestCase):
                  details, receipt=result["receipt"], summary=summary)
 
     def test_pending_document_delivery_cannot_be_frozen_into_final_batch_reports(self):
-        source = purchase_source([("GOOD", "พื้นที่เขียนรายงานรายใบไม่พร้อม")])
+        source = purchase_source([("GOOD", "Document report directory unavailable")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "pending-document")
             deliver = runtime.runtime.terminal.deliver

@@ -1,144 +1,102 @@
-# Neuron Flow 0.4.0.dev0 — development
+# Release notes
 
-เพิ่ม document intake และ connector adapters ตาม [คู่มือเชื่อมต่อ](docs/INTEGRATIONS_TH.md)
-รุ่นนี้ยังไม่เผยแพร่และไม่ใช้สิทธิ์อนุมัติ release 0.3.0
+## 0.4.0.dev0 — unreleased development
 
-- รับ CSV/TSV/JSON/Excel พร้อม source bytes, SHA-256 และ record mapping
-- อ่าน PDF ข้อความ และภาพ/PDF สแกนผ่าน optional Tesseract OCR; ต้อง review เป็น CSV ก่อนตรวจยอด
-- รับไฟล์จาก Google Drive, Google Sheets, Dropbox และ Amazon S3
-- ส่งออก CSV ไป finite Google Sheets range แบบ RAW ด้วยคำสั่งแยก
-- เก็บ immutable intake/review revisions และส่งต่อไปยัง BatchRuntime เดิม
-- คง CSV contracts, minor-unit verification, 46 currencies และ workspace compatibility เดิม
-- เพิ่ม synthetic receipts, regression tests และ optional adapter coverage ใน CI
+This source adds supervised document intake and optional connectors. These
+features and the English documentation migration are not in the published
+0.3.0 ZIP. Development source has no matching publication approval.
 
-การเชื่อมบัญชี cloud จริงและ Actual Colab acceptance ของส่วนเพิ่มนี้ยังไม่ได้ทดสอบ
-ดูผลที่ผูกกับ source ใน verification; ผลเก่าของ release ด้านล่างเป็นประวัติ
+- Accept CSV, TSV, JSON row arrays and values-only Excel workbooks, preserving
+  original bytes, SHA-256 and source-record mappings.
+- Extract text PDFs and optionally OCR scanned PDFs/PNG/JPEG/TIFF with local
+  Tesseract. Receipts require reviewed CSV before financial validation.
+- Import selected files/ranges from Google Drive, Google Sheets, Dropbox and S3.
+- Export literal CSV values to an exactly sized Google Sheets range by an
+  explicit command, separately from batch processing.
+- Retain immutable intake/review revisions and use the existing BatchRuntime.
+- Preserve the 46-currency monetary contracts and supported CSV workspace reuse.
+- Add synthetic format examples, optional-adapter regression coverage and CI.
+- Use English in maintained documentation, notebook instructions, examples,
+  issue forms and generated verification reports. Rename maintained guides to
+  language-neutral paths; preserve frozen source/evidence bytes and hashes.
+- Explain suitable datasets, preparation/review requirements, target user groups
+  and business boundaries in [data and market fit](docs/DATA_AND_MARKET_FIT.md).
 
-## ประวัติรุ่น 0.3.0
+The initial adapter implementation record reports 203 regression cases with no
+failures/errors/skips and a full verifier with 38 baseline plus 165 current cases.
+Those are dated results, not a rerun of later documentation revisions. See the
+[evidence index](verification/README.md) for exact run/source scope.
+Live cloud-account authorization and actual Colab acceptance remain unestablished.
+Tax/discount/FX interpretation, arbitrary receipt-layout understanding, production
+SLAs and multi-user approval are outside this implementation.
 
-### Neuron Flow 0.3.0 — beta
+## 0.3.0 — published 29 October 2026
 
-ผู้ใช้อนุมัติให้เผยแพร่ด้วยคำสั่ง “เผยแพร่เป็น release” โดยเปิดเผยข้อจำกัดด้านล่าง
-รุ่นนี้เตรียมเผยแพร่ผ่าน manual release workflow; การมีไฟล์อนุมัติหรือ build สำเร็จไม่ใช่หลักฐานว่าเผยแพร่แล้ว
+- Support 46 currencies in purchase CSV and invoice JSON, with currency-specific
+  0/2/3 decimal places. Decimal calculation and independent integer-minor-unit
+  verification remain separate.
+- Reject excess precision without rounding, including excess trailing zeroes.
+- Report certified_totals separately by currency for VALID documents. A mixed
+  batch has currency and certified_total set to null; no unlike units are added.
+- Include currency in multicurrency document and summary reports and verify
+  source amounts/hashes before delivery.
+- Preserve THB-only contracts, original frozen answers and saved v1 results.
+  Use a new batch ID to process old source under a different contract.
+- Add international examples and precision, tampering, CLI and recovery tests.
 
-## การเปลี่ยนแปลง
+Every row of one document uses the same currency. Invoice JSON extract/calculate/
+verify Agents use version 2; saved version-1 invoice jobs require the original
+runtime or new jobs/workspaces. Python APIs remain experimental.
 
-- รองรับ 46 สกุลเงินสำหรับ purchase CSV และ invoice JSON รวม USD, EUR, GBP, CNY, JPY และ SGD
-- ใช้หน่วยย่อยทางบัญชี 0, 2 หรือ 3 ตำแหน่งตามสกุล คำนวณด้วย Decimal และตรวจซ้ำแยกด้วย integer minor units
-- ปฏิเสธความละเอียดเกินกติกาโดยไม่ปัดเศษ รวมถึงทศนิยมศูนย์ที่เกินจำนวนตำแหน่ง
-- รองรับเอกสารต่างสกุลใน batch เดียวกัน และรวม `certified_totals` แยกแต่ละรหัสเฉพาะเอกสาร VALID
-  ผล batch หลายสกุลมี `currency` และ `certified_total` เป็น null โดยไม่รวมยอดข้ามสกุลหรือแปลงอัตราแลกเปลี่ยน
-- เพิ่ม `currency` ในผลเอกสารและ summary CSV ภายใต้ `purchase-csv-multicurrency-v1`
-  พร้อมตรวจสกุล ยอดจาก source และ SHA-256 ก่อนส่งมอบ
-- คงสัญญาและรายงานเดิมของ THB-only intake รวมถึงผลที่บันทึกไว้ใน batch v1
-  การประมวลผล source เดิมด้วยกติกาหลายสกุลใหม่ใช้ batch ID ใหม่
-- เพิ่มตัวอย่าง `examples/purchases_international.csv`, คู่มือสกุลเงิน และ regression tests ของ precision,
-  report tampering, CLI, recovery และ legacy currency contracts
+The preparatory 173-case regression run and subsequent exact-source CI/publication
+have distinct records. The [post-publication check](verification/publication_v0_3_0_2026_10_29/README.md)
+confirms the release, six downloaded assets, hashes and 367 ZIP manifest entries.
+All nine main CI jobs passed, including the Windows/macOS smoke matrix. Full
+recovery/fault-injection coverage remains scoped to Linux; actual Colab acceptance
+is not_run. This release does not include PDF/OCR or the new cloud adapters.
 
-## ความเข้ากันได้
+## 0.2.1 — published 28 October 2026
 
-ทุกแถวในเอกสารเดียวต้องใช้สกุลเดียวกัน รายการรหัสและกติกาอยู่ใน `docs/CURRENCIES_TH.md`
-งาน CSV ที่บันทึกไว้ภายใต้ v1 ยังคงผลเดิม รวม USD ที่เดิมถูกปฏิเสธ ไม่เปลี่ยนคำตอบระหว่าง recovery
-fixture 100 เอกสารใน `acceptance/` และหลักฐานเก่ายังคงเดิม โดย replay สัญญา v1 อย่างชัดเจน
+- Add csv --submit-only, persisted batch discovery and resume without the upload.
+- Reuse supported 0.2.0 workspaces under explicit schema/contract/Agent rules.
+- Report permanent size-limit errors without blocking other documents.
+- Reject events --after values outside SQLite signed-int64 range with structured
+  errors instead of a traceback or creation of an unnecessary workspace.
+- Keep golden fixture bytes stable on Windows.
+- Add pinned/hash-locked build tools, isolated wheel/sdist checks, branch
+  coverage, correctness lint and scoped strict typing.
+- Add full-runtime/recovery benchmarks, API examples and backup/restore runbooks.
+- Index evidence and preserve superseded approvals/stage gates in the archive.
 
-invoice JSON ใช้ Agent รุ่น 2 สำหรับ extract/calculate/verify เพื่อผูกกติกาทศนิยมใหม่กับ identity
-งาน invoice JSON ที่บันทึกด้วย Agent รุ่น 1 ต้องใช้ runtime เดิม หรือเริ่ม job ใหม่ใน workspace ใหม่
-Python API ยังทดลอง ผู้ต่อยอดควร pin รุ่น/commit และตรวจ integration ของตนก่อนอัปเกรด
+The [published-run record](verification/publication_2026_10_29/README.md) identifies
+38 baseline, 120 current and 10 release-guard cases. Earlier candidate counts are
+historical. Linux verification and Windows/macOS Python 3.10/3.12 smoke passed.
+This THB-only CSV/CLI release has no PDF/OCR or production SLA. Actual Colab
+acceptance remains not_run; backup restore requires the original absolute path.
 
-## ผลตรวจและขอบเขต
+## 0.2.0 — historical published release
 
-ก่อนเปลี่ยนหมายเลขรุ่น ชุด regression ของส่วนเพิ่มผ่าน 173 tests ไม่มี failure/error/skipped
-รวม 15 กรณีใหม่สำหรับสกุลเงิน พร้อม lint, scoped typing, branch coverage, wheel/sdist installation
-และ CLI จาก wheel ที่ติดตั้งจริง การตรวจรุ่น 0.3.0 และ package ที่แตกใหม่จะบันทึกผลอีกครั้ง
-ใน manual release workflow และไฟล์ verification ของ build นั้น ให้ใช้ผลที่ตรงกับ source/tag สุดท้าย
+- Add multi-document UTF-8/BOM CSV grouping with retained malformed/ungrouped rows.
+- Separate VALID, INVALID and ERROR from engine_status; calculate with Decimal
+  and independently verify integer minor units.
+- Limit processing to two attempts, isolate document failures and resume without
+  repeating successful steps.
+- Atomically deliver summary.csv, details.json and source.csv, verify content/
+  SHA-256 before receipt persistence and preserve conflicting files.
+- Supply a Colab notebook and a locked 100-document acceptance fixture.
 
-ผล Windows/macOS ของ 0.2.1 เป็นหลักฐานประวัติ ไม่ใช้รับรองรุ่น 0.3.0
-การเตรียมรุ่นนี้ยังไม่มีผล CI Windows/macOS 0.3.0 ที่ยืนยันแล้ว
-Actual Google Colab upload/run/resume/download/restore acceptance ยัง `not_run`
+The historical run passed 38 baseline plus 65 current cases with no failures,
+errors or skips. All 100 answers matched (80 VALID/20 INVALID), including real
+hung-worker, worker-death, interrupted-controller and report-before-receipt tests.
+The ZIP was checked again after extraction. Its original documentation languages
+and published assets are historical; they are not rewritten by this migration.
 
-## ข้อจำกัดที่เปิดเผย
+The owner authorized publication with disclosed missing real Colab acceptance.
+Offline notebook checks and Linux results did not establish fresh-runtime upload,
+execution, recovery, download and restore. The original scope was one machine,
+THB, a 16 MiB CSV limit and 1 MiB engine messages; Windows/macOS were unverified
+at that time. The 100-document fixture was never a document-count limit.
 
-- ไม่มีการแปลงอัตราแลกเปลี่ยนหรือปัดเศษสำหรับเงินสด และไม่รับสกุลนอกตารางที่ระบุ
-- แต่ละเอกสารใช้สกุลเดียว การใส่สกุลผสมในใบเดียวเป็น INVALID
-- ตรวจ full recovery/fault-injection บน Linux; smoke subset บนแพลตฟอร์มอื่นไม่แทนชุดเต็ม
-- เอกสารทำทีละใบ ใช้ worker ซ้ำ และ backup/restore ต้องใช้ absolute workspace path เดิม
-- CSV สูงสุด 16 MiB; engine message/job report สูงสุด 1 MiB; retry รวมสูงสุด 2 attempts
-- ไม่มี OCR/PDF, tax/discount engine หรือ SLA production
-
-ตรวจ SHA-256 ของ ZIP และไฟล์ภายในก่อนใช้ เก็บ backup ของ workspace
-การอนุมัติเผยแพร่ไม่เปลี่ยนผล Colab หรือทำให้ `not_run` กลายเป็น passed
-
-## ประวัติรุ่น 0.2.1
-
-### Neuron Flow 0.2.1 — beta
-
-อนุมัติให้เผยแพร่ตามคำสั่งเจ้าของงาน โดยเปิดเผยข้อจำกัดด้านล่าง
-เป็นรุ่นสำหรับ purchase CSV/CLI บนเครื่องเดียว ไม่ใช่การรับรอง production หรือ SLA
-
-## การเปลี่ยนแปลง
-
-- รับงานด้วย `csv --submit-only`, ค้น batch ที่คงอยู่ด้วย `batch-list` และ resume โดยไม่ต้องมี source upload เดิม
-- รองรับ workspace 0.2.0 ตาม schema/contract/Agent compatibility ที่กำหนดไว้
-- แสดง structured size-limit errors โดยไม่ขัดขวางเอกสารอื่นใน batch
-- ปฏิเสธ `events --after` เกิน signed-int64 ด้วย JSON error แทน traceback และไม่สร้าง workspace
-- รักษาไบต์ golden fixture บน Windows โดยไม่เปลี่ยนคำตอบอ้างอิงหรือ checksum
-- เพิ่ม hash-locked patched build tools, clean wheel/sdist installation checks, branch coverage,
-  correctness lint และ incremental strict typing ของ discovery boundary
-- เพิ่ม full-runtime benchmark พร้อม real controller kill/recovery, API examples และ backup/restore runbook
-- จัดดัชนีหลักฐาน เก็บสถานะ/approval เก่าใน archive ลบ cache ที่สร้างใหม่ได้ และนำ manifest เก่าที่ซ้ำออกจาก source root
-  package ZIP ยังคงมี manifest ที่สร้างจากไฟล์จริงของ package นั้น
-
-## ผลตรวจและขอบเขต
-
-Windows/macOS smoke ผ่าน Python 3.10/3.12 และ Linux regression/quality/distribution ผ่านจริง
-[CI ของ Windows fix](https://github.com/narongdetpyou-ux/neuron_flow/actions/runs/40717586187)
-ผลที่ตรงกับ source/tag สุดท้ายจะอยู่ใน manual release workflow และใน package verification
-แต่ละรอบบันทึกจำนวน tests, failures, errors และ skipped จริง ไม่ใช้จำนวนเก่าแทนรุ่นปัจจุบัน
-SHA-256, frozen expected answers และ independent Decimal/integer-satang checks ยังคงเดิม
-
-## ข้อจำกัดที่เปิดเผย
-
-- Actual Google Colab upload/run/resume/download/restore acceptance ยัง `not_run`
-- Windows/macOS ตรวจ smoke subset; full recovery/fault-injection suite ตรวจบน Linux
-- Python API ใน 0.2.x ยังทดลอง; เอกสารทำทีละใบ ใช้ workers ซ้ำ ไม่ใช่ batch parallel scheduling
-- backup/restore ใช้ absolute workspace path เดิม ไม่มี workspace relocation
-- THB, CSV สูงสุด 16 MiB, engine message/job report สูงสุด 1 MiB และ retry รวมสูงสุด 2 attempts
-- ไม่มี OCR/PDF, tax/discount engine หรือ SLA production
-
-รับ ZIP/checksum/Notebook จาก release นี้ ตรวจ SHA-256 ก่อนใช้และเก็บ backup ของ workspace
-การอนุมัติเผยแพร่ไม่เปลี่ยน `colab_acceptance_complete` และไม่ทำให้หลักฐาน `not_run` กลายเป็น passed
-
-## ประวัติรุ่น 0.2.0 — เผยแพร่แล้ว
-
-รุ่นนี้เพิ่มการรับ CSV หลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมทำงานต่อหลังหยุดและรายงานที่ย้อนถึงต้นทางได้
-
-- รองรับ UTF-8/UTF-8 BOM รวมรายการด้วย document_id และเก็บทุกแถว รวมแถวที่จัดกลุ่มไม่ได้
-- แยก VALID, INVALID และ ERROR จาก engine_status คำนวณด้วย Decimal และตรวจซ้ำด้วย integer สตางค์
-- จำกัดการลองรวม 2 ครั้ง แยกความล้มเหลวรายเอกสาร และ resume โดยไม่ทำขั้นที่สำเร็จแล้วซ้ำ
-- ส่ง summary.csv, details.json และ source.csv แบบ atomic ตรวจเนื้อหาและ SHA-256 ก่อนบันทึก receipt และรักษาไฟล์เดิมเมื่อเกิด conflict
-- มี Notebook สำหรับ Colab, README ภาษาไทย/อังกฤษ และชุดตรวจรับพร้อมคำตอบอ้างอิงที่ล็อกไว้
-
-ผลตรวจ: ฐานเดิม 38 กรณีและชุดใหม่ 65 กรณีผ่าน ไม่มี failure/error/skipped; ผลครบ 100 เอกสารตรงคำตอบอ้างอิง (80 VALID / 20 INVALID)
-ทดสอบ Agent ค้าง, worker ตาย และหยุด controller จริง รวมจุดหลังเขียนรายงานแต่ก่อนบันทึก receipt
-ชุด ZIP ตรวจ SHA-256 และรันชุดตรวจทั้งหมดจากการแตกไฟล์ใหม่อีกครั้ง
-
-### ข้อจำกัดที่เปิดเผยในการเผยแพร่
-
-ผู้ใช้อนุมัติปิดรุ่นและเผยแพร่ โดยยังไม่มีผลตรวจรับบน Google Colab จริง
-การตรวจ Notebook แบบ offline และผลใน Linux ไม่ใช้แทนการเริ่ม Colab runtime ใหม่ อัปโหลด ZIP/CSV รัน ทำต่อ และดาวน์โหลดผลจริง
-ขั้น 6 จึงยังไม่ถือว่าตรวจครบ แม้รุ่นนี้ได้รับอนุมัติให้เผยแพร่แล้ว ดู verification/archive/RELEASE_APPROVAL_0_2_0.json และ verification/v0_2_0/stage_gates.json
-
-ขอบเขตปัจจุบัน: เครื่องเดียว, THB, CSV ไม่เกิน 16 MiB และข้อความ engine ไม่เกิน 1 MiB; ยังไม่ได้ยืนยัน Windows/macOS
-100 เอกสารเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่เพดานจำนวนเอกสาร
-
-### เริ่มใช้
-
-แตก neuron_flow_v0.2.0.zip แล้วรันในโฟลเดอร์ neuron_flow:
-
-```bash
-python -m neuron_flow csv examples/purchases.csv --batch-id demo
-python -m neuron_flow batch-resume demo
-```
-
-ตรวจ SHA-256 ของ ZIP ด้วยไฟล์ neuron_flow_v0.2.0.zip.sha256 และตรวจไฟล์ภายในด้วย SHA256SUMS.txt
-ไฟล์ตรวจการส่งมอบ delivery_checks.json แนบแยกจาก ZIP เพื่อไม่ให้ hash อ้างกลับเข้าหาตัว ZIP เอง
+Download versioned ZIPs/checksums from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases)
+and verify both archive and internal manifest hashes before using a package.
+Publication approval does not turn unrun acceptance checks into passed checks.

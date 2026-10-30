@@ -1,5 +1,5 @@
 document_id,item_id,description,quantity,unit_price,declared_total,currency
-BAD-QUANTITY,A,จำนวนผิด,0,10.00,10.00,THB
-GOOD,A,รายการที่ทำต่อได้,2,5.00,10.00,THB
-BAD-TOTAL,A,ยอดไม่ตรง,2,5.00,11.00,THB
-,A,แถวที่จัดกลุ่มไม่ได้,1,1.00,1.00,THB
+BAD-QUANTITY,A,Invalid quantity,0,10.00,10.00,THB
+GOOD,A,Processable item,2,5.00,10.00,THB
+BAD-TOTAL,A,Total mismatch,2,5.00,11.00,THB
+,A,Ungrouped row,1,1.00,1.00,THB

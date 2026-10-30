@@ -35,7 +35,7 @@ def project_fingerprint(root):
     directories = {'neuron_flow', 'tools', 'tests', '.github', 'acceptance', 'docs'}
     files = {'pyproject.toml', 'requirements-build.txt', 'requirements-dev.txt', '.coveragerc', '.gitattributes',
              'START_COLAB.ipynb', 'RELEASE_APPROVAL.json',
-             'RELEASE_NOTES.md', 'README.md', 'README_TH.md'}
+             'RELEASE_NOTES.md', 'README.md'}
     for path in sorted(Path(root).rglob('*')):
         relative = path.relative_to(root)
         if (not path.is_file() or path.is_symlink() or '__pycache__' in relative.parts
@@ -133,17 +133,18 @@ def main(argv=None):
         (destination / name).write_text(contents, encoding='utf-8')
     for name, value in [('test_results.json', report), ('acceptance_matrix.json', matrix)]:
         (destination / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    summary = f'''# ผลตรวจ Neuron Flow {__version__}
+    summary = f"""# Neuron Flow {__version__} verification
 
-สถานะตรวจในเครื่อง: {'ผ่าน' if local_successful else 'ไม่ผ่าน'}
-ฐานเดิม 38 กรณีแยกจากชุดใหม่ {result.testsRun} กรณี; failures {len(result.failures)}, errors {len(result.errors)}, skipped {len(result.skipped)}
-เทียบ 100 เอกสารกับคำตอบที่ล็อก พร้อมหลักฐาน A01–A12 ใน acceptance_evidence/
+Local result: {'passed' if local_successful else 'failed'}.
+The separate 38-case baseline and {result.testsRun} current cases ran;
+failures: {len(result.failures)}, errors: {len(result.errors)}, skipped: {len(result.skipped)}.
+The 100-document fixture was compared with its locked reference; A01-A12 evidence is in acceptance_evidence/.
 
-Colab จริง: {colab['status']} การตรวจในเครื่องและการอนุมัติเผยแพร่ไม่เปลี่ยนผลตรวจ Colab
-การอนุมัติเผยแพร่รุ่นนี้: {'มี' if approved else 'ยังไม่มี'}
-รายงานนี้ไม่แก้ไขหลักฐานของรุ่น 0.2.0 และไม่มีการเผยแพร่ภายนอก
-'''
-    (destination / 'VERIFICATION_TH.md').write_text(summary, encoding='utf-8')
+Actual Colab acceptance: {colab['status']}. Local verification and publication approval do not change that result.
+Publication approval for this version: {'approved' if approved else 'not approved'}.
+This report preserves historical evidence and does not itself publish a release.
+"""
+    (destination / 'VERIFICATION.md').write_text(summary, encoding='utf-8')
     print(json.dumps({key: value for key, value in report.items() if key != 'cases'}, ensure_ascii=False, indent=2))
     if not local_successful:
         print(stream.getvalue() + samples.stderr + baseline.stderr, file=sys.stderr)

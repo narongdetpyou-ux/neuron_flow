@@ -21,8 +21,8 @@ PROJECT = Path(__file__).resolve().parents[1]
 
 
 def grouped(rows=None):
-    rows = rows or [["DOC", "A", "สมุด", "2", "125.50", "310.70", "THB"],
-                    ["DOC", "B", "ปากกา", "3", "19.90", "310.70", "THB"]]
+    rows = rows or [["DOC", "A", "Notebook", "2", "125.50", "310.70", "THB"],
+                    ["DOC", "B", "Pen", "3", "19.90", "310.70", "THB"]]
     stream = io.StringIO(newline="")
     writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(FIELDS)
@@ -120,7 +120,7 @@ class CsvAgentTests(unittest.TestCase):
                  ("quantity", "1000001", "QUANTITY_RANGE"),
                  ("quantity", "10000000", "QUANTITY_FORMAT"),
                  ("quantity", "-1", "QUANTITY_FORMAT"),
-                 ("quantity", "๒", "QUANTITY_FORMAT"),
+                 ("quantity", "\u0e52", "QUANTITY_FORMAT"),
                  ("quantity", "1e2", "QUANTITY_FORMAT"),
                  ("quantity", " 2", "QUANTITY_FORMAT"),
                  ("unit_price", "1000000000000.01", "PRICE_RANGE"),

@@ -97,7 +97,7 @@ def main(argv=None):
             delivery = runtime.deliver(name)
         export_sample(name, delivery)
     fault_workspace = workspaces / 'system_failure'
-    fault_source = purchase_source([('HANG', str(fault_workspace / 'hang-worker')), ('GOOD-AFTER', 'ใบอื่นจบได้')])
+    fault_source = purchase_source([('HANG', str(fault_workspace / 'hang-worker')), ('GOOD-AFTER', 'Other documents can finish')])
     with BatchRuntime(fault_workspace, agents=fault_definitions(), timeout_s=0.15) as runtime:
         runtime.submit(fault_source, 'system-failure')
         failure_delivery = runtime.deliver('system-failure')

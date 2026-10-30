@@ -1,11 +1,11 @@
-name: Bug report / แจ้งข้อผิดพลาด
+name: Bug report
 description: Report incorrect behavior with a small synthetic reproduction.
 title: "[Bug]: "
 body:
   - type: markdown
     attributes:
       value: |
-        Security reports follow SECURITY.md. Do not include credentials, real invoices or sensitive workspace files. Reports in Thai or English are welcome.
+        Security reports follow SECURITY.md. Do not include credentials, real invoices or sensitive workspace files. Please write reports in English.
   - type: input
     id: version
     attributes:

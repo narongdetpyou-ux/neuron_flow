@@ -34,3 +34,16 @@ Full Linux regressions, Windows/macOS smoke tests, local notebook checks and act
 Colab acceptance have separate scopes. A release approval does not turn `not_run`
 Colab evidence into a pass. Old absolute workspace paths inside records are
 historical observations, not required directories to create in a new checkout.
+
+## English documentation and archived source language
+
+Maintained narrative guides have English filenames and content. Raw JSON/CSV,
+approval quotations, published ZIPs/notebooks and checksummed narrative originals
+retain their original bytes. Three original *_TH.md files under the 28 October
+cloud snapshot are retained solely because ARTIFACT_SHA256SUMS.txt hashes them;
+use the adjacent README.md / VERIFICATION.md English renderings for reading.
+Do not rehash original evidence merely to change its language. Translation does
+not constitute a new test run or certify a later implementation fingerprint.
+
+The locked acceptance input intentionally includes non-English Unicode test data.
+Production source descriptions likewise remain unchanged by English interface text.
