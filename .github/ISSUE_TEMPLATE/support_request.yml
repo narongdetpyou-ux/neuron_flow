@@ -1,4 +1,4 @@
-name: Usage question / ขอความช่วยเหลือ
+name: Usage question
 description: Ask about the documented CSV workflow or development setup.
 title: "[Question]: "
 body:

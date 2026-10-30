@@ -41,7 +41,7 @@ this public repository. Adding this document does not enable that feature.
 - CSV values are untrusted data. Preserve input limits, strict validation,
   independent money checks, report integrity and workspace locking.
 - Optional document adapters parse PDF/XLSX/images and can run local Tesseract;
-  they are not security sandboxes. See the limits in `docs/INTEGRATIONS_TH.md`.
+  they are not security sandboxes. See the limits in `docs/INTEGRATIONS.md`.
 - Workspaces can retain original documents, OCR text, review records and reports. Restrict access, keep
   backups in a controlled location and use synthetic data in public evidence.
 - Core CSV has no credentials requirement; cloud connectors use operator-provided

@@ -67,49 +67,26 @@ def release_approval(version):
             and approval.get('decision') == 'release_with_disclosed_known_limitation')
 
 
-def write_th_report(report, destination):
-    from zoneinfo import ZoneInfo
-    observed = datetime.fromisoformat(report['created_at_utc']).astimezone(ZoneInfo('Asia/Bangkok'))
+def write_report(report, destination):
     approved = report.get('release_approved', False)
-    release_note = ('ผู้ใช้อนุมัติปิดรุ่นและเผยแพร่ โดยเปิดเผยว่ายังไม่มีผลตรวจ Colab จริง'
-                    if approved else 'ยังไม่ได้รับอนุมัติปิดรุ่นและเผยแพร่')
-    text = f'''# ผลตรวจ Neuron Flow 0.2.0
+    text = f"""# Neuron Flow 0.2.0 historical verifier
 
-ตรวจเมื่อ {observed.strftime('%d/%m/%Y %H:%M:%S')} เวลาไทย (Asia/Bangkok)
+- Created at UTC: {report['created_at_utc']}
+- Local result: {'passed' if report['local_successful'] else 'failed'}
+- Release approval: {'approved with disclosed limitations' if approved else 'not approved'}
+- Baseline: 38 cases; current cases: {report['new_test_cases']}
+- Failures: {report['failures']}; errors: {report['errors']}; skipped: {report['skipped']}
+- Python: {report['python'].split()[0]}; platform: {report['platform']}
+- Locked workload: 100 documents, 80 VALID and 20 INVALID under the legacy THB contract.
 
-- ผลตรวจในเครื่อง: {'ผ่าน' if report['local_successful'] else 'ไม่ผ่าน'}
-- สถานะการเผยแพร่: {release_note}
-- ชุดฐานเดิม: 38 กรณี แยกจากชุดใหม่; ดู `../baseline_report.json` สำหรับฐานก่อนเริ่มพัฒนา
-- ชุดใหม่: {report['new_test_cases']} กรณี, failures {report['failures']}, errors {report['errors']}, skipped {report['skipped']}
-- Python: {report['python'].split()[0]}
-- ระบบที่ตรวจจริง: {report['platform']}
-- ชุดตรวจรับ 100 เอกสาร: 80 VALID / 20 INVALID ตรงคำตอบที่ล็อกทุกช่อง
-- A01–A12: ผลและหลักฐานใน `acceptance_matrix.json` กับ `acceptance_evidence/`
-- รายงานตัวอย่าง: `samples/` มีกรณีปกติ ข้อมูลผิด และ Agent ค้างจน ERROR
+See acceptance_matrix.json, acceptance_evidence/, samples/, tests.log and test_results.json.
+Coverage includes real hangs/crashes and interrupted controllers and delivery recovery.
+Only VALID amounts are certified. Actual Colab acceptance remains unverified.
+Publication approval is separate from actual environment acceptance.
 
-ตรวจด้วย process จริงทั้ง Agent ค้าง, worker ตาย และฆ่า controller ระหว่างทำงาน
-รวมการหยุดหลังเขียนรายงานครบแต่ก่อน receipt แล้วเปิดต่อโดยไม่เปลี่ยนไฟล์หรือทำขั้นสำเร็จซ้ำ
-ผล ERROR ยังปรากฏในรายงาน แม้การเขียนรายงานสำเร็จ และยอดรับรองนับเฉพาะ VALID
-
-## เกณฑ์ที่ยังค้าง
-
-ยังไม่ได้ตรวจบน Google Colab จริง จึงยังไม่ผ่านการตรวจรับขั้น 6
-การอนุมัติเผยแพร่รุ่นนี้บันทึกแยกจากผลตรวจรับใน `../../RELEASE_APPROVAL.json`
-ต้องเริ่ม Colab runtime ใหม่ อัปโหลดชุด ZIP/CSV รัน Notebook ทำต่อ และดาวน์โหลดผลโดยไม่แก้โค้ดภายใน
-พร้อมเก็บผล สภาพแวดล้อม เวลา และข้อจำกัดจริง การตรวจ Notebook ในเครื่องไม่ใช้แทนหลักฐานนี้
-
-## ทำซ้ำ
-
-```bash
-python tools/verify.py
-python tools/verify_v020.py
-python tools/build_delivery.py
-```
-
-`tests.log` เป็นผลรายกรณี และ `test_results.json` เป็นผลสำหรับเครื่องอ่าน
-ชุดนี้ใช้กับ CSV UTF-8/UTF-8 BOM, THB และเครื่องเดียว; ไม่ใช่ผลทดสอบหลายเครื่องหรือ benchmark
-'''
-    (destination / 'VERIFICATION_TH.md').write_text(text, encoding='utf-8')
+Reproduce using tools/verify.py and tools/verify_v020.py with the appropriate historical runtime.
+"""
+    (destination / 'VERIFICATION.md').write_text(text, encoding='utf-8')
 
 
 def main():
@@ -178,7 +155,7 @@ def main():
         (destination / name).write_text(contents, encoding='utf-8')
     (destination / 'test_results.json').write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    write_th_report(report, destination)
+    write_report(report, destination)
     print(json.dumps({key: value for key, value in report.items() if key != 'cases'},
                      ensure_ascii=False, indent=2))
     if not local_successful:

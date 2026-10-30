@@ -19,4 +19,4 @@ python -m neuron_flow intake examples/intake/receipt_scan.pdf --ocr --workspace 
 ```
 
 Use the returned ID with `intake-status`, `intake-review`, and `intake-run`.
-See [the Thai integration guide](../../docs/INTEGRATIONS_TH.md) for the full sequence.
+See [the integration guide](../../docs/INTEGRATIONS.md) for the full sequence.

@@ -1,0 +1,49 @@
+{
+  "version": "0.4.0.dev0",
+  "created_at_utc": "2026-10-30T12:11:14.488825+00:00",
+  "source_fingerprint": "7d0c2d03f232b619ace3aa2d362b5aae54f910049453cf4db96f3c68e72e8700",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "new_test_cases": 165,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 2,
+  "baseline_38_passed": true,
+  "fixture_lock_passed": true,
+  "release_workflow_guard_tests_passed": true,
+  "report_examples_passed": true,
+  "local_successful": false,
+  "local_verifier_status": "incomplete_optional_excel_dependency",
+  "skipped_cases": [
+    {
+      "test": "tests.test_document_formats.ExcelInputTests.test_actual_workbook_rows_and_explicit_sheet_selection",
+      "outcome": "skipped: install the excel extra",
+      "duration_seconds": 0.0
+    },
+    {
+      "test": "tests.test_document_formats.ExcelInputTests.test_formulas_macros_invalid_archives_and_expansion_limits",
+      "outcome": "skipped: install the excel extra",
+      "duration_seconds": 0.0
+    }
+  ],
+  "baseline": {
+    "test_cases": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "documentation_checks": "passed",
+  "python_and_notebook_syntax": "62 Python files and 7 notebook code cells parsed",
+  "historical_manifest": {
+    "artifacts_checked": 60,
+    "all_hashes_match": true,
+    "original_fixture_and_machine_evidence_unchanged": true
+  },
+  "worked_examples": {
+    "USD_25_00": "VALID",
+    "USD_26_00": "INVALID:TOTAL_MISMATCH; difference=-1.00"
+  },
+  "actual_colab_acceptance": "not_run",
+  "publication": "not_requested_by_this_change; development version and existing approvals unchanged"
+}

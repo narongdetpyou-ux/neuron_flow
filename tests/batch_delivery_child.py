@@ -9,8 +9,8 @@ from tests.batch_fault_agents import purchase_source
 
 
 def delivery_source():
-    return purchase_source([("GOOD-FIRST", "รายงานก่อน receipt"),
-                            ("GOOD-LAST", "เก็บงานที่สำเร็จแล้ว")])
+    return purchase_source([("GOOD-FIRST", "Report before receipt"),
+                            ("GOOD-LAST", "Preserve completed work")])
 
 
 def main():

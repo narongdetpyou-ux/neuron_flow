@@ -40,7 +40,7 @@ def csv_bytes(rows, header=FIELDS):
 
 
 def purchase():
-    return ["A", "I1", "สินค้า", "2", "0.10", "0.20", "THB"]
+    return ["A", "I1", "Item", "2", "0.10", "0.20", "THB"]
 
 
 def csv_cases(seed, mutations):
@@ -68,7 +68,7 @@ def csv_cases(seed, mutations):
         row[index] = value
         yield case(name, csv_bytes([row]), [status], cli=True)
     for field, values in {
-        3: ["0", "-1", "1.5", "NaN", "Infinity", "1e309", "๑", " 2", "2 ", "1000001", "9" * 10000],
+        3: ["0", "-1", "1.5", "NaN", "Infinity", "1e309", "\u0e51", " 2", "2 ", "1000001", "9" * 10000],
         4: ["-0.01", "0.001", "NaN", "Infinity", "1e3", "1000000000000.01"],
         5: ["-0.01", "0.001", "NaN", "Infinity", "1e22", "10000000000000000000000.01"],
     }.items():
@@ -94,7 +94,7 @@ def csv_cases(seed, mutations):
                ungrouped=1, cli=True)
     for name, data in [
         ("empty", b""), ("invalid_utf8", csv_bytes([purchase()]) + b"\xff"),
-        ("surrogate_utf8", csv_bytes([purchase()]).replace("สินค้า".encode(), b"\xed\xa0\x80")),
+        ("surrogate_utf8", csv_bytes([purchase()]).replace("Item".encode(), b"\xed\xa0\x80")),
         ("unterminated_quote", csv_bytes([]) + b'A,I,"unterminated'),
         ("trailing_quote", csv_bytes([]) + b'A,I,"x"garbage,2,0.10,0.20,THB\n'),
         ("duplicate_header", csv_bytes([], FIELDS + ("item_id",))),
@@ -112,7 +112,7 @@ def csv_cases(seed, mutations):
              for i in range(1000)]
     yield case("oversized_isolated", csv_bytes(large + [purchase()]), ["VALID", "VALID"], cli=True)
     rng = random.Random(seed)
-    alphabet = ["", "x", "\x00", "\r", "\n", '"', ",", "\ufeff", "\u200b", "\u00a0", "😀", "ก", "9", "-", ".", "e"]
+    alphabet = ["", "x", "\x00", "\r", "\n", '"', ",", "\ufeff", "\u200b", "\u00a0", "😀", "\u0e01", "9", "-", ".", "e"]
     for index in range(mutations):
         row = purchase()
         row[rng.randrange(7)] = "".join(rng.choice(alphabet) for _ in range(rng.randrange(45)))

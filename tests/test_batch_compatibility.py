@@ -94,7 +94,7 @@ if __name__ == '__main__':
         self.addCleanup(self.temporary.cleanup)
         self.directory = Path(self.temporary.name)
         self.workspace = self.directory / 'workspace'
-        self.source = purchase_source([('GOOD', 'สร้างด้วยรุ่นที่เผยแพร่แล้ว')])
+        self.source = purchase_source([('GOOD', 'Created by the published version')])
         self.source_path = self.directory / 'input.csv'
         self.source_path.write_bytes(self.source)
 

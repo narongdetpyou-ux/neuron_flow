@@ -90,7 +90,7 @@ class BatchTests(unittest.TestCase):
         self.workspace = Path(self.temporary.name)
 
     def test_invalid_data_does_not_retry_or_prevent_next_document(self):
-        source = purchase_source([("INVALID", "จำนวนผิด"), ("GOOD", "ทำต่อ")])
+        source = purchase_source([("INVALID", "Invalid quantity"), ("GOOD", "Continue")])
         source = source.replace(
             ",2,0.10,0.20,THB".encode(), ",-1,0.10,0.20,THB".encode(), 1)
         with BatchRuntime(self.workspace) as runtime:
@@ -106,7 +106,7 @@ class BatchTests(unittest.TestCase):
 
     def fault_case(self, identifier, expected_types, evidence_name):
         base = self.workspace / f"{identifier.lower()}-worker"
-        source = purchase_source([(identifier, str(base)), ("GOOD-AFTER", "ใบอื่นต้องทำต่อ")])
+        source = purchase_source([(identifier, str(base)), ("GOOD-AFTER", "Other documents must continue")])
         with BatchRuntime(self.workspace, agents=fault_definitions(), timeout_s=0.15) as runtime:
             runtime.submit(source, identifier.lower())
             result = runtime.run(identifier.lower())
@@ -183,7 +183,7 @@ class BatchTests(unittest.TestCase):
             process.communicate(timeout=5)
 
     def test_identical_resubmission_preserves_snapshot_history_attempts_and_receipts(self):
-        source = purchase_source([("A", "เดิม"), ("B", "รายการที่สอง")])
+        source = purchase_source([("A", "Original"), ("B", "Second item")])
         with BatchRuntime(self.workspace) as runtime:
             first_submission = runtime.submit(source, "same")
             first = runtime.run("same")
@@ -206,8 +206,8 @@ class BatchTests(unittest.TestCase):
                  second, before=before, after=after)
 
     def test_changed_source_under_same_batch_id_conflicts_and_preserves_existing_state(self):
-        source = purchase_source([("A", "ต้นฉบับ")])
-        changed = purchase_source([("A", "ข้อมูลเปลี่ยน")])
+        source = purchase_source([("A", "Original")])
+        changed = purchase_source([("A", "Changed data")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "conflict")
             first = runtime.run("conflict")
@@ -221,7 +221,7 @@ class BatchTests(unittest.TestCase):
                  changed_source_csv=changed.decode(), error=str(raised.exception))
 
     def test_changed_agent_version_cannot_reuse_batch(self):
-        source = purchase_source([("A", "รุ่นเดิม")])
+        source = purchase_source([("A", "Previous version")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "version")
             runtime.run("version")
@@ -236,7 +236,7 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(before, engine_state(self.workspace))
 
     def test_document_report_written_before_receipt_can_resume_without_rerunning_steps(self):
-        source = purchase_source([("A", "บันทึกรายงานแล้วแต่ยังไม่ได้ receipt")])
+        source = purchase_source([("A", "Report written before receipt")])
         with BatchRuntime(self.workspace) as runtime:
             runtime.submit(source, "receipt-window")
             deliver = runtime.runtime.terminal.deliver
@@ -274,7 +274,7 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(engine_state(self.workspace), {})
 
     def test_generated_batch_id_is_stable_for_identical_bytes(self):
-        source = purchase_source([("A", "รหัสจากเนื้อหา")])
+        source = purchase_source([("A", "Content-derived identifier")])
         with BatchRuntime(self.workspace) as runtime:
             first = runtime.submit(source)
             second = runtime.submit(source)

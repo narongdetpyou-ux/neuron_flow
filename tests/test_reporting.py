@@ -16,11 +16,11 @@ from neuron_flow.reporting import BatchTerminal, ReportConflict, SUMMARY_FIELDS
 
 def frozen_example(*, bom=False, valid_id="VALID"):
     rows = [
-        [valid_id, "A", 'สมุด, รุ่น "พิเศษ"\nบรรทัดที่สอง', "2", "0.10", "0.50", "THB"],
-        ["INVALID", "A", "จำนวนผิด", "0", "0.10", "0.10", "THB"],
-        [valid_id, "B", "ปากกา", "3", "0.10", "0.50", "THB"],
-        ["ERROR", "A", "Agent ล้ม", "1", "1.00", "1.00", "THB"],
-        ["", "A", "ไม่มีรหัสเอกสาร", "1", "5.00", "5.00", "THB"],
+        [valid_id, "A", 'Notebook, "cafe edition"\nSecond line', "2", "0.10", "0.50", "THB"],
+        ["INVALID", "A", "Invalid quantity", "0", "0.10", "0.10", "THB"],
+        [valid_id, "B", "Pen", "3", "0.10", "0.50", "THB"],
+        ["ERROR", "A", "Agent failure", "1", "1.00", "1.00", "THB"],
+        ["", "A", "Missing document identifier", "1", "5.00", "5.00", "THB"],
     ]
     stream = io.StringIO(newline="")
     writer = csv.writer(stream, lineterminator="\n")

@@ -78,7 +78,7 @@ signature, so it does not independently prove final publication or remote execut
 Both native JSON assets and the copied test report retain
 `colab_acceptance_complete:false`; the report states no actual Colab evidence was supplied.
 The distributed Notebook has seven code cells with no recorded execution outputs.
-Follow the [Colab checklist](../../docs/COLAB_ACCEPTANCE_TH.md) for fresh-runtime
+Follow the [Colab checklist](../../docs/COLAB_ACCEPTANCE.md) for fresh-runtime
 upload/execution, exact 100-document matching, interrupted-controller recovery,
 resume without repeated completed work, confirmed receipt of the backup and
 restore/resume in a second runtime at the original workspace path. Publication,

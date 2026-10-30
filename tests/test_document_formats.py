@@ -93,10 +93,10 @@ class StructuredInputTests(unittest.TestCase):
             document.optional_module("missing", "pdf")
 
     def test_text_receipt_keeps_every_ambiguous_total_candidate_with_page_and_line(self):
-        result = document.prepare_document((RECEIPT + "Subtotal USD 20.00\nยอดรวม 25.00\n").encode(), "receipt.txt")
+        result = document.prepare_document((RECEIPT + "Subtotal USD 20.00\n\u0e22\u0e2d\u0e14\u0e23\u0e27\u0e21 25.00\n").encode(), "receipt.txt")
         self.assertIsNone(result["csv"])
         self.assertEqual(result["pages"][0]["text"].splitlines()[0], "RECEIPT R-001")
-        self.assertEqual(result["hints"][-1], {"page": 1, "line": 5, "text": "ยอดรวม 25.00"})
+        self.assertEqual(result["hints"][-1], {"page": 1, "line": 5, "text": "\u0e22\u0e2d\u0e14\u0e23\u0e27\u0e21 25.00"})
         self.assertIn("RECEIPT_REQUIRES_REVIEW", result["review_reasons"])
         empty = document.prepare_document(b"", "blank.txt")
         self.assertIn("EMPTY_PAGE_REQUIRES_OCR_OR_MANUAL_ENTRY", empty["review_reasons"])

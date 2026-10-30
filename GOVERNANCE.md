@@ -5,7 +5,7 @@ the repository's current owner and sole administrator. The maintainer makes fina
 decisions about project direction, contributions, releases, moderation and
 repository administration. There is no governing committee or voting process.
 
-Issues and pull requests may be written in English or Thai. Participation follows
+Maintained documentation, issue forms and reproduction instructions use English. Participation follows
 the [Code of Conduct](CODE_OF_CONDUCT.md), and contributions follow
 [CONTRIBUTING.md](CONTRIBUTING.md). The repository is public; these
 collaboration routes are public, and sensitive details require an agreed private channel.
@@ -37,7 +37,7 @@ GitHub enforces any particular approval count.
 Documentation and repository settings have different effects. CODEOWNERS can
 identify a reviewer, but does not by itself require approval or block a merge.
 The current distinction between intended protections and settings actually
-applied is recorded in [the repository policy notes](docs/REPOSITORY_POLICIES_TH.md).
+applied is recorded in [the repository policy notes](docs/REPOSITORY_POLICIES.md).
 Do not treat a policy document, template or passing local test as proof that a
 server-side rule is active.
 

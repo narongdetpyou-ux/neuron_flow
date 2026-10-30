@@ -25,7 +25,7 @@ class Transport:
 @patch.dict(os.environ, {"GOOGLE_ACCESS_TOKEN": "synthetic-google-token", "DROPBOX_ACCESS_TOKEN": "synthetic-dropbox-token"})
 class ProviderTests(unittest.TestCase):
     def test_drive_and_dropbox_use_documented_hosts_and_header_encoding(self):
-        for provider, resource in (("google-drive", "file_123"), ("dropbox", "/ใบเสร็จ.pdf"), ("dropbox", "id:abc")):
+        for provider, resource in (("google-drive", "file_123"), ("dropbox", "/\u0e43\u0e1a\u0e40\u0e2a\u0e23\u0e47\u0e08.pdf"), ("dropbox", "id:abc")):
             with self.subTest(provider=provider):
                 transport = Transport()
                 data, provenance = connectors.fetch_source(provider, resource, transport=transport)

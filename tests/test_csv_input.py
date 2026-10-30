@@ -21,19 +21,19 @@ def source(rows, header=FIELDS):
     return stream.getvalue().encode("utf-8")
 
 
-def purchase(identifier="A", description="สินค้า"):
+def purchase(identifier="A", description="Item"):
     return [identifier, "I1", description, "2", "0.10", "0.20", "THB"]
 
 
 class CsvInputTests(unittest.TestCase):
     def test_bom_unicode_and_hash(self):
-        data = b"\xef\xbb\xbf" + source([purchase("ใบ-๑", "สมุด, ปากกา")])
+        data = b"\xef\xbb\xbf" + source([purchase("\u0e43\u0e1a-\u0e51", "Notebook, Pen")])
         result = read_csv_bytes(data)
         self.assertEqual(result["source_sha256"], hashlib.sha256(data).hexdigest())
         row = result["documents"][0]["rows"][0]
-        self.assertEqual(row["fields"]["description"], "สมุด, ปากกา")
+        self.assertEqual(row["fields"]["description"], "Notebook, Pen")
         self.assertEqual(row["source_row"], 2)
-        self.assertEqual(result["documents"][0]["document_id"], "ใบ-๑")
+        self.assertEqual(result["documents"][0]["document_id"], "\u0e43\u0e1a-\u0e51")
 
     def test_interleaved_documents_preserve_source_order_and_values(self):
         result = read_csv_bytes(source([purchase(" A "), purchase("B"), purchase("A")]))

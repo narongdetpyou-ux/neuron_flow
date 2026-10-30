@@ -50,7 +50,7 @@ def make_source(items):
     writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(FIELDS)
     for item_id, quantity, price in rows:
-        writer.writerow(("BENCH", item_id, "สินค้าทดสอบ", quantity, price, total, "THB"))
+        writer.writerow(("BENCH", item_id, "Test item", quantity, price, total, "THB"))
     return stream.getvalue().encode("utf-8"), total
 
 

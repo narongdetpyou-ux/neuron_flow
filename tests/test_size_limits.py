@@ -142,7 +142,7 @@ class SizeLimitTests(unittest.TestCase):
         with self.assertRaises(MessageSizeError) as raised:
             decode(b' ' + data)
         self.assert_size_error(raised.exception.details(), 'json_input')
-        unicode_value = {'body': 'ก' * (MAX_MESSAGE_BYTES // 3 + 1)}
+        unicode_value = {'body': '\u0e01' * (MAX_MESSAGE_BYTES // 3 + 1)}
         observed = len(json.dumps(unicode_value, ensure_ascii=False, sort_keys=True,
                                   separators=(',', ':')).encode('utf-8'))
         with self.assertRaises(MessageSizeError) as raised:

@@ -1,14 +1,14 @@
 # Getting support
 
-Start with the [README](README.md) or [Thai user guide](README_TH.md) for supported
+Start with the [README](README.md) and [documentation index](docs/README.md) for supported
 inputs, CLI commands, limits, status meanings and recovery instructions. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for development and test commands.
 
 ## Questions and bug reports
 
 Use this repository's GitHub Issues for usage questions, reproducible bugs and
-feature proposals. English and Thai are accepted. The repository is currently
-private, so this route requires repository access. There is no separate support
+feature proposals. Use English for maintained project discussions. The repository is
+public, so issues and their attachments are publicly visible. There is no separate support
 email or discussion service established by this policy.
 
 Search existing issues first. A useful report includes:
@@ -26,7 +26,7 @@ Share only the information needed to reproduce the issue. Do not upload real
 purchase documents, credentials, personal information or an unreviewed workspace
 database or backup. Workspaces can contain original source data, reports and
 absolute paths. Review and sanitize logs before attaching them, including in this
-private repository. Never paste secret values into an issue.
+public repository. Never paste secret values into an issue.
 
 Suspected vulnerabilities belong in the process described by
 [SECURITY.md](SECURITY.md). Conduct concerns follow
@@ -40,7 +40,7 @@ guaranteed response time, resolution date, support contract or service-level
 agreement. The maintainer prioritizes requests according to impact,
 reproducibility, project scope and available time.
 
-The current scope is the single-machine purchase CSV workflow described in the
-README. Historical releases, external services, operating systems and hosted
+The current scope is the single-machine purchase-validation workflow, including
+supervised document intake and optional adapters described in the README. Historical releases, external services, operating systems and hosted
 notebook runtimes are not automatically covered by local test results. Include
 evidence from the environment where a problem occurs.
