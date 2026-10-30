@@ -1,8 +1,17 @@
-# Neuron Flow 0.3.0 — beta
+# Neuron Flow 0.4.0.dev0 — development
 
 รับ CSV รายการซื้อหลายเอกสาร ตรวจข้อมูลและยอดเงินแยกรายใบ พร้อมรายงานย้อนถึงแถวต้นทาง
 เอกสารที่ข้อมูลผิดหรือ Agent ล้มไม่ขัดขวางเอกสารอื่น และเปิด workspace เดิมเพื่อทำต่อได้
-ใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ไม่ต้องมี API key
+workflow CSV หลักใช้ Python 3.10 ขึ้นไปและ standard library บนเครื่องเดียว ไม่ต้องมี API key
+
+**ส่วนเพิ่มใน source ที่ยังไม่เผยแพร่:** รับ TSV/JSON/Excel, PDF ข้อความและใบเสร็จภาพ/สแกน
+พร้อม optional Tesseract OCR โดยต้องตรวจทานข้อมูลใบเสร็จก่อนตรวจยอด
+เชื่อม Google Drive, Google Sheets, Dropbox และ Amazon S3; ส่งรายงานไป Sheets ด้วยคำสั่งแยก
+ดูการติดตั้ง dependencies/credentials และตัวอย่างที่ [คู่มือเชื่อมต่อ](docs/INTEGRATIONS_TH.md)
+หรือ `python -m neuron_flow adapters` ส่วนเพิ่มนี้ยังไม่มีอยู่ใน ZIP Release 0.3.0
+รองรับ CSV workspace เดิม 0.2.0/0.2.1/0.3.0 ตาม policy เดิม โดยคง version/ประวัติ/รายงานต้นทาง
+batch ใหม่บันทึก version 0.4.0.dev0 รุ่นพัฒนานี้ยังไม่มีการอนุมัติเผยแพร่ใหม่
+Notebook ยังคงสาธิต workflow CSV หลัก; adapters ใช้คำสั่งในคู่มือเชื่อมต่อ
 
 **รุ่น 0.3.0:** รองรับ 46 สกุลเงิน รวม USD, EUR, GBP, CNY,
 JPY และ SGD โดยใช้ทศนิยม 0, 2 หรือ 3 ตำแหน่งตามสกุล และแยกยอดรวมรายสกุล
@@ -180,7 +189,8 @@ Agent ค้างหรือ worker ตายอาจลองใหม่ภ
 - CSV ต้นทางไม่เกิน 16 MiB; ข้อความ workflow/Agent/report เดิมจำกัด 1 MiB
   เอกสารที่ใหญ่เกินขอบเขต engine ถูกแสดงเป็น ERROR โดยเอกสารอื่นยังทำต่อ
 - 100 เอกสารแบบ 80 ถูก/20 ผิดเป็นขอบเขตชุดตรวจรับรอบนี้ ไม่ใช่อัตราข้อมูลจริงหรือเพดานจำนวนเอกสาร
-- ใช้เครื่องเดียว ไม่มี OCR, PDF, ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
+- ใช้เครื่องเดียว; PDF/OCR เป็น optional adapters ตาม [คู่มือเชื่อมต่อ](docs/INTEGRATIONS_TH.md)
+  ไม่มี engine ภาษี ส่วนลด การเรียนรู้เอง หรือการเลือกวิธีแก้จากภาษาธรรมชาติ
 - worker เป็น process สำหรับจัดการค้าง/ล้ม ไม่ใช่ sandbox ของโค้ดที่ไม่เชื่อถือ และไม่มีเพดาน RAM ราย Agent
 - ทดสอบชุดเต็มบน Linux; Windows/macOS ของ 0.3.0 ผ่าน smoke subset ใน CI ของ source ที่เผยแพร่
   ยังไม่มีผลตรวจ Google Colab จริง และ smoke ไม่แทน full fault-injection suite ทุกแพลตฟอร์ม

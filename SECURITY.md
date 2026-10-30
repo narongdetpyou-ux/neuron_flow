@@ -40,9 +40,13 @@ this public repository. Adding this document does not enable that feature.
   plugins or hostile Python code.
 - CSV values are untrusted data. Preserve input limits, strict validation,
   independent money checks, report integrity and workspace locking.
-- Workspaces can retain original CSV bytes and reports. Restrict access, keep
+- Optional document adapters parse PDF/XLSX/images and can run local Tesseract;
+  they are not security sandboxes. See the limits in `docs/INTEGRATIONS_TH.md`.
+- Workspaces can retain original documents, OCR text, review records and reports. Restrict access, keep
   backups in a controlled location and use synthetic data in public evidence.
-- There are no runtime API-key requirements. Never commit credentials, live
+- Core CSV has no credentials requirement; cloud connectors use operator-provided
+  OAuth tokens or the AWS SDK credential chain. Tokens are not saved in intake
+  manifests; errors suppress provider response bodies. Never commit credentials, live
   workspace databases, or real financial records to the repository.
 
 Ordinary invalid input or an availability bug is not automatically a security

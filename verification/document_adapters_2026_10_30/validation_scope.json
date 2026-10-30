@@ -1,0 +1,29 @@
+{
+  "version": "0.4.0.dev0",
+  "source_fingerprint": "aee8eedf40eb2b698197e6efc7ded7e5473ff71d14add284d4ed7dc073b88fc6",
+  "regression_tests": 203,
+  "optional_format_tests_skipped": 0,
+  "platform": "Linux / Python 3.12.14",
+  "ocr_languages_tested": [
+    "eng"
+  ],
+  "thai_ocr_language_pack": "not_run locally; CI installs tha pack",
+  "cloud_api_contract_tests": "passed with fake HTTP transports and S3 clients",
+  "live_cloud_accounts": {
+    "google-drive": "not_run",
+    "google-sheets": "not_run",
+    "dropbox": "not_run",
+    "s3": "not_run"
+  },
+  "actual_colab_acceptance": "not_run",
+  "publication_approval": false,
+  "published": false,
+  "commands": [
+    "python -B tools/check_quality.py --output-dir /tmp/neuron-external-quality-final",
+    "python -B tools/check_distribution.py --output-dir /tmp/neuron-external-distribution-adapters",
+    "python -B tools/verify_current.py --output-dir /tmp/neuron-external-verify-final",
+    "python -B tools/build_acceptance_fixture.py --check",
+    "python -B tools/check_repository_docs.py",
+    "python -B .github/workflows/test_release_support.py -q"
+  ]
+}

@@ -1,6 +1,7 @@
 """Build wheel/sdist, then verify each in a clean environment outside the checkout."""
 
 import argparse
+import csv
 from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
@@ -37,7 +38,7 @@ def write_supply_chain_records(output, report):
                                        'version': version,
                                        'purl': f'pkg:pypi/neuron-flow-prototype@{version}',
                                        'licenses': [{'license': {'id': 'GPL-3.0-only'}}]},
-                         'properties': [{'name': 'neuron-flow:runtime-dependencies', 'value': 'Python standard library only'},
+                         'properties': [{'name': 'neuron-flow:runtime-dependencies', 'value': 'Core: Python standard library only; optional adapters declared in package extras, not installed in this base smoke'},
                                         {'name': 'neuron-flow:python', 'value': report['python']}]},
             'components': [{'type': 'library', 'name': name, 'version': tool_version,
                             'purl': f'pkg:pypi/{name}@{tool_version}',
@@ -115,8 +116,21 @@ def check_install(artifact, *, wheelhouse, temporary, env, log):
                             cwd=root, env=env, log=log))
     if first != second or receipt_snapshot(second) != before:
         raise RuntimeError('Recovery changed delivered reports or their receipts')
+    adapters = json.loads(run([cli, 'adapters'], cwd=root, env=env, log=log))
+    if (not {'csv', 'json', 'xlsx', 'pdf', 'png'}.issubset(adapters['formats'])
+            or not {'google-drive', 'google-sheets', 'dropbox', 's3'}.issubset(adapters['sources'])):
+        raise RuntimeError('Installed package is missing document/cloud adapters')
+    json_source = root / 'purchases.json'
+    with source.open(encoding='utf-8-sig', newline='') as stream:
+        json_source.write_text(json.dumps(list(csv.DictReader(stream)), ensure_ascii=False), encoding='utf-8')
+    staged = json.loads(run([cli, 'intake', json_source, '--workspace', workspace], cwd=root, env=env, log=log))
+    imported = json.loads(run([cli, 'intake-run', staged['intake_id'], '--workspace', workspace],
+                              cwd=root, env=env, log=log))
+    receipt_snapshot(imported['batch'])
     return {'kind': label, 'import_probe': probe, 'counts': first['counts'],
             'certified_total': first['certified_total'], 'artifact_checks': before,
+            'document_intake': {'status': staged['status'], 'formats': adapters['formats'],
+                                'sources': adapters['sources'], 'json_batch_passed': True},
             'recovery_preserved_receipts_and_files': True, 'passed': True}
 
 

@@ -1,9 +1,20 @@
-# Neuron Flow 0.3.0 — beta
+# Neuron Flow 0.4.0.dev0 — development
 
 Validate multiple purchase documents from UTF-8 CSV, verify money with Decimal and an
 independent integer minor-unit calculation, and deliver reports traceable to original CSV records.
-Python 3.10+ and the standard library; one machine, no API keys.
+The core CSV workflow uses Python 3.10+ and the standard library on one machine, without API keys.
 See [the Thai guide](README_TH.md) for the complete data contract and operating instructions.
+
+**Unreleased 0.4.0.dev0 addition:** document intake now accepts CSV/TSV/JSON/Excel,
+text PDFs and scanned/image receipts with optional local Tesseract OCR. Receipt
+extraction requires reviewed CSV before financial verification. Connectors fetch
+from Google Drive, Google Sheets, Dropbox and Amazon S3; an explicit command can
+write literal report values to Google Sheets. Optional dependencies and credentials
+are needed only for the selected adapters. See the [integration guide](docs/INTEGRATIONS_TH.md)
+and run `python -m neuron_flow adapters`. These changes are not in the published 0.3.0 ZIP.
+Supported 0.2.0/0.2.1/0.3.0 CSV workspaces retain their original creation version,
+source and reports; new batches record 0.4.0.dev0. This development version has no
+new publication approval. The Colab notebook still demonstrates the core CSV workflow.
 
 Version 0.3.0 adds **46 currencies**, including USD, EUR, GBP, CNY, JPY and SGD,
 with currency-specific 0, 2 or 3 decimal places and separate certified totals per currency.
@@ -160,8 +171,10 @@ batch-artifact delivery does not remove that ERROR.
 Report delivery uses atomic file creation, fsync, full-file conflict preflight and content/SHA-256
 read-back. A crash between files resumes only missing artifacts; receipt persistence is the
 completion marker. Existing conflicting content is preserved. Workers handle hangs/crashes but
-are trusted Python code, not a security sandbox. The package does not implement OCR/PDF parsing,
-tax, discounts, autonomous learning or external-service transaction guarantees.
+are trusted Python code, not a security sandbox. Optional document adapters have
+their own [limits and review requirements](docs/INTEGRATIONS_TH.md); parsers/OCR
+are not a security sandbox. The package does not implement tax, discounts,
+autonomous learning or external-service transaction guarantees.
 
 CLI exit codes: 0 for completed delivery/status without ERROR; 1 for document ERROR or a returned
 DELIVERY_FAILED state; 2 for invalid setup/input or an exception, including delivery conflicts.

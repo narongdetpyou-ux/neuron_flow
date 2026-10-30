@@ -1,0 +1,11 @@
+[
+  {
+    "document_id": "R-001",
+    "item_id": "A",
+    "description": "Notebook",
+    "quantity": "2",
+    "unit_price": "12.50",
+    "declared_total": "25.00",
+    "currency": "USD"
+  }
+]
