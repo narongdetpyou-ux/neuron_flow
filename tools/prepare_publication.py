@@ -80,6 +80,8 @@ def main(argv=None):
     package_version = re.search(r'^version = "([^"]+)"', (PROJECT / 'pyproject.toml').read_text(), re.M)
     if package_version is None or package_version.group(1) != __version__:
         raise ValueError('Package metadata version differs from the source version')
+    if __version__ not in (PROJECT / 'RELEASE_NOTES.md').read_text(encoding='utf-8').splitlines()[0]:
+        raise ValueError('Release notes heading must identify the exact version before tag creation')
     token = os.environ['GH_TOKEN']
     def api(method, path, payload=None):
         data = json.dumps(payload).encode() if payload is not None else None

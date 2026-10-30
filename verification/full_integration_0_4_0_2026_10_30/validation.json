@@ -58,6 +58,11 @@
     "Local HTTP and advisory case retrieval do not establish production capacity or automatic learning improvement"
   ],
   "successful": true,
-  "final_publication_preparation_fingerprint": "fb55b5272991a7cf89c99045f2f1fa3969dd5200b3e33960d14e11bc56486134",
-  "post_local_run_change": "The release workflow now installs document extras and Tesseract before its zero-skip verifier, and its publication docstring reflects explicit approved requests. Core runtime and regression-test source bytes are unchanged from the local verification fingerprint. Exact final-source remote CI and the release workflow repeat the gates."
+  "final_publication_preparation_fingerprint": "c3b4ec403670c9211c6d4a7f3c35b89e0f36c0e9b5aca22272750d553cc6687f",
+  "post_local_run_change": "The release workflow now installs document extras and Tesseract before its zero-skip verifier, and its publication docstring reflects explicit approved requests. Core runtime and regression-test source bytes are unchanged from the local verification fingerprint. Exact final-source remote CI and the release workflow repeat the gates. The release-notes heading now identifies version 0.4.0, and the request preparer checks it before tag creation. Offline bundle/verify_bundle checks passed for all six native assets using explicitly synthetic source metadata.",
+  "local_bundle_format_check": {
+    "passed": true,
+    "assets": 6,
+    "source_identity_scope": "Synthetic source metadata for offline bundle/verify_bundle checks only; final tag identity is checked in the release workflow"
+  }
 }

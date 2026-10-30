@@ -1,4 +1,4 @@
-# Release notes
+# Neuron Flow 0.4.0 release notes
 
 ## 0.4.0 — approved release source
 
