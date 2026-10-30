@@ -1,4 +1,4 @@
-# Neuron Flow 0.4.0.dev0 — development
+# Neuron Flow 0.4.0
 
 **Supervised purchase-document validation with traceable reports and recoverable batches.**
 
@@ -59,16 +59,24 @@ within a document; duplicate-invoice detection across suppliers/batches is not i
 
 ## Source and published versions
 
-**Unreleased 0.4.0.dev0 addition:** document intake now accepts CSV/TSV/JSON/Excel,
+**Version 0.4.0:** document intake now accepts CSV/TSV/JSON/Excel,
 text PDFs and scanned/image receipts with optional local Tesseract OCR. Receipt
 extraction requires reviewed CSV before financial verification. Connectors fetch
 from Google Drive, Google Sheets, Dropbox and Amazon S3; an explicit command can
 write literal report values to Google Sheets. Optional dependencies and credentials
 are needed only for the selected adapters. See the [integration guide](docs/INTEGRATIONS.md)
 and run `python -m neuron_flow adapters`. These changes are not in the published 0.3.0 ZIP.
-Supported 0.2.0/0.2.1/0.3.0 CSV workspaces retain their original creation version,
-source and reports; new batches record 0.4.0.dev0. This development version has no
-new publication approval. The Colab notebook still demonstrates the core CSV workflow.
+Supported 0.2.0/0.2.1/0.3.0 and 0.4.0.dev0 CSV workspaces retain their original
+creation version, source and reports; new batches record 0.4.0. The owner has
+authorized publication of this version. The Colab notebook demonstrates the core
+CSV workflow; actual fresh-runtime acceptance remains separately unrun.
+
+The [operations guide](docs/OPERATIONS.md) covers the supervised local queue,
+HTTP admission, deadlines, extraction alternatives, phase metrics, pure cache,
+reviewed case memory, candidate gates and shared integrity tools. The committed
+publication request enables `publish=true` only for its matching approved version
+after all nine exact-source CI jobs succeed. Published assets and observed state
+are available from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases).
 
 Version 0.3.0 adds **46 currencies**, including USD, EUR, GBP, CNY, JPY and SGD,
 with currency-specific 0, 2 or 3 decimal places and separate certified totals per currency.
@@ -106,7 +114,7 @@ Full fault-injection validation remains scoped to Linux.
 
 ## Quick start
 
-Run from this checkout, or download `neuron_flow_v0.3.0.zip` from [release v0.3.0](https://github.com/narongdetpyou-ux/neuron_flow/releases/tag/v0.3.0), verify its `.sha256` and run from its extracted `neuron_flow` directory. The published ZIP predates the document adapters and English documentation migration:
+Run from this checkout, or download the approved `neuron_flow_v0.4.0.zip` from [GitHub Releases](https://github.com/narongdetpyou-ux/neuron_flow/releases), verify its `.sha256` and run from its extracted `neuron_flow` directory:
 
 ```bash
 python -m neuron_flow csv examples/purchases.csv --batch-id demo --workspace batch_workspace
@@ -158,10 +166,10 @@ still uses the Runtime workspace lock.
 
 ## Supported 0.2.0 workspace compatibility
 
-Current development can reuse supported 0.2.0/0.2.1/0.3.0 schema-1 CSV workspaces, including the markerless 0.2.0 format,
+Version 0.4.0 can reuse supported 0.2.0/0.2.1/0.3.0/0.4.0.dev0 schema-1 CSV workspaces, including the markerless 0.2.0 format,
 when the CSV contract, Agent definitions/versions and workflow settings match the compatibility
 policy. Existing identity, creation-version provenance, frozen payloads and reports stay unchanged.
-Old results retain their creation version; new work identifies 0.4.0.dev0. Compatibility does not
+Old results retain their creation version; new work identifies 0.4.0. Compatibility does not
 implicitly accept every patch version or changed contract. Backup restoration still requires
 the original absolute workspace path; relocation support is outside this release.
 

@@ -1,6 +1,18 @@
 name: Manual release
 
 on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      expected_commit:
+        required: true
+        type: string
+      publish:
+        required: true
+        default: false
+        type: boolean
   workflow_dispatch:
     inputs:
       tag:

@@ -1,0 +1,61 @@
+{
+  "created_at_utc": "2026-10-30T17:01:43.680740+00:00",
+  "version": "0.4.0",
+  "base_commit": "061cfb85ad5911cbda5b5eb7a2346eadca772d1f",
+  "source_fingerprint": "e01e65e1028316c856ff248c9fafb3a8a394bbac24df76e14fb9edc500309e6a",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "checks": {
+    "full_regression": {
+      "passed": true,
+      "tests": 261,
+      "skipped": 0
+    },
+    "release_guards": {
+      "passed": true,
+      "tests": 10
+    },
+    "quality_gates": true,
+    "distribution_wheel_and_sdist": true,
+    "fresh_zip_extraction_and_suite": true,
+    "locked_100_document_fixture": true,
+    "synthetic_queue_replay": {
+      "requests": 8,
+      "unique_jobs": 6,
+      "idempotent_retries": 2,
+      "passed": true
+    }
+  },
+  "commands": [
+    "python -B tools/check_quality.py --output-dir <fresh-outside-checkout>",
+    "python -B .github/workflows/test_release_support.py -v",
+    "python -B tools/check_distribution.py --output-dir <fresh-outside-checkout>",
+    "python -B tools/build_delivery.py --output-dir <fresh-package> --verification-dir <fresh-verification>",
+    "python -B tools/probe_operations.py --requests 8 --output-dir <fresh-probe>",
+    "python -B tools/check_repository_docs.py",
+    "git diff --check"
+  ],
+  "corrections": [
+    "Original new tests incorrectly assumed all event cursors must be nonnegative; corrected the test to preserve existing signed-int64 semantics.",
+    "A memory-capacity test originally submitted already-deduplicated evidence; corrected the fixture to submit distinct bytes.",
+    "Actual workload oracle now reads emitted details.json because batch delivery receipts intentionally contain summary fields.",
+    "Candidate acceptance now checks the immutable intake policy binding and rejects training/evaluation and validation/holdout source overlap.",
+    "Added per-format/currency efficiency checks so aggregate latency cannot hide a group regression.",
+    "Enabled HTTP thread tracing and require real POST-handler coverage, in addition to spawned workers.",
+    "A coverage run exposed asynchronous descendant termination; cleanup now waits for active Linux process-group members to stop before returning. Final fault tests and the full suite pass."
+  ],
+  "publication": {
+    "approved": true,
+    "requested_publish": true,
+    "local_record_is_publication_evidence": false,
+    "remote_ci": "recorded separately on PR/commit",
+    "published_release": "must be independently observed after the guarded workflow"
+  },
+  "limits": [
+    "Actual fresh Colab acceptance remains not_run",
+    "Live cloud-account OAuth/S3 authorization unestablished",
+    "Full fault-injection and process-group cancellation scoped to Linux",
+    "Local HTTP and advisory case retrieval do not establish production capacity or automatic learning improvement"
+  ],
+  "successful": true
+}

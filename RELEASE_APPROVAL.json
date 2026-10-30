@@ -1,20 +1,22 @@
 {
   "schema_version": 1,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "release_approved": true,
-  "approved_at_utc": "2026-10-29T09:38:50.365078+00:00",
+  "approved_at_utc": "2026-10-30T16:39:38.115728+00:00",
   "approval_source": "User instruction in this conversation",
-  "user_instruction": "เผยแพร่เป็น release",
+  "user_instruction": "เริ่มรวมแบบครบชุด พร้อม ทดสอบ + ตั้งค่าเป็น เผยแพร่",
   "publication_target": "https://github.com/narongdetpyou-ux/neuron_flow/releases",
   "decision": "release_with_disclosed_known_limitation",
-  "scope": "Beta release of the single-machine CSV/CLI and invoice JSON workflow with 46 currencies, exact currency-specific minor units, per-currency certified totals and preserved legacy CSV replay. Exact source/tag commit is checked separately by the manual release workflow.",
+  "scope": "Beta release of document adapters/connectors plus supervised local operations, evidence review, paired candidate gates, cache, reviewed case retrieval and integrity tools; existing exact monetary verification remains authoritative. Exact tag/source commit and successful CI are checked separately.",
   "colab_acceptance_complete": false,
   "known_limitations": [
-    "Actual fresh Google Colab upload/run/resume/download/restore acceptance remains not_run.",
-    "The 0.3.0 Windows/macOS smoke matrix is not yet verified at release preparation; prior 0.2.1 platform evidence is historical, and the full fault-injection suite remains scoped to Linux.",
-    "No exchange-rate conversion or cash rounding; each document must use one supported currency, and excess decimal precision is rejected.",
-    "Experimental Python API; persisted invoice JSON jobs using Agent version 1 require their prior runtime or a new job/workspace. Legacy CSV batches preserve their original currency contract.",
-    "Sequential document processing; original absolute workspace path required for backup restoration; no production SLA."
+    "Actual fresh Google Colab acceptance remains not_run; offline notebook checks are separate.",
+    "Live cloud-account OAuth/S3 authorization is not established by synthetic connector tests.",
+    "The HTTP adapter is a trusted single-machine loopback service, without a production SLA or multi-user identity system.",
+    "Full recovery/fault-injection and process-group cancellation validation are scoped to Linux; Windows/macOS have their documented smoke subset.",
+    "Case retrieval is advisory and cannot certify a new document; labels bind reviewed CSV but do not authenticate reviewers.",
+    "Synthetic workload measurements do not establish production capacity or an automatic learning improvement.",
+    "No FX conversion, arbitrary receipt-layout understanding or automatic connector publication."
   ],
-  "historical_approval": "verification/archive/RELEASE_APPROVAL_0_2_1.json"
+  "historical_approval": "verification/archive/RELEASE_APPROVAL_0_3_0.json"
 }

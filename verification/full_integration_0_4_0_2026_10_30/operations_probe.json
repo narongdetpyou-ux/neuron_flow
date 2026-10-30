@@ -1,0 +1,546 @@
+{
+  "schema": "operations-probe-v1",
+  "seed": 20261030,
+  "requests": 8,
+  "unique_jobs": 6,
+  "idempotent_retries": 2,
+  "completed_jobs": 6,
+  "checks": [
+    {
+      "job_id": "499d1b69db774652af6ab257d0455741",
+      "source_sha256": "dc16f2eba4095a1824192def3b925ebe79c5b061c43960f57119134b618939df",
+      "expected_status": "VALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "VALID",
+      "passed": true
+    },
+    {
+      "job_id": "f5f3cbc664bd4018a1427037842272c4",
+      "source_sha256": "012f13f7ec8e04fc483f7ee7289a8bcb064e994e2ec8e6650b98b57477944983",
+      "expected_status": "VALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "VALID",
+      "passed": true
+    },
+    {
+      "job_id": "1553666f52b6407d85dda8d567dcee88",
+      "source_sha256": "cda8f5d29772d4d391fef293456a7ba376d51e3ff8404a17879cd893b26971a5",
+      "expected_status": "INVALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "INVALID",
+      "passed": true
+    },
+    {
+      "job_id": "3de4a2219b544e8fabf75246a7201500",
+      "source_sha256": "172c79a73712fdf7245e15ce3cf0bad8bc19681092c37171a92282d1b50f9e2b",
+      "expected_status": "VALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "VALID",
+      "passed": true
+    },
+    {
+      "job_id": "a2bd7dca5ad84c6da3d7bfdb55b1d54b",
+      "source_sha256": "9097add0d0bf674522613a8bc47533bc10c259728e75e1375513f5022d64cbd2",
+      "expected_status": "INVALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "INVALID",
+      "passed": true
+    },
+    {
+      "job_id": "52875211c514408ca0e1d158dc4f41a6",
+      "source_sha256": "4b4bb6378dd0a10288d77a7b21a4265b79c4c623e82e0991e719eafa2b4bd290",
+      "expected_status": "VALID",
+      "observed_job_status": "COMPLETED",
+      "observed_document_status": "VALID",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "elapsed_ms": 3042.8251000003,
+  "admission_ms": [
+    6.574052000360098,
+    3.8663239993184106,
+    3.9765200008332613,
+    3.6643090006691637,
+    3.694164000080491,
+    3.787364999880083,
+    3.7115499999345047,
+    3.8793339999756427
+  ],
+  "metrics": {
+    "jobs": {
+      "COMPLETED": 6
+    },
+    "telemetry": {
+      "phases": {
+        "admission": {
+          "total_count": 8,
+          "retained_count": 8,
+          "p50_ms": 3.7502979994314956,
+          "p95_ms": 6.493750999652548,
+          "errors_retained": 0
+        },
+        "batch": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 399.1090849995089,
+          "p95_ms": 440.6508419997408,
+          "errors_retained": 0
+        },
+        "calculation": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 0.22286100011115195,
+          "p95_ms": 0.30337700081872754,
+          "errors_retained": 0
+        },
+        "contract_validation": {
+          "total_count": 18,
+          "retained_count": 18,
+          "p50_ms": 64.47803899936844,
+          "p95_ms": 83.88440999988234,
+          "errors_retained": 0
+        },
+        "delivery": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 0.3335619994686567,
+          "p95_ms": 1.5974960006133188,
+          "errors_retained": 0
+        },
+        "extraction": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 83.47872800004552,
+          "p95_ms": 95.29045999988739,
+          "errors_retained": 0
+        },
+        "parsing": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 0.08384600005229004,
+          "p95_ms": 0.24698199922568165,
+          "errors_retained": 0
+        },
+        "queue": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 1005.4142475128174,
+          "p95_ms": 2508.713722229004,
+          "errors_retained": 0
+        },
+        "validation": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 2.075000999866461,
+          "p95_ms": 2.4252430002889014,
+          "errors_retained": 0
+        },
+        "verification": {
+          "total_count": 6,
+          "retained_count": 6,
+          "p50_ms": 0.2679839999473188,
+          "p95_ms": 0.4067429999849992,
+          "errors_retained": 0
+        }
+      },
+      "retained_samples": 74,
+      "samples": [
+        {
+          "phase": "admission",
+          "elapsed_ms": 6.493750999652548,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.820734999862907,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.935187000024598,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.6232669999662903,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.657428000224172,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.7502979994314956,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.6699370002679643,
+          "outcome": "OK"
+        },
+        {
+          "phase": "admission",
+          "elapsed_ms": 3.8431789998867316,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 27.019739151000977,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 95.29045999988739,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 409.1348169995399,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.0834359998407308,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 2.172351999433886,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 73.53453000087029,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.22026100032235263,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 62.26032899940037,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.4067429999849992,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 72.44918600008532,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 1.5974960006133188,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 532.1111679077148,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 83.25458000035724,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 388.76239199998963,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.08119199992506765,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 2.075000999866461,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 63.697323000269535,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.22286100011115195,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 63.2800049997968,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.2471919997333316,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 62.446949999866774,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 0.2716589997362462,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 1005.4142475128174,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 83.95438499974262,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 398.6109400002533,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.2367369997955393,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 1.9678290000229026,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 63.34902399976272,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.23669599977438338,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 72.61429300069722,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.25878399992507184,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 64.47803899936844,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 0.3335619994686567,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 1488.8544082641602,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 83.22930299982545,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 440.6508419997408,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.24698199922568165,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 2.4252430002889014,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 73.48676799938403,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.30337700081872754,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 72.59074400008103,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.2679839999473188,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 82.80181400004949,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 0.28314599967416143,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 2013.9508247375488,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 95.00581599968427,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 399.1090849995089,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.08384600005229004,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 2.075086000331794,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 64.53136900017853,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.2791399992929655,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 72.77669799987052,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.2753999997366918,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 62.08013699961157,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 0.3378789997441345,
+          "outcome": "OK"
+        },
+        {
+          "phase": "queue",
+          "elapsed_ms": 2508.713722229004,
+          "outcome": "OK"
+        },
+        {
+          "phase": "extraction",
+          "elapsed_ms": 83.47872800004552,
+          "outcome": "OK"
+        },
+        {
+          "phase": "batch",
+          "elapsed_ms": 413.78981300022133,
+          "outcome": "OK"
+        },
+        {
+          "phase": "parsing",
+          "elapsed_ms": 0.08531900039088214,
+          "outcome": "OK"
+        },
+        {
+          "phase": "validation",
+          "elapsed_ms": 1.5644470004190225,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 62.99711300016497,
+          "outcome": "OK"
+        },
+        {
+          "phase": "calculation",
+          "elapsed_ms": 0.21787300011055777,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 83.88440999988234,
+          "outcome": "OK"
+        },
+        {
+          "phase": "verification",
+          "elapsed_ms": 0.3264920005676686,
+          "outcome": "OK"
+        },
+        {
+          "phase": "contract_validation",
+          "elapsed_ms": 63.49591600064741,
+          "outcome": "OK"
+        },
+        {
+          "phase": "delivery",
+          "elapsed_ms": 0.4523620000327355,
+          "outcome": "OK"
+        }
+      ],
+      "controller_rss_bytes": 19755008,
+      "memory_scope": "Controller only; child memory is not aggregated or estimated"
+    },
+    "cache": {
+      "hits": 0,
+      "misses": 6,
+      "evictions": 0,
+      "entries": 6,
+      "encoded_payload_bytes": 2486,
+      "scope": "Pure extraction only; OCR excluded; verification and receipts never cached"
+    }
+  },
+  "pure_extraction_cache": {
+    "actual_latencies_ms": [
+      93.00406600050337,
+      0.12768200031132437,
+      0.03172799915773794
+    ],
+    "hits": 2,
+    "misses": 1,
+    "evictions": 0,
+    "entries": 1,
+    "encoded_payload_bytes": 415,
+    "scope": "Pure extraction only; OCR excluded; verification and receipts never cached"
+  },
+  "scope": "Synthetic labeled CSV replay against real local runtime; timings are measured, no production SLA or cross-workload speed claim"
+}

@@ -34,7 +34,7 @@ def project_fingerprint(root):
     digest = hashlib.sha256()
     directories = {'neuron_flow', 'tools', 'tests', '.github', 'acceptance', 'docs'}
     files = {'pyproject.toml', 'requirements-build.txt', 'requirements-dev.txt', '.coveragerc', '.gitattributes',
-             'START_COLAB.ipynb', 'RELEASE_APPROVAL.json',
+             'START_COLAB.ipynb', 'RELEASE_APPROVAL.json', 'RELEASE_REQUEST.json',
              'RELEASE_NOTES.md', 'README.md'}
     for path in sorted(Path(root).rglob('*')):
         relative = path.relative_to(root)
