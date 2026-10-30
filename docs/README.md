@@ -13,6 +13,7 @@ hashes. Historical paths in machine records describe the files at that run.
 | [Document intake and integrations](INTEGRATIONS.md) | Excel/JSON/PDF/OCR, human review and cloud connectors |
 | [Currencies](CURRENCIES.md) | Codes, precision and compatibility |
 | [Python API](PYTHON_API.md) | BatchRuntime, Runtime and custom Agents |
+| [Report explanations and comparison](REPORT_REVIEW.md) | Read-only evidence claims and comparison of saved report outcomes |
 | [Maintainer runbook](MAINTAINER_RUNBOOK.md) | Inspection, recovery, backup and restore |
 | [Colab acceptance](COLAB_ACCEPTANCE.md) | Real-runtime observations and evidence submission |
 | [Quality](QUALITY.md) | Static gates, branch coverage and measured scope |

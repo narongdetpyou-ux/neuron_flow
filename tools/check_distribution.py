@@ -112,6 +112,15 @@ def check_install(artifact, *, wheelhouse, temporary, env, log):
     first = json.loads(run([cli, 'csv', source, '--batch-id', 'package-smoke',
                            '--workspace', workspace], cwd=root, env=env, log=log))
     before = receipt_snapshot(first)
+    report_directory = Path(first['receipt']['artifacts']['details.json']['path']).parent
+    explanation = json.loads(run([cli, 'report-explain', report_directory], cwd=root, env=env, log=log))
+    comparison = json.loads(run([cli, 'report-compare', report_directory, report_directory],
+                                cwd=root, env=env, log=log))
+    if (len(explanation['documents']) != 2
+            or not all(document['verification']['all_supported'] for document in explanation['documents'])
+            or comparison['agreement'] is not True or comparison['difference_count'] != 0
+            or receipt_snapshot(first) != before):
+        raise RuntimeError('Installed report review changed artifacts or returned incorrect evidence')
     second = json.loads(run([cli, 'batch-resume', 'package-smoke', '--workspace', workspace],
                             cwd=root, env=env, log=log))
     if first != second or receipt_snapshot(second) != before:
@@ -131,6 +140,7 @@ def check_install(artifact, *, wheelhouse, temporary, env, log):
             'certified_total': first['certified_total'], 'artifact_checks': before,
             'document_intake': {'status': staged['status'], 'formats': adapters['formats'],
                                 'sources': adapters['sources'], 'json_batch_passed': True},
+            'read_only_report_explanation_and_comparison': True,
             'recovery_preserved_receipts_and_files': True, 'passed': True}
 
 

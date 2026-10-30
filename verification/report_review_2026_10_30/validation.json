@@ -1,0 +1,61 @@
+{
+  "created_at_utc": "2026-10-30T13:43:09.197056+00:00",
+  "base_commit": "273859502efd243f80df73432f6f24178fbe2ec8",
+  "source_fingerprint": "33ddb557eb246dd279d936bdc958119cbbf08afb40f5bb4cdd33a8f20907d4e6",
+  "fingerprint_scope": "tools.verify_current.project_fingerprint: code, tests, tools, workflows, docs, notebook and locked inputs; verification evidence excluded",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "scope": [
+    "read-only evidence explanations of saved reports",
+    "offline comparison of checked reference/candidate reports"
+  ],
+  "checks": [
+    {
+      "command": "python -B -m unittest tests.test_report_review -v",
+      "passed": true,
+      "tests": 15
+    },
+    {
+      "command": "python -B tools/build_acceptance_fixture.py --check",
+      "passed": true
+    },
+    {
+      "command": "python -B tools/check_repository_docs.py",
+      "passed": true
+    },
+    {
+      "command": "python -B .github/workflows/test_release_support.py -v",
+      "passed": true,
+      "tests": 10
+    },
+    {
+      "command": "python -B tools/check_quality.py --output-dir <fresh-output-outside-checkout>",
+      "passed": true,
+      "tests": 218,
+      "skipped": 0
+    },
+    {
+      "command": "python -B tools/check_distribution.py --output-dir <fresh-output-outside-checkout>",
+      "passed": true,
+      "installed_artifacts": [
+        "wheel",
+        "sdist"
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "passed": true
+    }
+  ],
+  "historical_100_document_report": "explanation and self-comparison pass; original bytes and mtimes preserved",
+  "financial_compatibility": "legacy THB and multicurrency reports covered, including exact JPY/KWD strings; real batch resume preserves original receipts",
+  "limitations": [
+    "internal source/report consistency is not artifact authorship authentication",
+    "recorded invalid reasons are presented rather than independently re-diagnosed",
+    "comparison reads saved outputs and does not execute a candidate",
+    "remote CI is separate from this local record",
+    "actual Google Colab acceptance is not established",
+    "no release publication"
+  ],
+  "successful": true
+}

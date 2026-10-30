@@ -11,6 +11,10 @@ Use it as a local checking step before an operator accepts data into an accounti
 or procurement workflow. The core CSV workflow uses Python 3.10+ and the standard
 library on one trusted machine, without an AI model or API keys.
 
+Saved batch reports can also be explained with source-row evidence and compared
+across candidate runtimes using `report-explain` and `report-compare`. See the
+[read-only report review guide](docs/REPORT_REVIEW.md).
+
 ## Suitable data
 
 | Input | What the system does | Preparation needed |

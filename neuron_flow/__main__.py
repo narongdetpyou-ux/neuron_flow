@@ -14,6 +14,7 @@ from .csv_input import MAX_SOURCE_BYTES
 from .inspection import list_batches
 from .storage import validate_event_cursor
 from . import intake_cli
+from . import review_cli
 from .connectors import ConnectorError
 
 
@@ -27,6 +28,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Neuron Flow supervised workflow prototype")
     commands = parser.add_subparsers(dest="command", required=True)
     intake_cli.add_commands(commands)
+    review_cli.add_commands(commands)
     for name in ("csv", "batch-resume", "batch-status", "batch-list"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", default="batch_workspace")
@@ -55,6 +57,10 @@ def main(argv=None):
             command.add_argument("--after", type=int, default=0)
     args = parser.parse_args(argv)
     try:
+        if args.command in review_cli.COMMANDS:
+            result = review_cli.execute(args)
+            print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            return 0 if result.get("agreement", True) else 1
         if args.command in intake_cli.COMMANDS:
             result = intake_cli.execute(args)
             print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
