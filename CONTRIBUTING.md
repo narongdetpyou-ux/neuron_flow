@@ -12,7 +12,9 @@ Read the [README](README.md), [Code of Conduct](CODE_OF_CONDUCT.md) and
 ## Development setup
 
 Python 3.10 or newer is required. The application and test suite use the Python
-standard library; no third-party runtime packages are required. The package build
+standard library for the core; optional document/cloud adapters use the extras in
+`pyproject.toml`. Install `.[documents]` and Tesseract to run all adapter tests;
+core-only environments skip optional-format tests explicitly. The package build
 requirement is declared separately in `pyproject.toml`.
 
 From a checkout, the following example creates a virtual environment on a POSIX

@@ -1,4 +1,22 @@
-# Neuron Flow 0.3.0 — beta
+# Neuron Flow 0.4.0.dev0 — development
+
+เพิ่ม document intake และ connector adapters ตาม [คู่มือเชื่อมต่อ](docs/INTEGRATIONS_TH.md)
+รุ่นนี้ยังไม่เผยแพร่และไม่ใช้สิทธิ์อนุมัติ release 0.3.0
+
+- รับ CSV/TSV/JSON/Excel พร้อม source bytes, SHA-256 และ record mapping
+- อ่าน PDF ข้อความ และภาพ/PDF สแกนผ่าน optional Tesseract OCR; ต้อง review เป็น CSV ก่อนตรวจยอด
+- รับไฟล์จาก Google Drive, Google Sheets, Dropbox และ Amazon S3
+- ส่งออก CSV ไป finite Google Sheets range แบบ RAW ด้วยคำสั่งแยก
+- เก็บ immutable intake/review revisions และส่งต่อไปยัง BatchRuntime เดิม
+- คง CSV contracts, minor-unit verification, 46 currencies และ workspace compatibility เดิม
+- เพิ่ม synthetic receipts, regression tests และ optional adapter coverage ใน CI
+
+การเชื่อมบัญชี cloud จริงและ Actual Colab acceptance ของส่วนเพิ่มนี้ยังไม่ได้ทดสอบ
+ดูผลที่ผูกกับ source ใน verification; ผลเก่าของ release ด้านล่างเป็นประวัติ
+
+## ประวัติรุ่น 0.3.0
+
+### Neuron Flow 0.3.0 — beta
 
 ผู้ใช้อนุมัติให้เผยแพร่ด้วยคำสั่ง “เผยแพร่เป็น release” โดยเปิดเผยข้อจำกัดด้านล่าง
 รุ่นนี้เตรียมเผยแพร่ผ่าน manual release workflow; การมีไฟล์อนุมัติหรือ build สำเร็จไม่ใช่หลักฐานว่าเผยแพร่แล้ว

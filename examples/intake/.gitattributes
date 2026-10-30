@@ -1,0 +1,4 @@
+# Preserve document bytes and avoid treating PDF cross-reference data as text.
+*.pdf binary
+*.xlsx binary
+*.png binary

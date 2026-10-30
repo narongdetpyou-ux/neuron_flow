@@ -66,7 +66,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install pinned development tools
-        run: python -m pip install -r requirements-dev.txt
+        run: python -m pip install -r requirements-dev.txt '.[documents]'
+      - name: Install local OCR for adapter coverage
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-tha
       - name: Check documentation claims
         run: python -B tools/check_repository_docs.py
       - name: Measure branch coverage and run static quality gates

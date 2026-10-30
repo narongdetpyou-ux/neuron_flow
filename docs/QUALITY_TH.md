@@ -3,12 +3,14 @@
 ติดตั้งเครื่องมือสำหรับพัฒนาแยกจาก runtime ซึ่งยังใช้ standard library เท่านั้น:
 
 ```bash
-python -m pip install -r requirements-dev.txt
+python -m pip install -r requirements-dev.txt '.[documents]'
 python -B tools/check_quality.py --output-dir /tmp/neuron-quality-new
 ```
 
 เลือก directory ใหม่ที่อยู่นอก checkout เพื่อแยกผลรอบนี้ออกจากหลักฐานเก่า
 helper คืน exit code 1 หาก lint, typing, tests, การรวม coverage หรือเกณฑ์ coverage ไม่ผ่าน
+ส่วนรับเอกสารใหม่ต้องติดตั้ง Tesseract และ language data เพื่อทดสอบ OCR จริง
+ดู [คู่มือ adapters](INTEGRATIONS_TH.md); core-only tests จะ skip optional formats อย่างชัดเจน
 เก็บ logs, `quality_results.json`, `coverage.json` และ `coverage.xml` ใน directory ที่ระบุ
 ไม่มีการลด assertions หรือข้าม tests เพื่อให้เกณฑ์ผ่าน
 

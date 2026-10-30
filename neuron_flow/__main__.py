@@ -13,6 +13,8 @@ from .batch import BatchRuntime
 from .csv_input import MAX_SOURCE_BYTES
 from .inspection import list_batches
 from .storage import validate_event_cursor
+from . import intake_cli
+from .connectors import ConnectorError
 
 
 DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
@@ -24,6 +26,7 @@ DEMO_DOCUMENT = {"document_id": "INV-001", "currency": "THB", "items": [
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Neuron Flow supervised workflow prototype")
     commands = parser.add_subparsers(dest="command", required=True)
+    intake_cli.add_commands(commands)
     for name in ("csv", "batch-resume", "batch-status", "batch-list"):
         command = commands.add_parser(name)
         command.add_argument("--workspace", default="batch_workspace")
@@ -52,6 +55,13 @@ def main(argv=None):
             command.add_argument("--after", type=int, default=0)
     args = parser.parse_args(argv)
     try:
+        if args.command in intake_cli.COMMANDS:
+            result = intake_cli.execute(args)
+            print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            batch = result.get("batch", {})
+            return 1 if (batch.get("counts", {}).get("ERROR", 0)
+                         or batch.get("status") == "DELIVERY_FAILED"
+                         or batch.get("batch_status") == "DELIVERY_FAILED") else 0
         if args.command == "events":
             # Validate before opening or creating any workspace state.
             validate_event_cursor(args.after)
@@ -104,7 +114,10 @@ def main(argv=None):
             return 1
         return 0
     except (ValueError, KeyError, RuntimeError, OSError, sqlite3.Error) as exc:
-        print(json.dumps({"error": type(exc).__name__, "message": str(exc)}, ensure_ascii=False), file=sys.stderr)
+        error = {"error": type(exc).__name__, "message": str(exc)}
+        if isinstance(exc, ConnectorError):
+            error.update(status=exc.status, retryable=exc.retryable)
+        print(json.dumps(error, ensure_ascii=False), file=sys.stderr)
         return 2
 
 

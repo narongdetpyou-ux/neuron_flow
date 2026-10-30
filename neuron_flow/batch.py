@@ -22,7 +22,7 @@ from .model import NAME, MessageSizeError, SpecError, encode
 
 WORKSPACE_SCHEMA_VERSION = 1
 EXECUTION_CONTRACT_VERSION = 'purchase-batch-v1'
-SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1', '0.3.0'})
+SUPPORTED_CREATION_VERSIONS = frozenset({'0.2.0', '0.2.1', '0.3.0', __version__})
 
 
 def _json(value):
