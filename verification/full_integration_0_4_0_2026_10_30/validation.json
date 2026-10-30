@@ -57,5 +57,7 @@
     "Full fault-injection and process-group cancellation scoped to Linux",
     "Local HTTP and advisory case retrieval do not establish production capacity or automatic learning improvement"
   ],
-  "successful": true
+  "successful": true,
+  "final_publication_preparation_fingerprint": "fb55b5272991a7cf89c99045f2f1fa3969dd5200b3e33960d14e11bc56486134",
+  "post_local_run_change": "The release workflow now installs document extras and Tesseract before its zero-skip verifier, and its publication docstring reflects explicit approved requests. Core runtime and regression-test source bytes are unchanged from the local verification fingerprint. Exact final-source remote CI and the release workflow repeat the gates."
 }

@@ -5,8 +5,11 @@ based on commit `061cfb85ad5911cbda5b5eb7a2346eadca772d1f`. The mapping and usag
 are in [the operations guide](../../docs/OPERATIONS.md). Original unrelated
 models, resource-allocation controllers and domain-specific solvers are excluded.
 
-The tested source fingerprint in `validation.json` matches the canonical package
-verifier. Verification records are excluded from that fingerprint to avoid a
+The local tested source fingerprint in `validation.json` matches the canonical
+package verifier. A subsequent publication-environment correction installs document
+extras and Tesseract in the release job so its strict zero-skip verifier can run.
+Core runtime/test sources are unchanged; the final preparation fingerprint is
+recorded separately and exact-source CI/release repeats verification. Verification records are excluded from that fingerprint to avoid a
 circular record. This is local evidence; exact-source remote CI and observed
 publication are recorded separately in GitHub.
 

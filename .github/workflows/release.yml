@@ -72,6 +72,11 @@ jobs:
           fi
           python -B .github/workflows/release_support.py validate \
             --tag "$REQUESTED_TAG" --expected-commit "$EXPECTED_COMMIT" "${publish_options[@]}"
+      - name: Install optional adapters and OCR for zero-skip release verification
+        run: |
+          python -m pip install '.[documents]'
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-tha
       - name: Verify locked answers and all regressions
         run: |
           python -B tools/build_acceptance_fixture.py --check

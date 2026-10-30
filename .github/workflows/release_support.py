@@ -1,7 +1,7 @@
 """Local release checks and draft-only, no-clobber publication for Actions.
 
 This file never publishes unless invoked with the explicit ``publish`` command.
-The workflow invokes that command only after a manual publish=true dispatch.
+The workflow invokes it only for an explicitly approved publish=true request.
 """
 
 import argparse
